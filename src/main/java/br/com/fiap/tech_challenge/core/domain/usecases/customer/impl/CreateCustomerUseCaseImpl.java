@@ -4,9 +4,7 @@ import br.com.fiap.tech_challenge.core.domain.exceptions.CustomerAlreadyExistsEx
 import br.com.fiap.tech_challenge.core.domain.models.Customer;
 import br.com.fiap.tech_challenge.core.domain.ports.CustomerPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.customer.CreateCustomerUseCase;
-import org.springframework.stereotype.Component;
 
-@Component
 public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
 
     private final CustomerPersistence persistence;

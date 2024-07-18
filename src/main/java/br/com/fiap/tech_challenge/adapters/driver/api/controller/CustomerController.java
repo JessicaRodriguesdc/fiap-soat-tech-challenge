@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Controller {
+public class CustomerController {
 
     private final CreateCustomerUseCase createCustomerUseCase;
     private final CustomerMapper mapper;
 
-    public Controller(CreateCustomerUseCase createCustomerUseCase, CustomerMapper mapper) {
+    public CustomerController(CreateCustomerUseCase createCustomerUseCase, CustomerMapper mapper) {
         this.createCustomerUseCase = createCustomerUseCase;
         this.mapper = mapper;
     }
