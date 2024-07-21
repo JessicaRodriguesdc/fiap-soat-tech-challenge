@@ -17,6 +17,5 @@ COPY --from=layers /layer/snapshot-dependencies/ ./
 COPY --from=layers /layer/application/ ./
 RUN chown -R appuser:appuser /opt/app
 USER appuser
-HEALTHCHECK --interval=30s --timeout=3s --retries=1 CMD wget -qO- http://localhost:8357/actuator/health/ | grep UP || exit 1
 EXPOSE 8357
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
