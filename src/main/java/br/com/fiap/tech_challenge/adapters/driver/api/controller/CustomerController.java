@@ -27,7 +27,7 @@ public class CustomerController {
     @GetMapping("/{document}")
     private ResponseEntity<CustomerResponseDTO> findByDocument(@PathVariable("document") final String document){
         var customerFound = findCustomerByDocumentUseCase.findByDocument(document);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomerResponseDTO(customerFound));
+        return ResponseEntity.status(HttpStatus.OK).body(new CustomerResponseDTO(customerFound));
     }
 
     @PostMapping
