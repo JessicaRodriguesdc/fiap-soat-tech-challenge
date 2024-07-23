@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.CustomerRequestDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.CustomerResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerRequestDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.CustomerMapper;
 import br.com.fiap.tech_challenge.core.domain.usecases.customer.CreateCustomerUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.customer.FindCustomerByDocumentUseCase;

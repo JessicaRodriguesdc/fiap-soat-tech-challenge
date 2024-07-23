@@ -1,4 +1,4 @@
-package br.com.fiap.tech_challenge.adapters.driver.api.controller.dto;
+package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
 import br.com.fiap.tech_challenge.core.domain.models.Customer;
 
