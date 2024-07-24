@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.handler;
 
-import br.com.fiap.tech_challenge.core.domain.exceptions.CustomerAlreadyExistsException;
-import br.com.fiap.tech_challenge.core.domain.exceptions.CustomerDoesNotExistException;
+import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyExistsException;
+import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,13 +19,13 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class ControllerAdvice  extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(CustomerAlreadyExistsException.class)
+    @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<?> alreadyExists(RuntimeException ex){
         var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
         return ResponseEntity.badRequest().body(error);
     }
 
-    @ExceptionHandler(CustomerDoesNotExistException.class)
+    @ExceptionHandler(DoesNotExistException.class)
     public ResponseEntity<?> notFound(RuntimeException ex){
         var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
