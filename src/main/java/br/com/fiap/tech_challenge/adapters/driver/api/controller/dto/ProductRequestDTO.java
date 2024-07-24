@@ -4,8 +4,10 @@ import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 public record ProductRequestDTO(@NotBlank String name,
                                 @NotNull CategoryProductEnum category,
-                                @NotNull Double price,
+                                @NotNull BigDecimal price,
                                 @NotBlank String description) {
 }

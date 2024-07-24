@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class ProductEntity {
     @Enumerated(EnumType.STRING)
     private CategoryProductEnum category;
 
-    private Double price;
+    private BigDecimal price;
 
     private String description;
 
@@ -36,7 +37,7 @@ public class ProductEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public ProductEntity(UUID id, String name, CategoryProductEnum category, Double price, String description) {
+    public ProductEntity(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -68,7 +69,7 @@ public class ProductEntity {
         return category;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 

@@ -5,6 +5,7 @@ import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Product {
@@ -16,14 +17,14 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private CategoryProductEnum category;
 
-    private Double price;
+    private BigDecimal price;
 
     private String description;
 
     @Enumerated(EnumType.STRING)
     private StatusProductEnum status;
 
-    public Product(UUID id, String name, CategoryProductEnum category, Double price, String description,StatusProductEnum status) {
+    public Product(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description,StatusProductEnum status) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -32,7 +33,7 @@ public class Product {
         this.status = status;
     }
 
-    public Product(String name, CategoryProductEnum category, Double price, String description) {
+    public Product(String name, CategoryProductEnum category, BigDecimal price, String description) {
         this.name = name;
         this.category = category;
         this.price = price;
@@ -51,7 +52,7 @@ public class Product {
         return category;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
