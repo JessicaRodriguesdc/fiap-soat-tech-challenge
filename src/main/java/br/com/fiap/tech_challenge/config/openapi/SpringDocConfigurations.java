@@ -1,8 +1,7 @@
-package br.com.fiap.tech_challenge.config.doc;
+package br.com.fiap.tech_challenge.config.openapi;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.handler.ErrorsValidateData;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ProblemDTO;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
