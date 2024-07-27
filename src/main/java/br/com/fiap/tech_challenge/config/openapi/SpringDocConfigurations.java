@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.config.doc;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ErrorsValidateData;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ProblemDTO;
 import io.swagger.v3.core.converter.ModelConverters;
@@ -48,11 +49,13 @@ public class SpringDocConfigurations {
 
         Map<String, Schema> problemSchema = ModelConverters.getInstance().read(ProblemDTO.class);
         Map<String, Schema> customerResponseDto = ModelConverters.getInstance().read(CustomerResponseDTO.class);
+        Map<String, Schema> productResponseDto = ModelConverters.getInstance().read(ProductResponseDTO.class);
         Schema errorsValidateDataArraySchema = new ArraySchema().items(new Schema<>().$ref("#/components/schemas/ErrorsValidateData"));
 
 
         schemaMap.putAll(problemSchema);
         schemaMap.putAll(customerResponseDto);
+        schemaMap.putAll(productResponseDto);
         schemaMap.put("ErrorsValidateDataList", errorsValidateDataArraySchema);
 
         return schemaMap;
