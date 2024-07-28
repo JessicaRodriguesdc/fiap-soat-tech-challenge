@@ -3,6 +3,7 @@ package br.com.fiap.tech_challenge.core.domain.usecases.order.impl;
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyInStatusException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.UpdateOrderStatusUseCase;
 
@@ -18,7 +19,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
     }
 
     @Override
-    public Order updateStatusById(String status, UUID id) {
+    public Order updateStatusById(OrderStatusEnum status, UUID id) {
         var orderFound = persistence.findById(id).orElseThrow(
                 () -> new DoesNotExistException("Order does no exist!")
         );
@@ -28,7 +29,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
         }
 
         var isPaid = orderFound.getIsPaid();
-        if (Objects.equals(status, "PREPARING")) {
+        if (Objects.equals(status, OrderStatusEnum.PREPARING)) {
             isPaid = true;
         }
         var newOrder = new Order(

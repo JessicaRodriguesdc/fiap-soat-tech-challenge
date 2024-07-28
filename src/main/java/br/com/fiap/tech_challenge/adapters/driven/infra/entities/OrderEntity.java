@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.entities;
 
 import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,7 +25,8 @@ public class OrderEntity {
 
     private Integer sequence;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum status;
 
     @Column(name = "payment_id")
     private String paymentId;
@@ -45,7 +47,7 @@ public class OrderEntity {
             UUID customerId,
             BigDecimal amount,
             Integer sequence,
-            String status,
+            OrderStatusEnum status,
             String paymentId,
             Boolean isPaid
     ) {
@@ -88,7 +90,7 @@ public class OrderEntity {
         return sequence;
     }
 
-    public String getStatus() {
+    public OrderStatusEnum getStatus() {
         return status;
     }
 

@@ -2,6 +2,7 @@ package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.FakeCheckoutRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.OrderResponseDTO;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.UpdateOrderStatusUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class FakeCheckoutController {
             @RequestBody @Valid FakeCheckoutRequestDTO fakeCheckoutRequestDTO
     ) {
         var updatedOrder = updateOrderStatusUseCase.updateStatusById(
-                "PREPARING",
+                OrderStatusEnum.PREPARING,
                 UUID.fromString(fakeCheckoutRequestDTO.orderId())
         );
         return ResponseEntity.status(HttpStatus.OK).body(new OrderResponseDTO(updatedOrder));

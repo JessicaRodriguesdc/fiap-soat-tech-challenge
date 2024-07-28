@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
 import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -10,7 +11,7 @@ public record OrderResponseDTO(
         UUID customer_id,
         BigDecimal amount,
         Integer sequence,
-        String status,
+        OrderStatusEnum status,
         String payment_id,
         Boolean is_paid
 ) {

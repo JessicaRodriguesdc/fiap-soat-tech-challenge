@@ -1,5 +1,9 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -13,7 +17,8 @@ public class Order {
 
     private Integer sequence;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum status;
 
     private String paymentId;
 
@@ -24,7 +29,7 @@ public class Order {
             UUID customerId,
             BigDecimal amount,
             Integer sequence,
-            String status,
+            OrderStatusEnum status,
             String paymentId,
             Boolean isPaid
     ) {
@@ -41,7 +46,7 @@ public class Order {
             UUID customerId,
             BigDecimal amount,
             Integer sequence,
-            String status,
+            OrderStatusEnum status,
             String paymentId,
             Boolean isPaid
     ) {
@@ -69,7 +74,7 @@ public class Order {
         return sequence;
     }
 
-    public String getStatus() {
+    public OrderStatusEnum getStatus() {
         return status;
     }
 
