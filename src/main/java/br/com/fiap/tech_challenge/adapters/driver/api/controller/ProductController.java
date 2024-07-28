@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.ProductRequestDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.ProductResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
 import jakarta.validation.Valid;
