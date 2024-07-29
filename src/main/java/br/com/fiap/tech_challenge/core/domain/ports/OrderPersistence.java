@@ -7,5 +7,6 @@ import java.util.UUID;
 
 public interface OrderPersistence {
     Optional<Order> findById(UUID id);
-    Order create (Order order);
+    Order create(Order customer);
+    Integer getLastSequence();
 }

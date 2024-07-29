@@ -28,18 +28,21 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
             throw new AlreadyInStatusException("Order already in PREPARING status!");
         }
 
-        var isPaid = orderFound.getIsPaid();
+        var isPaid = orderFound.isPaid();
         if (Objects.equals(status, OrderStatusEnum.PREPARING)) {
             isPaid = true;
         }
         var newOrder = new Order(
                 orderFound.getId(),
-                orderFound.getCustomerId(),
                 orderFound.getAmount(),
                 orderFound.getSequence(),
                 status,
+                isPaid,
+                orderFound.getProducts(),
+                orderFound.getCustomerId(),
                 orderFound.getPaymentId(),
-                isPaid
+                orderFound.getCreatedAt(),
+                orderFound.getUpdatedAt()
         );
 
         return persistence.create(newOrder);

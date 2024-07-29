@@ -5,6 +5,9 @@ import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +31,14 @@ public class OrderPersistenceImpl implements OrderPersistence {
         var orderEntity = new OrderEntity(order);
         var orderSaved = repository.save(orderEntity);
         return orderSaved.toOrder();
+    }
+
+    @Override
+    public Integer getLastSequence() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
+
+        return repository.findLastSequenceForToday(startOfDay, endOfDay).orElse(0);
     }
 }

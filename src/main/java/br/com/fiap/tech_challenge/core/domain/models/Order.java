@@ -1,69 +1,43 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class Order {
+    private final UUID id;
+    private final BigDecimal amount;
+    private final Integer sequence;
+    private final OrderStatusEnum status;
+    private final boolean isPaid;
+    private final String paymentId;
+    private final List<OrderProduct> products;
+    private final UUID customerId;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
-    private UUID id;
-
-    private UUID customerId;
-
-    private BigDecimal amount;
-
-    private Integer sequence;
-
-    @Enumerated(EnumType.STRING)
-    private OrderStatusEnum status;
-
-    private String paymentId;
-
-    private Boolean isPaid;
-
-    public Order(
-            UUID id,
-            UUID customerId,
-            BigDecimal amount,
-            Integer sequence,
-            OrderStatusEnum status,
-            String paymentId,
-            Boolean isPaid
-    ) {
-        this.id = id;
-        this.customerId = customerId;
-        this.amount = amount;
-        this.sequence = sequence;
-        this.status = status;
-        this.paymentId = paymentId;
-        this.isPaid = isPaid;
+    public static Order create(BigDecimal amount, Integer sequence, List<OrderProduct> products, UUID customerId, String PaymentId) {
+        return new Order(null, amount, sequence, OrderStatusEnum.RECEIVED, false, products, customerId, PaymentId, null, null);
     }
 
-    public Order(
-            UUID customerId,
-            BigDecimal amount,
-            Integer sequence,
-            OrderStatusEnum status,
-            String paymentId,
-            Boolean isPaid
-    ) {
-        this.customerId = customerId;
+    public Order(UUID id, BigDecimal amount, Integer sequence, OrderStatusEnum status, boolean isPaid, List<OrderProduct> products, UUID customerId, String paymentId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
         this.amount = amount;
         this.sequence = sequence;
         this.status = status;
-        this.paymentId = paymentId;
         this.isPaid = isPaid;
+        this.products = products;
+        this.customerId = customerId;
+        this.paymentId = paymentId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public UUID getCustomerId() {
-        return customerId;
     }
 
     public BigDecimal getAmount() {
@@ -78,11 +52,27 @@ public class Order {
         return status;
     }
 
-    public String getPaymentId() {
-        return paymentId;
+    public boolean isPaid() {
+        return isPaid;
     }
 
-    public Boolean getIsPaid() {
-        return isPaid;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public List<OrderProduct> getProducts() {
+        return products;
+    }
+
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
     }
 }
