@@ -35,11 +35,16 @@ public class ProductEntity {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    public void setStatus(StatusProductEnum status) {
+        this.status = status;
+    }
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public ProductEntity() {}
+    public ProductEntity() {
+    }
 
     public ProductEntity(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description) {
         this.id = id;
@@ -47,7 +52,6 @@ public class ProductEntity {
         this.category = category;
         this.price = price;
         this.description = description;
-        this.status = status;
     }
 
     public ProductEntity(Product product) {
@@ -58,7 +62,7 @@ public class ProductEntity {
         this.description = product.getDescription();
     }
 
-    public Product toProduct(){
+    public Product toProduct() {
         return new Product(id, name, category, price, description, status);
     }
 
