@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
-import br.com.fiap.tech_challenge.core.domain.exceptions.ResourceNotFoundException;
+import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
 
@@ -19,7 +19,7 @@ public class DeleteProductByIdUseCaseImpl implements DeleteProductByIdUseCase {
         var product = persistence.findById(id);
 
         if (product.isEmpty()) {
-            throw new ResourceNotFoundException("Product not found");
+            throw new DoesNotExistException("Product not found");
         }
 
         persistence.delete(id);

@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
-import br.com.fiap.tech_challenge.core.domain.exceptions.ResourceNotFoundException;
+import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
@@ -21,7 +21,7 @@ public class GetProductsByCategoryUseCaseImpl implements GetProductsByCategoryUs
         var products = persistence.findByCategory(category, pageable);
 
         if (products.isEmpty()) {
-            throw new ResourceNotFoundException("Products not found by category");
+            throw new DoesNotExistException("Products not found by category");
         }
 
         return products;
