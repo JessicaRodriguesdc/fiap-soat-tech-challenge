@@ -1,9 +1,10 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.ProductRequestDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.ProductResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
+import br.com.fiap.tech_challenge.adapters.driver.api.openapi.ProductControllerOpenApi;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/products")
-public class ProductController {
+public class ProductController implements ProductControllerOpenApi {
 
     private final GetProductsByCategoryUseCase getProductsByCategoryUseCase;
     private final DeleteProductByIdUseCase deleteProductByIdUseCase;
@@ -44,8 +45,9 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
+    @Override
     @PostMapping
-    private ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductRequestDTO productDTO) {
+    public ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductRequestDTO productDTO){
         var productSaved = createProductUseCase.create(mapper.toProduct(productDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponseDTO(productSaved));
     }

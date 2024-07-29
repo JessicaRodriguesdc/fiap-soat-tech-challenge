@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.mapper;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.controller.dto.ProductRequestDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import org.springframework.stereotype.Component;
 
