@@ -1,5 +1,11 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
+import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Product {
@@ -8,15 +14,17 @@ public class Product {
 
     private String name;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private CategoryProductEnum category;
 
-    private double price;
+    private BigDecimal price;
 
     private String description;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusProductEnum status;
 
-    public Product(UUID id, String name, String category, double price, String description, String status) {
+    public Product(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description,StatusProductEnum status) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -25,8 +33,7 @@ public class Product {
         this.status = status;
     }
 
-    public Product(UUID id, String name, String category, double price, String description) {
-        this.id = id;
+    public Product(String name, CategoryProductEnum category, BigDecimal price, String description) {
         this.name = name;
         this.category = category;
         this.price = price;
@@ -37,47 +44,23 @@ public class Product {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCategory() {
+    public CategoryProductEnum getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
+    public StatusProductEnum getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

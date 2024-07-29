@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -21,6 +22,10 @@ public class ProductPersistenceImpl implements ProductPersistence {
     }
 
     @Override
+    public Product create(Product product) {
+        var productEntity = new ProductEntity(product);
+        var productSaved = repository.save(productEntity);
+        return productSaved.toProduct();
     public Page<Product> findByCategory(String category, Pageable pageable) {
         return repository.findByCategoryAndStatusNot(category, INACTIVE, pageable).map(ProductEntity::toProduct);
     }
@@ -28,6 +33,9 @@ public class ProductPersistenceImpl implements ProductPersistence {
     @Override
     public Optional<Product> findById(UUID id) {
         return repository.findByIdAndStatusNot(id, INACTIVE).map(ProductEntity::toProduct);
+    public List<Product> findAllByIds(List<UUID> ids) {
+        var products = repository.findAllById(ids);
+        return products.stream().map(ProductEntity::toProduct).toList();
     }
 
     @Override
