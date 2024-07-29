@@ -1,4 +1,4 @@
-package br.com.fiap.tech_challenge.config;
+package br.com.fiap.tech_challenge.config.bean;
 
 import br.com.fiap.tech_challenge.core.domain.ports.CustomerPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.customer.impl.CreateCustomerUseCaseImpl;
