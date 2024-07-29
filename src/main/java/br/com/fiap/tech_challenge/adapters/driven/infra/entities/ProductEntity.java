@@ -37,6 +37,8 @@ public class ProductEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public ProductEntity() {}
+
     public ProductEntity(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description) {
         this.id = id;
         this.name = name;
