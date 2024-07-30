@@ -26,7 +26,7 @@ public class FakeCheckoutController {
         this.updateOrderStatusUseCase = updateOrderStatusUseCase;
     }
 
-    @PostMapping()
+    @PostMapping
     private ResponseEntity<OrderResponseDTO> checkout(
             @RequestBody @Valid FakeCheckoutRequestDTO fakeCheckoutRequestDTO
     ) {

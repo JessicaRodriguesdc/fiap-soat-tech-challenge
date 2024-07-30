@@ -2,7 +2,7 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.entities;
 
 import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
-import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,23 +18,23 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private final UUID id;
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    private final BigDecimal amount;
 
     @Column(nullable = false)
-    private Integer sequence;
+    private final Integer sequence;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatusEnum status;
+    private final OrderStatus status;
 
     @Column(nullable = false)
-    private boolean isPaid;
+    private final boolean isPaid;
 
     @Column(nullable = false)
-    private String paymentId;
+    private final String paymentId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -42,36 +42,10 @@ public class OrderEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private UUID customerId;
+    private final UUID customerId;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderProductEntity> products;
-
-    public OrderEntity() {}
-
-    public OrderEntity(
-            UUID id,
-            BigDecimal amount,
-            Integer sequence,
-            OrderStatusEnum status,
-            Boolean isPaid,
-            String paymentId,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
-            UUID customerId,
-            List<OrderProductEntity> products
-    ) {
-        this.id = id;
-        this.amount = amount;
-        this.sequence = sequence;
-        this.status = status;
-        this.isPaid = isPaid;
-        this.paymentId = paymentId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.customerId = customerId;
-        this.products = products;
-    }
+    private final List<OrderProductEntity> products;
 
     public OrderEntity(Order order) {
         this.id = order.getId();
