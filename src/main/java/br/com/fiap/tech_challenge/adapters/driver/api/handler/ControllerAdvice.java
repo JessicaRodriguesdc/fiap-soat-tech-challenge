@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.handler;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyExistsException;
+import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyInStatusException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,12 @@ public class ControllerAdvice  extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> notFound(RuntimeException ex){
         var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(AlreadyInStatusException.class)
+    public ResponseEntity<?> alreadyInStatus(RuntimeException ex){
+        var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
     @Override

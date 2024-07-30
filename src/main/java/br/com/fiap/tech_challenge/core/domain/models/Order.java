@@ -20,6 +20,7 @@ public class Order {
     private final LocalDateTime updatedAt;
 
     public static Order create(BigDecimal amount, Integer sequence, List<OrderProduct> products, UUID customerId, String PaymentId) {
+
         return new Order(null, amount, sequence, OrderStatus.RECEIVED, false, products, customerId, PaymentId, null, null);
     }
 

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
+import java.util.UUID;
+
 
 @Component
 public class OrderPersistenceImpl implements OrderPersistence {
@@ -16,6 +19,12 @@ public class OrderPersistenceImpl implements OrderPersistence {
 
     public OrderPersistenceImpl(OrderRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public Optional<Order> findById(UUID id) {
+        var orderFound = repository.findById(id);
+        return orderFound.map(OrderEntity::toOrder);
     }
 
     @Override
@@ -33,5 +42,4 @@ public class OrderPersistenceImpl implements OrderPersistence {
 
         return repository.findLastSequenceForToday(startOfDay, endOfDay).orElse(0);
     }
-
 }
