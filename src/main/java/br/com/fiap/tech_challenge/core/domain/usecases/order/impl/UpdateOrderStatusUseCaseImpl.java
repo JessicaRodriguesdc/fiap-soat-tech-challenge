@@ -19,7 +19,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
     }
 
     @Override
-    public Order updateStatusById(OrderStatus status, UUID id) {
+    public void updateStatusById(OrderStatus status, UUID id) {
         var orderFound = persistence.findById(id).orElseThrow(
                 () -> new DoesNotExistException("Order does no exist!")
         );
@@ -45,6 +45,6 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
                 orderFound.getUpdatedAt()
         );
 
-        return persistence.create(newOrder);
+        persistence.create(newOrder);
     }
 }

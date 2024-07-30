@@ -29,7 +29,7 @@ public class FakeCheckoutController {
     private ResponseEntity<Void> checkout(
             @RequestBody @Valid FakeCheckoutRequestDTO fakeCheckoutRequestDTO
     ) {
-        var updatedOrder = updateOrderStatusUseCase.updateStatusById(
+        updateOrderStatusUseCase.updateStatusById(
                 OrderStatus.PREPARING,
                 UUID.fromString(fakeCheckoutRequestDTO.orderId())
         );
