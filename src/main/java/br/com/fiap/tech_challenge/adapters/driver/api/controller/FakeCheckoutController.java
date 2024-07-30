@@ -1,13 +1,12 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.FakeCheckoutRequestDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.OrderResponseDTO;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.UpdateOrderStatusUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,14 +25,14 @@ public class FakeCheckoutController {
         this.updateOrderStatusUseCase = updateOrderStatusUseCase;
     }
 
-    @PostMapping
-    private ResponseEntity<OrderResponseDTO> checkout(
+    @PutMapping
+    private ResponseEntity<Void> checkout(
             @RequestBody @Valid FakeCheckoutRequestDTO fakeCheckoutRequestDTO
     ) {
         var updatedOrder = updateOrderStatusUseCase.updateStatusById(
                 OrderStatus.PREPARING,
                 UUID.fromString(fakeCheckoutRequestDTO.orderId())
         );
-        return ResponseEntity.status(HttpStatus.OK).body(new OrderResponseDTO(updatedOrder));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
