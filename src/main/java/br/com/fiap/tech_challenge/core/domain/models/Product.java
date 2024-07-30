@@ -12,7 +12,7 @@ public class Product {
 
     private UUID id;
 
-    private String name;
+    private final String name;
 
     @Enumerated(EnumType.STRING)
     private CategoryProductEnum category;
@@ -24,7 +24,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private StatusProductEnum status;
 
-    public Product(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description,StatusProductEnum status) {
+    public Product(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description, StatusProductEnum status) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -62,5 +62,9 @@ public class Product {
 
     public StatusProductEnum getStatus() {
         return status;
+    }
+
+    public void setStatus(StatusProductEnum status) {
+        this.status = status;
     }
 }

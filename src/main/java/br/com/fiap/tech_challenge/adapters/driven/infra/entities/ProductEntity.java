@@ -6,6 +6,7 @@ import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "product")
+@Where(clause = "status <> 'INACTIVE'")
 public class ProductEntity {
 
     @Id
@@ -34,10 +36,15 @@ public class ProductEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    public void setStatus(StatusProductEnum status) {
+        this.status = status;
+    }
+
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public ProductEntity() {}
+    public ProductEntity() {
+    }
 
     public ProductEntity(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description) {
         this.id = id;
@@ -55,7 +62,7 @@ public class ProductEntity {
         this.description = product.getDescription();
     }
 
-    public Product toProduct(){
+    public Product toProduct() {
         return new Product(id, name, category, price, description, status);
     }
 
