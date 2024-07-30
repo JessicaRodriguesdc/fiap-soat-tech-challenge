@@ -1,8 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
 import br.com.fiap.tech_challenge.core.domain.models.Order;
-import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,17 +10,12 @@ import java.util.UUID;
 public record OrderResponseDTO(
         UUID id,
         BigDecimal amount,
-        @JsonProperty("customer_id")
         UUID customerId,
         Integer sequence,
-        OrderStatusEnum status,
-        @JsonProperty("is_paid")
+        OrderStatus status,
         Boolean isPaid,
-        @JsonProperty("payment_id")
         String paymentId,
-        @JsonProperty("created_at")
         LocalDateTime createdAt,
-        @JsonProperty("updated_at")
         LocalDateTime updatedAt
 
 ) {

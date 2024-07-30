@@ -18,23 +18,23 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final UUID id;
+    private UUID id;
 
     @Column(nullable = false)
-    private final BigDecimal amount;
+    private BigDecimal amount;
 
     @Column(nullable = false)
-    private final Integer sequence;
+    private Integer sequence;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private final OrderStatus status;
+    private OrderStatus status;
 
     @Column(nullable = false)
-    private final boolean isPaid;
+    private boolean isPaid;
 
     @Column(nullable = false)
-    private final String paymentId;
+    private String paymentId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -42,10 +42,12 @@ public class OrderEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private final UUID customerId;
+    private UUID customerId;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<OrderProductEntity> products;
+    private List<OrderProductEntity> products;
+
+    public OrderEntity() {}
 
     public OrderEntity(Order order) {
         this.id = order.getId();
@@ -55,6 +57,8 @@ public class OrderEntity {
         this.isPaid = order.isPaid();
         this.customerId = order.getCustomerId();
         this.paymentId = order.getPaymentId();
+        this.createdAt = order.getCreatedAt();
+        this.updatedAt = order.getUpdatedAt();
 
         this.products = order.getProducts().stream().map(
                 orderProduct -> new OrderProductEntity(this, orderProduct)
