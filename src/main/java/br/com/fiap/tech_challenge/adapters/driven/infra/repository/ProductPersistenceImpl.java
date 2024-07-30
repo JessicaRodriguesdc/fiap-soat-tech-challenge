@@ -30,22 +30,17 @@ public class ProductPersistenceImpl implements ProductPersistence {
     }
 
     public Page<Product> findByCategory(CategoryProductEnum category, Pageable pageable) {
-        return repository.findByCategoryAndStatusNot(category, StatusProductEnum.INACTIVE, pageable)
-                .map(ProductEntity::toProduct);
+        return repository.findByCategory(category, pageable).map(ProductEntity::toProduct);
     }
 
     @Override
     public Optional<Product> findById(UUID id) {
-        return repository.findByIdAndStatusNot(id, StatusProductEnum.INACTIVE)
-                .map(ProductEntity::toProduct);
+        return repository.findById(id).map(ProductEntity::toProduct);
     }
 
     public List<Product> findAllByIds(List<UUID> ids) {
         var products = repository.findAllById(ids);
-        return products.stream()
-                .filter(product -> !product.getStatus().equals(StatusProductEnum.INACTIVE))
-                .map(ProductEntity::toProduct)
-                .toList();
+        return products.stream().map(ProductEntity::toProduct).toList();
     }
 
     @Override

@@ -2,18 +2,14 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
 import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
-    Page<ProductEntity> findByCategoryAndStatusNot(CategoryProductEnum category, StatusProductEnum status, Pageable pageable);
-
-    Optional<ProductEntity> findByIdAndStatusNot(UUID id, StatusProductEnum status);
+    Page<ProductEntity> findByCategory(CategoryProductEnum category, Pageable pageable);
 }
