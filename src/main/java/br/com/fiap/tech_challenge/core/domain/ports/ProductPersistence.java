@@ -11,12 +11,9 @@ import java.util.UUID;
 
 public interface ProductPersistence {
     Page<Product> findByCategory(CategoryProductEnum category, Pageable pageable);
-
     Product create(Product product);
-
     List<Product> findAllByIds(List<UUID> ids);
-
     Optional<Product> findById(UUID id);
-
+    Product update(Product product);
     void delete(UUID id);
 }

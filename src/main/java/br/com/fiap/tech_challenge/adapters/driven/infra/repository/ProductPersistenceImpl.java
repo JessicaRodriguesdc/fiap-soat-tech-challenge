@@ -29,8 +29,15 @@ public class ProductPersistenceImpl implements ProductPersistence {
         return productSaved.toProduct();
     }
 
+    @Override
     public Page<Product> findByCategory(CategoryProductEnum category, Pageable pageable) {
         return repository.findByCategory(category, pageable).map(ProductEntity::toProduct);
+    }
+
+    @Override
+    public List<Product> findAllByIds(List<UUID> ids) {
+        var products = repository.findAllById(ids);
+        return products.stream().map(ProductEntity::toProduct).toList();
     }
 
     @Override
@@ -38,9 +45,11 @@ public class ProductPersistenceImpl implements ProductPersistence {
         return repository.findById(id).map(ProductEntity::toProduct);
     }
 
-    public List<Product> findAllByIds(List<UUID> ids) {
-        var products = repository.findAllById(ids);
-        return products.stream().map(ProductEntity::toProduct).toList();
+    @Override
+    public Product update(Product product) {
+        var productEntity = new ProductEntity().update(product);
+        var productUpdated = repository.save(productEntity);
+        return productUpdated.toProduct();
     }
 
     @Override
