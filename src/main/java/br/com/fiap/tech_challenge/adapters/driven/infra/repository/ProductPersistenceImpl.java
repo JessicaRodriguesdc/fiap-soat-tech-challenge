@@ -35,12 +35,6 @@ public class ProductPersistenceImpl implements ProductPersistence {
     }
 
     @Override
-    public List<Product> findAllByIds(List<UUID> ids) {
-        var products = repository.findAllById(ids);
-        return products.stream().map(ProductEntity::toProduct).toList();
-    }
-
-    @Override
     public Optional<Product> findById(UUID id) {
         return repository.findById(id).map(ProductEntity::toProduct);
     }
