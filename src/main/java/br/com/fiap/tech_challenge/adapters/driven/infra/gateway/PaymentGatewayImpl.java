@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class PaymentGatewayImpl implements PaymentGateway {
     @Override
     public String generatePixQrCode(BigDecimal value) {
-        if(value.compareTo(new BigDecimal("10,00")) == 0) {
+        if(value.compareTo(new BigDecimal("10.00")) == 0) {
             return "mockedUnpaidPixQRCodeString";
         }
         return "mockedPaidPixQRCodeString";
