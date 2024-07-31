@@ -40,12 +40,7 @@ public class OrderController {
         Page<Order> ordersPage = findPaidOrdersUseCase.findAllPaidOrders(status, pageable);
 
         List<PaidOrdersPaginatedResponseDTO.OrderSummary> content = ordersPage.getContent().stream()
-                .map(order -> new PaidOrdersPaginatedResponseDTO.OrderSummary(
-                        order.getSequence(),
-                        order.getCustomer(),
-                        order.getCreatedAt(),
-                        order.getUpdatedAt()
-                )).toList();
+                .map(PaidOrdersPaginatedResponseDTO.OrderSummary::new).toList();
 
         PaidOrdersPaginatedResponseDTO response = new PaidOrdersPaginatedResponseDTO(content, pageable);
 
