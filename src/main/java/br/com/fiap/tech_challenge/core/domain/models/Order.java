@@ -15,23 +15,36 @@ public class Order {
     private final boolean isPaid;
     private final String paymentId;
     private final List<OrderProduct> products;
-    private final UUID customerId;
+    private final Customer customer;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public static Order create(BigDecimal amount, Integer sequence, List<OrderProduct> products, UUID customerId, String PaymentId) {
+    public static Order create(BigDecimal amount,
+                               Integer sequence,
+                               List<OrderProduct> products,
+                               Customer customer,
+                               String PaymentId) {
 
-        return new Order(null, amount, sequence, OrderStatus.RECEIVED, false, products, customerId, PaymentId, null, null);
+        return new Order(null, amount, sequence, OrderStatus.RECEIVED, false, products, customer, PaymentId, null, null);
     }
 
-    public Order(UUID id, BigDecimal amount, Integer sequence, OrderStatus status, boolean isPaid, List<OrderProduct> products, UUID customerId, String paymentId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Order(UUID id,
+                 BigDecimal amount,
+                 Integer sequence,
+                 OrderStatus status,
+                 boolean isPaid,
+                 List<OrderProduct> products,
+                 Customer customer,
+                 String paymentId,
+                 LocalDateTime createdAt,
+                 LocalDateTime updatedAt) {
         this.id = id;
         this.amount = amount;
         this.sequence = sequence;
         this.status = status;
         this.isPaid = isPaid;
         this.products = products;
-        this.customerId = customerId;
+        this.customer = customer;
         this.paymentId = paymentId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -69,8 +82,8 @@ public class Order {
         return products;
     }
 
-    public UUID getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public String getPaymentId() {
