@@ -6,6 +6,7 @@ import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
 import br.com.fiap.tech_challenge.adapters.driver.api.openapi.ProductControllerOpenApi;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
 import jakarta.validation.Valid;
@@ -18,20 +19,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-
 @RequestMapping("/v1/products")
 public class ProductController implements ProductControllerOpenApi {
-
-    private final GetProductsByCategoryUseCase getProductsByCategoryUseCase;
-    private final DeleteProductByIdUseCase deleteProductByIdUseCase;
     private final CreateProductUseCase createProductUseCase;
+    private final GetProductsByCategoryUseCase getProductsByCategoryUseCase;
+    private final UpdateProductUseCase updateProductUseCase;
+    private final DeleteProductByIdUseCase deleteProductByIdUseCase;
     private final ProductMapper mapper;
 
-    public ProductController(GetProductsByCategoryUseCase getProductsByCategoryUseCase, DeleteProductByIdUseCase deleteProductByIdUseCase, CreateProductUseCase createProductUseCase, ProductMapper mapper) {
-        this.getProductsByCategoryUseCase = getProductsByCategoryUseCase;
-        this.deleteProductByIdUseCase = deleteProductByIdUseCase;
+    public ProductController(CreateProductUseCase createProductUseCase, GetProductsByCategoryUseCase getProductsByCategoryUseCase,
+                             UpdateProductUseCase updateProductUseCase, DeleteProductByIdUseCase deleteProductByIdUseCase, ProductMapper mapper) {
         this.createProductUseCase = createProductUseCase;
+        this.getProductsByCategoryUseCase = getProductsByCategoryUseCase;
+        this.updateProductUseCase = updateProductUseCase;
+        this.deleteProductByIdUseCase = deleteProductByIdUseCase;
         this.mapper = mapper;
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductRequestDTO productDTO){
+        var productSaved = createProductUseCase.create(mapper.toProduct(productDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponseDTO(productSaved));
     }
 
     @GetMapping
@@ -46,11 +55,10 @@ public class ProductController implements ProductControllerOpenApi {
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
-    @Override
-    @PostMapping
-    public ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductRequestDTO productDTO){
-        var productSaved = createProductUseCase.create(mapper.toProduct(productDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponseDTO(productSaved));
+    @PutMapping("/{id}")
+    private ResponseEntity<ProductResponseDTO> update(@PathVariable("id") final UUID id, @RequestBody @Valid ProductRequestDTO productDTO){
+        var product = updateProductUseCase.update(id, mapper.toProduct(productDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(new ProductResponseDTO(product));
     }
 
     @DeleteMapping("/{id}")
@@ -58,4 +66,5 @@ public class ProductController implements ProductControllerOpenApi {
     public void deleteProductById(@PathVariable UUID id) {
         deleteProductByIdUseCase.delete(id);
     }
+
 }

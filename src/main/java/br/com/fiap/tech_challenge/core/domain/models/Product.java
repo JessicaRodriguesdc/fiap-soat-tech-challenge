@@ -6,13 +6,14 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Product {
 
     private UUID id;
 
-    private final String name;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private CategoryProductEnum category;
@@ -24,13 +25,19 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private StatusProductEnum status;
 
-    public Product(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description, StatusProductEnum status) {
+    private LocalDateTime createdAt;
+
+    public Product() {}
+
+    public Product(UUID id, String name, CategoryProductEnum category, BigDecimal price,
+                   String description, StatusProductEnum status, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.description = description;
         this.status = status;
+        this.createdAt = createdAt;
     }
 
     public Product(String name, CategoryProductEnum category, BigDecimal price, String description) {
@@ -38,6 +45,14 @@ public class Product {
         this.category = category;
         this.price = price;
         this.description = description;
+    }
+
+    public Product update(Product product) {
+        this.name = product.getName();
+        this.category = product.getCategory();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
+        return this;
     }
 
     public UUID getId() {
@@ -62,6 +77,10 @@ public class Product {
 
     public StatusProductEnum getStatus() {
         return status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public void setStatus(StatusProductEnum status) {

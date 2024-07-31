@@ -36,10 +36,6 @@ public class ProductEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public void setStatus(StatusProductEnum status) {
-        this.status = status;
-    }
-
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -63,7 +59,18 @@ public class ProductEntity {
     }
 
     public Product toProduct() {
-        return new Product(id, name, category, price, description, status);
+        return new Product(id, name, category, price, description, status, createdAt);
+    }
+
+    public ProductEntity update(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.category = product.getCategory();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
+        this.status = product.getStatus();
+        this.createdAt = product.getCreatedAt();
+        return this;
     }
 
     public UUID getId() {
@@ -88,5 +95,9 @@ public class ProductEntity {
 
     public StatusProductEnum getStatus() {
         return status;
+    }
+
+    public void setStatus(StatusProductEnum status) {
+        this.status = status;
     }
 }
