@@ -39,7 +39,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
                 status,
                 isPaid,
                 orderFound.getProducts(),
-                orderFound.getCustomerId(),
+                orderFound.getCustomer(),
                 orderFound.getPaymentId(),
                 orderFound.getCreatedAt(),
                 orderFound.getUpdatedAt()
