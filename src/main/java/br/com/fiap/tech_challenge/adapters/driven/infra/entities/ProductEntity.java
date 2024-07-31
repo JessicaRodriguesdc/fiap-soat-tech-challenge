@@ -5,8 +5,8 @@ import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "product")
-@Where(clause = "status <> 'INACTIVE'")
+@SQLRestriction("status <> 'INACTIVE'")
 public class ProductEntity {
 
     @Id
