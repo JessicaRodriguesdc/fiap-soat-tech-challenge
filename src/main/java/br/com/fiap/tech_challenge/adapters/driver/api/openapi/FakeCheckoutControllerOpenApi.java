@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Fake Checkout")
 public interface FakeCheckoutControllerOpenApi {
 
-    @Operation(summary = "Change the order status to RECEIVED, and mark as paid")
+    @Operation(summary = "Change the order status to PREPARING, and mark as paid")
     @ApiResponse(
             responseCode = "204",
             description = "No Content Response",
