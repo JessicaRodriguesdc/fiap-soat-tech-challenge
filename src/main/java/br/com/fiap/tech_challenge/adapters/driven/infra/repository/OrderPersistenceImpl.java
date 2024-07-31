@@ -2,7 +2,10 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
 import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -41,5 +44,12 @@ public class OrderPersistenceImpl implements OrderPersistence {
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
 
         return repository.findLastSequenceForToday(startOfDay, endOfDay).orElse(0);
+    }
+
+    @Override
+    public Page<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatus status, Pageable pageable) {
+        var orders = repository.findByIsPaidAndStatus(false, status, pageable);
+
+        return orders.map(OrderEntity::toOrder);
     }
 }
