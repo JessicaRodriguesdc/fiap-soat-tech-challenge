@@ -44,9 +44,7 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
              customer = getCustomer(input.customerId());
         }
 
-        var productIdList = getListOfProductIds(input);
-        var products = productPersistence.findAllByIds(productIdList);
-        var orderProducts = getOrderProducts(input, products);
+        var orderProducts = getOrderProducts(input);
         var calculatedAmount = reduceAmount(orderProducts);
         var nextSequence = getNextSequence();
         var qrCode = paymentGateway.generatePixQrCode(calculatedAmount);
@@ -71,10 +69,9 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
         return persistence.getLastSequence() + 1;
     }
 
-    private List<OrderProduct> getOrderProducts(CreateOrderDTO order, List<Product> products) {
-        Map<UUID, Product> productsMap = products
-                .stream()
-                .collect(Collectors.toMap(Product::getId, product -> product));
+    private List<OrderProduct> getOrderProducts(CreateOrderDTO order) {
+        var productIdList = getListOfProductIds(order);
+        var productsMap = getProductMap(findProductListOrThrowException(productIdList));
 
         return order
                 .products()
@@ -83,6 +80,24 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
                     BigDecimal price = productsMap.get(orderProduct.id()).getPrice();
                     return OrderProduct.create(price, orderProduct.observation(), orderProduct.id());
                 }).toList();
+    }
+
+    private List<Product> findProductListOrThrowException(List<UUID> productIdList) {
+       return productIdList.stream().map(
+                uuid -> productPersistence.findById(uuid).orElseThrow(
+                        () -> new DoesNotExistException("Product not found with ID: " + uuid)
+                )
+        ).toList();
+    }
+
+    private Map<UUID, Product> getProductMap(List<Product> products) {
+        return products
+                .stream()
+                .collect(Collectors.toMap(
+                        Product::getId,
+                        product -> product,
+                        (existing, replacement) -> existing
+                ));
     }
 
     private List<UUID> getListOfProductIds(CreateOrderDTO input) {
