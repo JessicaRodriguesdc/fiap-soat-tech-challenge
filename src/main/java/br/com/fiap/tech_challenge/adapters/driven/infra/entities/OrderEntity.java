@@ -42,7 +42,9 @@ public class OrderEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private UUID customerId;
+    @OneToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private CustomerEntity customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProductEntity> products;
@@ -55,7 +57,7 @@ public class OrderEntity {
         this.sequence = order.getSequence();
         this.status = order.getStatus();
         this.isPaid = order.isPaid();
-        this.customerId = order.getCustomerId();
+        this.customer = order.getCustomer() != null ? new CustomerEntity(order.getCustomer()) : null;
         this.paymentId = order.getPaymentId();
         this.createdAt = order.getCreatedAt();
         this.updatedAt = order.getUpdatedAt();
@@ -78,7 +80,7 @@ public class OrderEntity {
                 status,
                 isPaid,
                 orderProducts,
-                customerId,
+                customer != null ? customer.toCustomer() : null,
                 paymentId,
                 createdAt,
                 updatedAt

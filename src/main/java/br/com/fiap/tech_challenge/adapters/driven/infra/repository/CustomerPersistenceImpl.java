@@ -6,6 +6,7 @@ import br.com.fiap.tech_challenge.core.domain.ports.CustomerPersistence;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class CustomerPersistenceImpl implements CustomerPersistence {
@@ -27,5 +28,10 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
     public Optional<Customer> findByDocument(String document) {
         var customerFound = repository.findByDocument(document);
         return customerFound.map(CustomerEntity::toCustomer);
+    }
+
+    @Override
+    public Optional<Customer> findById(UUID id) {
+        return repository.findById(id).map(CustomerEntity::toCustomer);
     }
 }

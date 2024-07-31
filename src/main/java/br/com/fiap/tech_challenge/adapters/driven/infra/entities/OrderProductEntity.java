@@ -14,21 +14,23 @@ public class OrderProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final UUID id;
+    private UUID id;
 
     @Column(nullable = false)
-    private final BigDecimal price;
+    private BigDecimal price;
 
-    private final String customization;
+    private String customization;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private final OrderEntity order;
+    private OrderEntity order;
 
-    private final UUID productId;
+    private UUID productId;
+
+    public OrderProductEntity() {}
 
     public OrderProductEntity(OrderEntity order, OrderProduct orderProduct) {
         this.order = order;
