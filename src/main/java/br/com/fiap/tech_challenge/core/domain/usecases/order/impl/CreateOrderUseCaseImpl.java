@@ -38,7 +38,12 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
     @Override
     public Order create(CreateOrderDTO input) {
-        var customer = getCustomer(input.customerId());
+        Customer customer = null;
+
+        if (input.customerId() != null) {
+             customer = getCustomer(input.customerId());
+        }
+
         var productIdList = getListOfProductIds(input);
         var products = productPersistence.findAllByIds(productIdList);
         var orderProducts = getOrderProducts(input, products);
@@ -46,18 +51,14 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
         var nextSequence = getNextSequence();
         var qrCode = paymentGateway.generatePixQrCode(calculatedAmount);
 
-        var newOrder = Order.create(calculatedAmount, nextSequence, orderProducts, customer, qrCode);
+        var newOrder = Order.create(calculatedAmount, nextSequence, orderProducts, customer, "qrCode");
 
         return persistence.create(newOrder);
     }
 
     private Customer getCustomer(UUID customerId) {
-        if (customerId != null) {
-            return customerPersistence.findById(customerId)
-                    .orElseThrow(() -> new DoesNotExistException("Customer not found with ID: " + customerId));
-        }
-
-        return null;
+        return customerPersistence.findById(customerId)
+                .orElseThrow(() -> new DoesNotExistException("Customer not found with ID: " + customerId));
     }
 
     private BigDecimal reduceAmount(List<OrderProduct> products) {
