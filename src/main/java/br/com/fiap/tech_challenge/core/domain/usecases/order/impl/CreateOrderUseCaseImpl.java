@@ -51,7 +51,7 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
         var nextSequence = getNextSequence();
         var qrCode = paymentGateway.generatePixQrCode(calculatedAmount);
 
-        var newOrder = Order.create(calculatedAmount, nextSequence, orderProducts, customer, "qrCode");
+        var newOrder = Order.create(calculatedAmount, nextSequence, orderProducts, customer, qrCode);
 
         return persistence.create(newOrder);
     }
