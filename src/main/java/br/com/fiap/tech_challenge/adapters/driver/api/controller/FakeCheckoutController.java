@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.FakeCheckoutRequestDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.openapi.FakeCheckoutControllerOpenApi;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.UpdateOrderStatusUseCase;
 import jakarta.validation.Valid;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/fake-checkout")
-public class FakeCheckoutController {
+public class FakeCheckoutController implements FakeCheckoutControllerOpenApi {
 
     private final UpdateOrderStatusUseCase updateOrderStatusUseCase;
 
@@ -26,7 +27,7 @@ public class FakeCheckoutController {
     }
 
     @PutMapping
-    private ResponseEntity<Void> checkout(
+    public ResponseEntity<Void> checkout(
             @RequestBody @Valid FakeCheckoutRequestDTO fakeCheckoutRequestDTO
     ) {
         updateOrderStatusUseCase.updateStatusById(
