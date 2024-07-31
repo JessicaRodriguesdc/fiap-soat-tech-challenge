@@ -1,6 +1,5 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.openapi;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.FakeCheckoutRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ErrorsValidateData;
 import io.swagger.v3.oas.annotations.Operation;
