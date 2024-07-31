@@ -2,7 +2,9 @@ package br.com.fiap.tech_challenge.adapters.driver.api.openapi;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.FakeCheckoutRequestDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.handler.ErrorsValidateData;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,23 +24,17 @@ public interface FakeCheckoutControllerOpenApi {
     @ApiResponse(
             responseCode = "400",
             description = "Bad Request Response",
-            content = @Content(mediaType = "application/json",
-                    schema = @Schema(ref = "ProblemDto")
-            )
+            content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorsValidateData.class)))
     )
     @ApiResponse(
             responseCode = "404",
             description = "Not Found Response",
-            content = @Content(mediaType = "application/json",
-                    schema = @Schema(ref = "ProblemDto")
-            )
+            content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto"))
     )
     @ApiResponse(
             responseCode = "500",
             description = "Internal Server Error Response",
-            content = @Content(mediaType = "application/json",
-                    schema = @Schema(ref = "ProblemDto")
-            )
+            content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto"))
     )
     ResponseEntity<Void> checkout(@RequestBody FakeCheckoutRequestDTO fakeCheckoutRequestDTO);
 
