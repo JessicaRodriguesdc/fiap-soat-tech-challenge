@@ -17,7 +17,6 @@ public class FindPaidOrdersUseCaseImpl implements FindPaidOrdersUseCase {
 
     @Override
     public Page<Order> findAllPaidOrders(OrderStatus status, Pageable pageable) {
-        Page<Order> orders = persistence.findByIsPaidAndStatus(true, status, pageable);
-        return orders;
+        return persistence.findByIsPaidAndStatus(true, status, pageable);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
+import br.com.fiap.tech_challenge.core.domain.models.Customer;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
@@ -14,5 +15,13 @@ public record PaidOrdersPaginatedResponseDTO(
             String customerName,
             LocalDateTime createdAt,
             LocalDateTime updatedAt) {
+        public OrderSummary(Integer sequence, Customer customer, LocalDateTime createdAt, LocalDateTime updatedAt) {
+            this(
+                    sequence,
+                    customer != null ? customer.getName() : "",
+                    createdAt,
+                    updatedAt
+            );
+        }
     }
 }
