@@ -40,19 +40,11 @@ public class OrderController {
         Page<Order> ordersPage = findPaidOrdersUseCase.findAllPaidOrders(status, pageable);
 
         List<PaidOrdersPaginatedResponseDTO.OrderSummary> content = ordersPage.getContent().stream()
-                .map(order -> {
-                    var customerName = order.getCustomer() != null ? order.getCustomer().getName() : "";
-                    return new PaidOrdersPaginatedResponseDTO.OrderSummary(
-                            order.getSequence(),
-                            customerName,
-                            order.getCreatedAt(),
-                            order.getUpdatedAt()
-                    );
-                }).toList();
+                .map(PaidOrdersPaginatedResponseDTO.OrderSummary::new).toList();
 
         PaidOrdersPaginatedResponseDTO response = new PaidOrdersPaginatedResponseDTO(content, pageable);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping
