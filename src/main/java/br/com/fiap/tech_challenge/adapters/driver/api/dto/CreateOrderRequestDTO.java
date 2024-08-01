@@ -1,17 +1,25 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import br.com.fiap.tech_challenge.adapters.driver.api.validator.NullOrValidUUID;
+import br.com.fiap.tech_challenge.adapters.driver.api.validator.ValidUUID;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
-import java.util.UUID;
 
 public record CreateOrderRequestDTO(
-        UUID customerId,
-        @NotEmpty List<OrderProducts> products) {
+        @NullOrValidUUID
+        String customerId,
+        @NotEmpty
+        @Valid
+        List<OrderProducts> products) {
 
     public record OrderProducts(
-            @NotBlank UUID id,
+
+            @ValidUUID
+            @NotNull
+            String id,
             String observation) {
 
     }
