@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface FindPaidOrdersUseCase {
-    Page<Order> findAllPaidOrders(OrderStatus status, Pageable pageable);
+    Page<Order> findAllPaidOrders(OrderStatus status, Boolean isPaid, Pageable pageable);
 }

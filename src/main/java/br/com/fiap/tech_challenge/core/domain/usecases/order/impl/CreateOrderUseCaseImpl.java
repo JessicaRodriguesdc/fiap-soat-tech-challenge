@@ -46,10 +46,9 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
         var orderProducts = getOrderProducts(input);
         var calculatedAmount = reduceAmount(orderProducts);
-        var nextSequence = getNextSequence();
         var qrCode = paymentGateway.generatePixQrCode(calculatedAmount);
 
-        var newOrder = Order.create(calculatedAmount, nextSequence, orderProducts, customer, qrCode);
+        var newOrder = Order.create(calculatedAmount, orderProducts, customer, qrCode);
 
         return persistence.create(newOrder);
     }
@@ -63,10 +62,6 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
         return products.stream()
                 .map(OrderProduct::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private Integer getNextSequence() {
-        return persistence.getLastSequence() + 1;
     }
 
     private List<OrderProduct> getOrderProducts(CreateOrderDTO order) {
@@ -104,6 +99,6 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
         return input.products()
                 .stream()
                 .map(CreateOrderDTO.OrderProducts::id)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

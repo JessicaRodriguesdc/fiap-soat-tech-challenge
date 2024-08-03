@@ -34,11 +34,12 @@ public class OrderController implements OrderControllerOpenApi {
     @Override
     @GetMapping
     public ResponseEntity<Page<OrderSummaryResponseDTO>> findAllIsPaidOrders(@RequestParam("status") OrderStatus status,
+                                                                              @RequestParam("isPaid") Boolean isPaid,
                                                                               @RequestParam(required = false, defaultValue = "0") int page,
                                                                               @RequestParam(required = false, defaultValue = "10") int size) {
 
         var orders = findPaidOrdersUseCase
-                .findAllPaidOrders(status, PageRequest.of(page, size))
+                .findAllPaidOrders(status, isPaid, PageRequest.of(page, size))
                 .map(OrderSummaryResponseDTO::new);
 
         return ResponseEntity.status(HttpStatus.OK).body(orders);

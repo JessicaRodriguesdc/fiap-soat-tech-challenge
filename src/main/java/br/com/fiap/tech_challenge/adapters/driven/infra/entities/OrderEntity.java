@@ -23,7 +23,7 @@ public class OrderEntity {
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @Column(nullable = false)
+    @Column(insertable = false)
     private Integer sequence;
 
     @Column(nullable = false)
