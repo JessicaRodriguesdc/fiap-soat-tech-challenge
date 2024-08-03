@@ -65,7 +65,6 @@ public class ProductController implements ProductControllerOpenApi {
 
     @Override
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> deleteProductById(@PathVariable UUID id) {
         deleteProductByIdUseCase.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
