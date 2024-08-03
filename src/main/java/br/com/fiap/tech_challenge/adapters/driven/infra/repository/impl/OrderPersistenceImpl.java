@@ -1,6 +1,7 @@
-package br.com.fiap.tech_challenge.adapters.driven.infra.repository;
+package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
+import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
