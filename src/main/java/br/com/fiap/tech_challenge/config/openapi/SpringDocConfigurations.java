@@ -1,8 +1,11 @@
 package br.com.fiap.tech_challenge.config.openapi;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageableProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ProblemDTO;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageablePageableProductResponseDTO;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageableSortProductResponseDTO;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -49,12 +52,18 @@ public class SpringDocConfigurations {
         Map<String, Schema> problemSchema = ModelConverters.getInstance().read(ProblemDTO.class);
         Map<String, Schema> customerResponseDto = ModelConverters.getInstance().read(CustomerResponseDTO.class);
         Map<String, Schema> productResponseDto = ModelConverters.getInstance().read(ProductResponseDTO.class);
+        Map<String, Schema> productPageableResponseDto = ModelConverters.getInstance().read(PageableProductResponseDTO.class);
+        Map<String, Schema> productPageableSortResponseDto = ModelConverters.getInstance().read(PageableSortProductResponseDTO.class);
+        Map<String, Schema> productPageablePageableResponseDto = ModelConverters.getInstance().read(PageablePageableProductResponseDTO.class);
         Schema errorsValidateDataArraySchema = new ArraySchema().items(new Schema<>().$ref("#/components/schemas/ErrorsValidateData"));
 
 
         schemaMap.putAll(problemSchema);
         schemaMap.putAll(customerResponseDto);
         schemaMap.putAll(productResponseDto);
+        schemaMap.putAll(productPageableResponseDto);
+        schemaMap.putAll(productPageableSortResponseDto);
+        schemaMap.putAll(productPageablePageableResponseDto);
         schemaMap.put("ErrorsValidateDataList", errorsValidateDataArraySchema);
 
         return schemaMap;
