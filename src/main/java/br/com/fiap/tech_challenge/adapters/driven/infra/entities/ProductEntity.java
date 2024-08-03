@@ -97,6 +97,8 @@ public class ProductEntity {
         return status;
     }
 
+    public LocalDateTime getCreatedAt() {return createdAt;}
+
     public void setStatus(StatusProductEnum status) {
         this.status = status;
     }
