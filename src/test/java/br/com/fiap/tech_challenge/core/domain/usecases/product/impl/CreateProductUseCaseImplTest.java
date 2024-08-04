@@ -38,7 +38,7 @@ public class CreateProductUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Deve criar um Product do tipo MAIN_COURSE com sucesso.")
+    @DisplayName("Should create a Product of type MAIN_COURSE successfully.")
     public void testCreateProduct() {
         when(persistence.create(any(Product.class))).thenReturn(product);
 

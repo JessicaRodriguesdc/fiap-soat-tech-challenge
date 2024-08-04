@@ -41,7 +41,7 @@ public class ProductPersistenceImplTest {
     }
 
     @Test
-    @DisplayName("Deve salvar na base de dados um ProductEntity com sucesso.")
+    @DisplayName("Should successfully save a ProductEntity to the database.")
     public void testCreate() {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
@@ -58,7 +58,7 @@ public class ProductPersistenceImplTest {
     }
 
     @Test
-    @DisplayName("Deve retornar na base de dados um ProductEntity específico com sucesso.")
+    @DisplayName("Should successfully return a specific ProductEntity in the database.")
     public void testFindById() {
         when(repository.findById(any(UUID.class))).thenReturn(Optional.of(productEntity));
 
@@ -76,7 +76,7 @@ public class ProductPersistenceImplTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar na base de dados um ProductEntity com sucesso.")
+    @DisplayName("Should successfully update a ProductEntity to the database.")
     public void testUpdate() {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
 

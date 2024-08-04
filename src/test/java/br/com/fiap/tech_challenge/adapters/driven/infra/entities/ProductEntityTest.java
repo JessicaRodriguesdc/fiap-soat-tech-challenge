@@ -26,7 +26,7 @@ public class ProductEntityTest {
     }
 
     @Test
-    @DisplayName("Deve criar um ProductEntity do tipo MAIN_COURSE por meio do construtor com sucesso.")
+    @DisplayName("Should create a ProductEntity of type MAIN_COURSE via constructor successfully.")
     public void testProductEntityConstructor() {
         assertNotNull(productEntity.getId());
         assertEquals("Sanduíche de Frango", productEntity.getName());
@@ -37,7 +37,7 @@ public class ProductEntityTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar um ProductEntity do tipo MAIN_COURSE com sucesso.")
+    @DisplayName("Should update a ProductEntity of type MAIN_COURSE successfully.")
     public void testProductEntityUpdate() {
         Product product = new Product(UUID.randomUUID(), "Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE,
                 new BigDecimal("149.99"), "Sanduíche de bacon com salada", StatusProductEnum.INACTIVE, LocalDateTime.now());
@@ -54,7 +54,7 @@ public class ProductEntityTest {
     }
 
     @Test
-    @DisplayName("Deve converter um objeto ProductEntity para Product com sucesso.")
+    @DisplayName("Should convert a ProductEntity object to Product successfully.")
     public void testToProduct() {
         Product product = productEntity.toProduct();
 

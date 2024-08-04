@@ -30,7 +30,7 @@ public class UpdateProductUseCaseConfigTest {
     }
 
     @Test
-    @DisplayName("Deve ser criado um bean do tipo UpdateProductUseCaseImpl com sucesso.")
+    @DisplayName("Should be created a bean of type UpdateProductUseCaseImpl successfully.")
     public void testCreateProductUseCaseBean() {
         ApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class);
         UpdateProductUseCase createProductUseCase = context.getBean(UpdateProductUseCaseImpl.class);

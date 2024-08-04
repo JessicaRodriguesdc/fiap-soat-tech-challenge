@@ -25,7 +25,7 @@ public class ProductTest {
     }
 
     @Test
-    @DisplayName("Deve criar um Product do tipo MAIN_COURSE por meio do construtor com sucesso.")
+    @DisplayName("Should create a Product of type MAIN_COURSE via constructor successfully.")
     public void testProductConstructor() {
         assertNotNull(product.getId());
         assertEquals("Sanduíche de Frango", product.getName());
@@ -37,7 +37,7 @@ public class ProductTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar um Product do tipo MAIN_COURSE com sucesso.")
+    @DisplayName("Should update a Product of type MAIN_COURSE successfully.")
     public void testProductUpdate() {
         Product newProduct = new Product("Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE,
                 new BigDecimal("149.99"), "Sanduíche de bacon com salada");

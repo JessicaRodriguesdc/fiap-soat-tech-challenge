@@ -46,7 +46,7 @@ public class UpdateProductUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar um Product do tipo MAIN_COURSE com sucesso.")
+    @DisplayName("Should update a Product of type MAIN_COURSE successfully.")
     public void testUpdateProductSuccess() {
         when(persistence.findById(productId)).thenReturn(Optional.of(existingProduct));
         when(persistence.update(any(Product.class))).thenReturn(updatedProduct);
@@ -64,7 +64,7 @@ public class UpdateProductUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Deve estourar um exception do tipo DoesNotExistException ao tentar atualizar um Product do tipo MAIN_COURSE.")
+    @DisplayName("Should be thrown an when trying exception of type DoesNotExistException to update a product of type MAIN_COURSE.")
     public void testUpdateProductNotFound() {
         when(persistence.findById(productId)).thenReturn(Optional.empty());
 

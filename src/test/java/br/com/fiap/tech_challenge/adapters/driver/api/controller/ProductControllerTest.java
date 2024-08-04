@@ -50,7 +50,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("Deve criar um Produto por meio do endpoint create com sucesso.")
+    @DisplayName("Should create a Product via the create endpoint successfully.")
     public void testCreateProduct() throws Exception {
         UUID id = UUID.randomUUID();
         Product product = new Product(id, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE, BigDecimal.valueOf(99.99), "Sanduíche de frango com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());
@@ -73,7 +73,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("Deve atualizar um Produto por meio do endpoint update com sucesso.")
+    @DisplayName("Should create a Product via the update endpoint successfully.")
     public void testUpdateProduct() throws Exception {
         UUID id = UUID.randomUUID();
         Product product = new Product(id, "Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE, BigDecimal.valueOf(199.99), "Sanduíche de bacon com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());

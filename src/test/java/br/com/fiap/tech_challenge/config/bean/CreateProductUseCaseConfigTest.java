@@ -28,7 +28,7 @@ public class CreateProductUseCaseConfigTest {
     }
 
     @Test
-    @DisplayName("Deve ser criado um bean do tipo CreateProductUseCaseImpl com sucesso.")
+    @DisplayName("Should be created a bean of type CreateProductUseCaseImpl successfully.")
     public void testCreateProductUseCaseBean() {
         ApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class);
         CreateProductUseCaseImpl createProductUseCase = context.getBean(CreateProductUseCaseImpl.class);
