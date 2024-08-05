@@ -31,13 +31,11 @@ public interface ProductControllerOpenApi {
     @ApiResponse(responseCode = "500", description = "Internal Server Error Response", content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
     ResponseEntity<Page<ProductResponseDTO>> getProductsByCategory(CategoryProductEnum category, int page, int size);
 
-
     @Operation(summary = "Update a Product By ID")
     @ApiResponse(responseCode = "200", description = "Ok Response", content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProductResponseDTO")))
     @ApiResponse(responseCode = "404", description = "Not Found Response", content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
     @ApiResponse(responseCode = "500", description = "Internal Server Error Response", content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
     ResponseEntity<ProductResponseDTO> update(final UUID id, ProductRequestDTO productDTO);
-
 
     @Operation(summary = "Delete a Product By ID")
     @ApiResponse(responseCode = "204", description = "No Content Response")
