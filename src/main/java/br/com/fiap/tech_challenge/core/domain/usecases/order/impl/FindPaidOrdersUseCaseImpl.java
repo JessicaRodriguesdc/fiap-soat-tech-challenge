@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.order.impl;
 
 import br.com.fiap.tech_challenge.core.domain.models.Order;
-import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.FindPaidOrdersUseCase;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,7 @@ public class FindPaidOrdersUseCaseImpl implements FindPaidOrdersUseCase {
     }
 
     @Override
-    public Page<Order> findAllPaidOrders(OrderStatus status, Boolean isPaid, Pageable pageable) {
+    public Page<Order> findAllPaidOrders(OrderStatusEnum status, Boolean isPaid, Pageable pageable) {
         return persistence.findByIsPaidAndStatus(isPaid, status, pageable);
     }
 }
