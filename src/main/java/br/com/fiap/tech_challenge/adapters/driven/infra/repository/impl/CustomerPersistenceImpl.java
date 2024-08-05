@@ -1,6 +1,7 @@
-package br.com.fiap.tech_challenge.adapters.driven.infra.repository;
+package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.CustomerEntity;
+import br.com.fiap.tech_challenge.adapters.driven.infra.repository.CustomerRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Customer;
 import br.com.fiap.tech_challenge.core.domain.ports.CustomerPersistence;
 import org.springframework.stereotype.Component;
