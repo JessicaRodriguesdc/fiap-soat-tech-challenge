@@ -1,6 +1,7 @@
-package br.com.fiap.tech_challenge.adapters.driven.infra.repository;
+package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
+import br.com.fiap.tech_challenge.adapters.driven.infra.repository.ProductRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
