@@ -1,8 +1,11 @@
 package br.com.fiap.tech_challenge.config.openapi;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.CustomerResponseDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.*;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageableOrderResponseDTO;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageableProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ProblemDTO;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageablePageableResponseDTO;
+import br.com.fiap.tech_challenge.config.openapi.schemas.PageableSortResponseDTO;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -48,13 +51,27 @@ public class SpringDocConfigurations {
 
         Map<String, Schema> problemSchema = ModelConverters.getInstance().read(ProblemDTO.class);
         Map<String, Schema> customerResponseDto = ModelConverters.getInstance().read(CustomerResponseDTO.class);
+        Map<String, Schema> orderResponseDto = ModelConverters.getInstance().read(CreateOrderResponseDTO.class);
+        Map<String, Schema> orderProductsResponseDto = ModelConverters.getInstance().read(CreateOrderRequestDTO.OrderProducts.class);
         Map<String, Schema> productResponseDto = ModelConverters.getInstance().read(ProductResponseDTO.class);
+        Map<String, Schema> productPageableResponseDto = ModelConverters.getInstance().read(PageableProductResponseDTO.class);
+        Map<String, Schema> orderPageableResponseDto = ModelConverters.getInstance().read(PageableOrderResponseDTO.class);
+        Map<String, Schema> pageableSortResponseDto = ModelConverters.getInstance().read(PageableSortResponseDTO.class);
+        Map<String, Schema> pageablePageableResponseDto = ModelConverters.getInstance().read(PageablePageableResponseDTO.class);
+        Map<String, Schema> orderSummaryResponseDTO = ModelConverters.getInstance().read(OrderSummaryResponseDTO.class);
         Schema errorsValidateDataArraySchema = new ArraySchema().items(new Schema<>().$ref("#/components/schemas/ErrorsValidateData"));
 
 
         schemaMap.putAll(problemSchema);
         schemaMap.putAll(customerResponseDto);
+        schemaMap.putAll(orderResponseDto);
+        schemaMap.putAll(orderProductsResponseDto);
         schemaMap.putAll(productResponseDto);
+        schemaMap.putAll(orderPageableResponseDto);
+        schemaMap.putAll(productPageableResponseDto);
+        schemaMap.putAll(pageableSortResponseDto);
+        schemaMap.putAll(pageablePageableResponseDto);
+        schemaMap.putAll(orderSummaryResponseDTO);
         schemaMap.put("ErrorsValidateDataList", errorsValidateDataArraySchema);
 
         return schemaMap;

@@ -11,6 +11,5 @@ import java.util.UUID;
 public interface OrderPersistence {
     Optional<Order> findById(UUID id);
     Order create(Order customer);
-    Integer getLastSequence();
     Page<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatus status, Pageable pageable);
 }

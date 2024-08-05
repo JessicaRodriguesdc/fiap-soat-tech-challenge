@@ -28,9 +28,6 @@ public class CustomerEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private OrderEntity order;
-
     public CustomerEntity() {
     }
 

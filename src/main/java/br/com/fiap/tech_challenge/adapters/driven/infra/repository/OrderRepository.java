@@ -6,18 +6,10 @@ import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, UUID>{
-
-    @Query("SELECT MAX(o.sequence) FROM OrderEntity o WHERE o.createdAt >= :startOfDay AND o.createdAt < :endOfDay")
-    Optional<Integer> findLastSequenceForToday(LocalDateTime startOfDay, LocalDateTime endOfDay);
-
     Page<OrderEntity> findByIsPaidAndStatus(Boolean isPaid, OrderStatus status, Pageable pageable);
 }
