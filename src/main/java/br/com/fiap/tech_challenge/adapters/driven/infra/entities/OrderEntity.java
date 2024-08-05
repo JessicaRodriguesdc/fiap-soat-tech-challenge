@@ -2,7 +2,7 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.entities;
 
 import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusOrderEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,7 +28,7 @@ public class OrderEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private StatusOrderEnum status;
+    private OrderStatusEnum status;
 
     @Column(nullable = false)
     private boolean isPaid;
