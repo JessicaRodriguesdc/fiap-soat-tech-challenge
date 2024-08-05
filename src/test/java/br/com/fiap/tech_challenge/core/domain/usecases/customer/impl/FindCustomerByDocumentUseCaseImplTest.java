@@ -22,20 +22,20 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class FindCustomerByDocumentUseCaseImplTest {
 
-    @Mock
-    private CustomerPersistenceImpl customerPersistence;
+	@Mock
+	private CustomerPersistenceImpl customerPersistence;
 
-    @InjectMocks
-    private FindCustomerByDocumentUseCaseImpl findCustomerByDocumentUseCase;
+	@InjectMocks
+	private FindCustomerByDocumentUseCaseImpl findCustomerByDocumentUseCase;
 
-    private Customer customerExpected;
+	private Customer customerExpected;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-    @Test
+	@Test
     @DisplayName("Should return a new Customer")
     void shouldReturnACustomer(){
         when(customerPersistence.findByDocument(customerExpected.getDocument())).thenReturn(Optional.of(customerExpected));
@@ -52,7 +52,7 @@ class FindCustomerByDocumentUseCaseImplTest {
         assertNotNull(customerFound.getEmail());
     }
 
-    @Test
+	@Test
     @DisplayName("Shouldn't throw exception when Customer Was Found")
     void shouldNotThrowExceptionWhenCustomerWasFound(){
         when(customerPersistence.findByDocument(customerExpected.getDocument())).thenReturn(Optional.of(customerExpected));
@@ -65,7 +65,7 @@ class FindCustomerByDocumentUseCaseImplTest {
         verifyNoMoreInteractions(customerPersistence);
     }
 
-    @Test
+	@Test
     @DisplayName("Should throws DoesNotExistException when Customer Doesn't Exist")
     void shouldThrowsDoesNotExistExceptionWhenCustomerDoesNotExist(){
         when(customerPersistence.findByDocument(customerExpected.getDocument())).thenReturn(Optional.empty());
@@ -78,9 +78,8 @@ class FindCustomerByDocumentUseCaseImplTest {
         verifyNoMoreInteractions(customerPersistence);
     }
 
-    private void buildArranges() {
-        customerExpected = new Customer(UUID.randomUUID(), "Walter White", "31739380037",
-                "heisenberg@gmail.com");
-    }
+	private void buildArranges() {
+		customerExpected = new Customer(UUID.randomUUID(), "Walter White", "31739380037", "heisenberg@gmail.com");
+	}
 
 }

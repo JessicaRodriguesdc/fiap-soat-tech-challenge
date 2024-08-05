@@ -2,8 +2,8 @@ package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,30 +22,32 @@ import static org.mockito.Mockito.*;
 
 public class UpdateProductUseCaseImplTest {
 
-    @Mock
-    private ProductPersistence persistence;
+	@Mock
+	private ProductPersistence persistence;
 
-    @InjectMocks
-    private UpdateProductUseCaseImpl updateProductUseCase;
+	@InjectMocks
+	private UpdateProductUseCaseImpl updateProductUseCase;
 
-    private Product existingProduct;
-    private Product updatedProduct;
-    private UUID productId;
+	private Product existingProduct;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        productId = UUID.randomUUID();
-        existingProduct = new Product(productId, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("99.99"), "Sanduíche de frango com salada",
-                StatusProductEnum.ACTIVE, LocalDateTime.now());
+	private Product updatedProduct;
 
-        updatedProduct = new Product(productId, "Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("149.99"), "Sanduíche de bacon com salada",
-                StatusProductEnum.ACTIVE, LocalDateTime.now());
-    }
+	private UUID productId;
 
-    @Test
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		productId = UUID.randomUUID();
+		existingProduct = new Product(productId, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
+				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductProductEnum.ACTIVE,
+				LocalDateTime.now());
+
+		updatedProduct = new Product(productId, "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
+				new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductProductEnum.ACTIVE,
+				LocalDateTime.now());
+	}
+
+	@Test
     @DisplayName("Should update a Product of type MAIN_COURSE successfully.")
     public void testUpdateProductSuccess() {
         when(persistence.findById(productId)).thenReturn(Optional.of(existingProduct));
@@ -63,7 +65,7 @@ public class UpdateProductUseCaseImplTest {
         verify(persistence).update(any(Product.class));
     }
 
-    @Test
+	@Test
     @DisplayName("Should be thrown an when trying exception of type DoesNotExistException to update a product of type MAIN_COURSE.")
     public void testUpdateProductNotFound() {
         when(persistence.findById(productId)).thenReturn(Optional.empty());
@@ -77,4 +79,5 @@ public class UpdateProductUseCaseImplTest {
         verify(persistence).findById(productId);
         verify(persistence, never()).update(any(Product.class));
     }
+
 }

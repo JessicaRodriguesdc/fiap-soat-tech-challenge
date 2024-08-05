@@ -12,35 +12,37 @@ import java.util.UUID;
 @Table(name = "order_product")
 public class OrderProductEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private UUID id;
 
-    @Column(nullable = false)
-    private BigDecimal price;
+	@Column(nullable = false)
+	private BigDecimal price;
 
-    private String customization;
+	private String customization;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+	@CreationTimestamp
+	private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private OrderEntity order;
+	@ManyToOne
+	@JoinColumn(name = "order_id", nullable = false)
+	private OrderEntity order;
 
-    private UUID productId;
+	private UUID productId;
 
-    public OrderProductEntity() {}
+	public OrderProductEntity() {
+	}
 
-    public OrderProductEntity(OrderEntity order, OrderProduct orderProduct) {
-        this.order = order;
-        this.id = orderProduct.getId();
-        this.price = orderProduct.getPrice();
-        this.customization = orderProduct.getCustomization();
-        this.productId = orderProduct.getProductId();
-    }
+	public OrderProductEntity(OrderEntity order, OrderProduct orderProduct) {
+		this.order = order;
+		this.id = orderProduct.getId();
+		this.price = orderProduct.getPrice();
+		this.customization = orderProduct.getCustomization();
+		this.productId = orderProduct.getProductId();
+	}
 
-    public OrderProduct toOrderProduct(UUID orderId) {
-        return new OrderProduct(id, price, customization, productId, orderId, createdAt);
-    }
+	public OrderProduct toOrderProduct(UUID orderId) {
+		return new OrderProduct(id, price, customization, productId, orderId, createdAt);
+	}
+
 }

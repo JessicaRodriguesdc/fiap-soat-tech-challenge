@@ -14,20 +14,21 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class FindCustomerByDocumentUseCaseConfigTest {
 
-    @Mock
-    CustomerPersistence persistence;
+	@Mock
+	CustomerPersistence persistence;
 
-    @InjectMocks
-    private FindCustomerByDocumentUseCaseConfig findCustomerByDocumentUseCaseConfig;
+	@InjectMocks
+	private FindCustomerByDocumentUseCaseConfig findCustomerByDocumentUseCaseConfig;
 
-    @Test
-    @DisplayName("Should Create a Singleton Instance Of FindCustomerByDocumentUseCaseImpl")
-    void shouldCreateSingletonInstanceOfFindCustomerByDocumentUseCaseImpl() {
-        var findCustomerByDocumentUseCaseImpl =
-                findCustomerByDocumentUseCaseConfig.findCustomerByDocumentUseCaseImpl(persistence);
+	@Test
+	@DisplayName("Should Create a Singleton Instance Of FindCustomerByDocumentUseCaseImpl")
+	void shouldCreateSingletonInstanceOfFindCustomerByDocumentUseCaseImpl() {
+		var findCustomerByDocumentUseCaseImpl = findCustomerByDocumentUseCaseConfig
+			.findCustomerByDocumentUseCaseImpl(persistence);
 
-        assertNotNull(findCustomerByDocumentUseCaseImpl);
-        assertNotNull(persistence);
-        assertInstanceOf(FindCustomerByDocumentUseCaseImpl.class, findCustomerByDocumentUseCaseImpl);
-    }
+		assertNotNull(findCustomerByDocumentUseCaseImpl);
+		assertNotNull(persistence);
+		assertInstanceOf(FindCustomerByDocumentUseCaseImpl.class, findCustomerByDocumentUseCaseImpl);
+	}
+
 }

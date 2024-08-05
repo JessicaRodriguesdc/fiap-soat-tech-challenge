@@ -10,45 +10,50 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
-    private Customer customer;
-    private UUID id;
-    private String name;
-    private String document;
-    private String email;
+	private Customer customer;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	private UUID id;
 
-    @Test
-    @DisplayName("Should return Customer attributes as the object was created")
-    void shouldReturnCustomerAttributesAsTheObjectWasCreated(){
-        customer = new Customer(id, name, document,email);
+	private String name;
 
-        assertNotNull(customer);
-        assertEquals(id, customer.getId());
-        assertEquals(name, customer.getName());
-        assertEquals(document, customer.getDocument());
-        assertEquals(email, customer.getEmail());
-    }
+	private String document;
 
-    @Test
-    @DisplayName("Should return Customer attributes as the object was created without ID")
-    void shouldReturnCustomerAttributesAsTheObjectWasCreatedWithoutId(){
-        customer = new Customer(name, document,email);
+	private String email;
 
-        assertNotNull(customer);
-        assertNull(customer.getId());
-        assertEquals(name, customer.getName());
-        assertEquals(document, customer.getDocument());
-        assertEquals(email, customer.getEmail());
-    }
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-    private void buildArranges() {
-        id = UUID.randomUUID();
-        name = "Walter White";
-        document = "31739380037";
-        email = "heisenberg@gmail.com";
-    }
+	@Test
+	@DisplayName("Should return Customer attributes as the object was created")
+	void shouldReturnCustomerAttributesAsTheObjectWasCreated() {
+		customer = new Customer(id, name, document, email);
+
+		assertNotNull(customer);
+		assertEquals(id, customer.getId());
+		assertEquals(name, customer.getName());
+		assertEquals(document, customer.getDocument());
+		assertEquals(email, customer.getEmail());
+	}
+
+	@Test
+	@DisplayName("Should return Customer attributes as the object was created without ID")
+	void shouldReturnCustomerAttributesAsTheObjectWasCreatedWithoutId() {
+		customer = new Customer(name, document, email);
+
+		assertNotNull(customer);
+		assertNull(customer.getId());
+		assertEquals(name, customer.getName());
+		assertEquals(document, customer.getDocument());
+		assertEquals(email, customer.getEmail());
+	}
+
+	private void buildArranges() {
+		id = UUID.randomUUID();
+		name = "Walter White";
+		document = "31739380037";
+		email = "heisenberg@gmail.com";
+	}
+
 }

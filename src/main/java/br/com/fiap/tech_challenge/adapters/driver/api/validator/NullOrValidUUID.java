@@ -9,11 +9,15 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = NullOrValidUUIDValidator.class)
 public @interface NullOrValidUUID {
-    String message() default "Not a valid UUID";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+
+	String message() default "Not a valid UUID";
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
+
 }

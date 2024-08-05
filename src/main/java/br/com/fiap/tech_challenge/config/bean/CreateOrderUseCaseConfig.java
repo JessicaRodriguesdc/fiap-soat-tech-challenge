@@ -11,16 +11,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CreateOrderUseCaseConfig {
 
-    @Bean
-    public CreateOrderUseCaseImpl createOrderUseCaseImpl(
-        OrderPersistence persistence,
-        ProductPersistence productPersistence,
-        CustomerPersistence customerPersistence,
-        PaymentGateway paymentGateway) {
-        return new CreateOrderUseCaseImpl(
-                persistence,
-                productPersistence,
-                customerPersistence,
-                paymentGateway);
-    }
+	@Bean
+	public CreateOrderUseCaseImpl createOrderUseCaseImpl(OrderPersistence persistence,
+			ProductPersistence productPersistence, CustomerPersistence customerPersistence,
+			PaymentGateway paymentGateway) {
+		return new CreateOrderUseCaseImpl(persistence, productPersistence, customerPersistence, paymentGateway);
+	}
+
 }

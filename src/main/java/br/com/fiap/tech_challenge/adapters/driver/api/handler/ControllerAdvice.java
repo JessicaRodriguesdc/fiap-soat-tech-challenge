@@ -18,48 +18,50 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class ControllerAdvice  extends ResponseEntityExceptionHandler {
+public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<?> alreadyExists(RuntimeException ex){
-        var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
-        return ResponseEntity.badRequest().body(error);
-    }
+	@ExceptionHandler(AlreadyExistsException.class)
+	public ResponseEntity<?> alreadyExists(RuntimeException ex) {
+		var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
+		return ResponseEntity.badRequest().body(error);
+	}
 
-    @ExceptionHandler(DoesNotExistException.class)
-    public ResponseEntity<?> notFound(RuntimeException ex){
-        var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
+	@ExceptionHandler(DoesNotExistException.class)
+	public ResponseEntity<?> notFound(RuntimeException ex) {
+		var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
 
-    @ExceptionHandler(AlreadyInStatusException.class)
-    public ResponseEntity<?> alreadyInStatus(RuntimeException ex){
-        var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-    }
+	@ExceptionHandler(AlreadyInStatusException.class)
+	public ResponseEntity<?> alreadyInStatus(RuntimeException ex) {
+		var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+	}
 
-    @Override
-    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request){
-        var errors = ex.getFieldErrors();
-        return ResponseEntity.badRequest().body(errors.stream().map(ErrorsValidateData::new).toList());
-    }
+	@Override
+	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
+			HttpStatusCode status, WebRequest request) {
+		var errors = ex.getFieldErrors();
+		return ResponseEntity.badRequest().body(errors.stream().map(ErrorsValidateData::new).toList());
+	}
 
-    @ExceptionHandler(DateTimeException.class)
-    public ResponseEntity<?> dateTimeException(DateTimeException ex){
-        var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
-        return ResponseEntity.badRequest().body(error);
-    }
+	@ExceptionHandler(DateTimeException.class)
+	public ResponseEntity<?> dateTimeException(DateTimeException ex) {
+		var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
+		return ResponseEntity.badRequest().body(error);
+	}
 
-    @Override
-    public ResponseEntity<Object> handleHttpMessageNotReadable(
-            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
-        return ResponseEntity.badRequest().body(error);
-    }
+	@Override
+	public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
+			HttpStatusCode status, WebRequest request) {
+		var error = new ProblemDTO(ex.getMessage(), LocalDateTime.now());
+		return ResponseEntity.badRequest().body(error);
+	}
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ProblemDTO> handle500Error(Exception ex) {
-        var error = new ProblemDTO("Error: " + ex.getLocalizedMessage(), LocalDateTime.now());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-    }
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ProblemDTO> handle500Error(Exception ex) {
+		var error = new ProblemDTO("Error: " + ex.getLocalizedMessage(), LocalDateTime.now());
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+	}
+
 }

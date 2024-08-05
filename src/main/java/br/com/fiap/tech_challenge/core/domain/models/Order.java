@@ -8,84 +8,86 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
-    private final UUID id;
-    private final BigDecimal amount;
-    private final Integer sequence;
-    private final OrderStatusEnum status;
-    private final boolean isPaid;
-    private final String paymentId;
-    private final List<OrderProduct> products;
-    private final Customer customer;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
 
-    public static Order create(BigDecimal amount,
-                               List<OrderProduct> products,
-                               Customer customer,
-                               String paymentId) {
+	private final UUID id;
 
-        return new Order(null, amount, null, OrderStatusEnum.RECEIVED, false, products, customer, paymentId, null, null);
-    }
+	private final BigDecimal amount;
 
-    public Order(UUID id,
-                 BigDecimal amount,
-                 Integer sequence,
-                 OrderStatusEnum status,
-                 boolean isPaid,
-                 List<OrderProduct> products,
-                 Customer customer,
-                 String paymentId,
-                 LocalDateTime createdAt,
-                 LocalDateTime updatedAt) {
-        this.id = id;
-        this.amount = amount;
-        this.sequence = sequence;
-        this.status = status;
-        this.isPaid = isPaid;
-        this.products = products;
-        this.customer = customer;
-        this.paymentId = paymentId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+	private final Integer sequence;
 
-    public UUID getId() {
-        return id;
-    }
+	private final OrderStatusEnum status;
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
+	private final boolean isPaid;
 
-    public Integer getSequence() {
-        return sequence;
-    }
+	private final String paymentId;
 
-    public OrderStatusEnum getStatus() {
-        return status;
-    }
+	private final List<OrderProduct> products;
 
-    public boolean isPaid() {
-        return isPaid;
-    }
+	private final Customer customer;
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	private final LocalDateTime createdAt;
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	private final LocalDateTime updatedAt;
 
-    public List<OrderProduct> getProducts() {
-        return products;
-    }
+	public static Order create(BigDecimal amount, List<OrderProduct> products, Customer customer, String paymentId) {
 
-    public Customer getCustomer() {
-        return customer;
-    }
+		return new Order(null, amount, null, OrderStatusEnum.RECEIVED, false, products, customer, paymentId, null,
+				null);
+	}
 
-    public String getPaymentId() {
-        return paymentId;
-    }
+	public Order(UUID id, BigDecimal amount, Integer sequence, OrderStatusEnum status, boolean isPaid,
+			List<OrderProduct> products, Customer customer, String paymentId, LocalDateTime createdAt,
+			LocalDateTime updatedAt) {
+		this.id = id;
+		this.amount = amount;
+		this.sequence = sequence;
+		this.status = status;
+		this.isPaid = isPaid;
+		this.products = products;
+		this.customer = customer;
+		this.paymentId = paymentId;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+
+	public OrderStatusEnum getStatus() {
+		return status;
+	}
+
+	public boolean isPaid() {
+		return isPaid;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public List<OrderProduct> getProducts() {
+		return products;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
 }

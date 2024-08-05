@@ -14,27 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Fake Checkout")
 public interface FakeCheckoutControllerOpenApi {
 
-    @Operation(summary = "Change the order status to PREPARING, and mark as paid")
-    @ApiResponse(
-            responseCode = "204",
-            description = "No Content Response",
-            content = @Content(mediaType = "application/json")
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Bad Request Response",
-            content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ErrorsValidateData.class)))
-    )
-    @ApiResponse(
-            responseCode = "404",
-            description = "Not Found Response",
-            content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto"))
-    )
-    @ApiResponse(
-            responseCode = "500",
-            description = "Internal Server Error Response",
-            content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto"))
-    )
-    ResponseEntity<Void> checkout(@RequestBody FakeCheckoutRequestDTO fakeCheckoutRequestDTO);
+	@Operation(summary = "Change the order status to PREPARING, and mark as paid")
+	@ApiResponse(responseCode = "204", description = "No Content Response",
+			content = @Content(mediaType = "application/json"))
+	@ApiResponse(responseCode = "400", description = "Bad Request Response",
+			content = @Content(mediaType = "application/json",
+					array = @ArraySchema(schema = @Schema(implementation = ErrorsValidateData.class))))
+	@ApiResponse(responseCode = "404", description = "Not Found Response",
+			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
+	@ApiResponse(responseCode = "500", description = "Internal Server Error Response",
+			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
+	ResponseEntity<Void> checkout(@RequestBody FakeCheckoutRequestDTO fakeCheckoutRequestDTO);
 
 }

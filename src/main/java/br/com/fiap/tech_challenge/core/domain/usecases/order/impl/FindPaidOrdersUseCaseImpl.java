@@ -9,14 +9,15 @@ import org.springframework.data.domain.Pageable;
 
 public class FindPaidOrdersUseCaseImpl implements FindPaidOrdersUseCase {
 
-    private final OrderPersistence persistence;
+	private final OrderPersistence persistence;
 
-    public FindPaidOrdersUseCaseImpl(OrderPersistence persistence) {
-        this.persistence = persistence;
-    }
+	public FindPaidOrdersUseCaseImpl(OrderPersistence persistence) {
+		this.persistence = persistence;
+	}
 
-    @Override
-    public Page<Order> findAllPaidOrders(OrderStatusEnum status, Boolean isPaid, Pageable pageable) {
-        return persistence.findByIsPaidAndStatus(isPaid, status, pageable);
-    }
+	@Override
+	public Page<Order> findAllPaidOrders(OrderStatusEnum status, Boolean isPaid, Pageable pageable) {
+		return persistence.findByIsPaidAndStatus(isPaid, status, pageable);
+	}
+
 }

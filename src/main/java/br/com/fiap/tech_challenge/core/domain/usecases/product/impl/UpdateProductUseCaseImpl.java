@@ -10,23 +10,23 @@ import java.util.UUID;
 
 public class UpdateProductUseCaseImpl implements UpdateProductUseCase {
 
-    private final ProductPersistence persistence;
+	private final ProductPersistence persistence;
 
-    public UpdateProductUseCaseImpl(ProductPersistence persistence) {
-        this.persistence = persistence;
-    }
+	public UpdateProductUseCaseImpl(ProductPersistence persistence) {
+		this.persistence = persistence;
+	}
 
-    @Override
-    public Product update(UUID id, Product product) {
-        var productFound = persistence.findById(id);
+	@Override
+	public Product update(UUID id, Product product) {
+		var productFound = persistence.findById(id);
 
-        if(productFound.isEmpty()){
-            throw new DoesNotExistException("Product Doesn't Exist");
-        }
+		if (productFound.isEmpty()) {
+			throw new DoesNotExistException("Product Doesn't Exist");
+		}
 
-        var productUpdated = productFound.get().update(product);
+		var productUpdated = productFound.get().update(product);
 
-        return persistence.update(productUpdated);
-    }
+		return persistence.update(productUpdated);
+	}
 
 }
