@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
-import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatus;
+import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public class Order {
     private final UUID id;
     private final BigDecimal amount;
     private final Integer sequence;
-    private final OrderStatus status;
+    private final OrderStatusEnum status;
     private final boolean isPaid;
     private final String paymentId;
     private final List<OrderProduct> products;
@@ -20,18 +20,17 @@ public class Order {
     private final LocalDateTime updatedAt;
 
     public static Order create(BigDecimal amount,
-                               Integer sequence,
                                List<OrderProduct> products,
                                Customer customer,
-                               String PaymentId) {
+                               String paymentId) {
 
-        return new Order(null, amount, sequence, OrderStatus.RECEIVED, false, products, customer, PaymentId, null, null);
+        return new Order(null, amount, null, OrderStatusEnum.RECEIVED, false, products, customer, paymentId, null, null);
     }
 
     public Order(UUID id,
                  BigDecimal amount,
                  Integer sequence,
-                 OrderStatus status,
+                 OrderStatusEnum status,
                  boolean isPaid,
                  List<OrderProduct> products,
                  Customer customer,
@@ -62,7 +61,7 @@ public class Order {
         return sequence;
     }
 
-    public OrderStatus getStatus() {
+    public OrderStatusEnum getStatus() {
         return status;
     }
 

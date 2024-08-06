@@ -43,6 +43,7 @@ public class ProductController implements ProductControllerOpenApi {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponseDTO(productSaved));
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<Page<ProductResponseDTO>> getProductsByCategory(
             @RequestParam CategoryProductEnum category,
@@ -55,16 +56,18 @@ public class ProductController implements ProductControllerOpenApi {
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
+    @Override
     @PutMapping("/{id}")
-    private ResponseEntity<ProductResponseDTO> update(@PathVariable("id") final UUID id, @RequestBody @Valid ProductRequestDTO productDTO){
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable("id") final UUID id, @RequestBody @Valid ProductRequestDTO productDTO){
         var product = updateProductUseCase.update(id, mapper.toProduct(productDTO));
         return ResponseEntity.status(HttpStatus.OK).body(new ProductResponseDTO(product));
     }
 
+    @Override
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProductById(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteProductById(@PathVariable UUID id) {
         deleteProductByIdUseCase.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
