@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
@@ -23,7 +23,7 @@ public class Product {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private ProductProductEnum status;
+	private ProductStatusEnum status;
 
 	private LocalDateTime createdAt;
 
@@ -31,7 +31,7 @@ public class Product {
 	}
 
 	public Product(UUID id, String name, ProductCategoryEnum category, BigDecimal price, String description,
-			ProductProductEnum status, LocalDateTime createdAt) {
+			ProductStatusEnum status, LocalDateTime createdAt) {
 		this.id = id;
 		this.name = name;
 		this.category = category;
@@ -76,7 +76,7 @@ public class Product {
 		return description;
 	}
 
-	public ProductProductEnum getStatus() {
+	public ProductStatusEnum getStatus() {
 		return status;
 	}
 
@@ -84,7 +84,7 @@ public class Product {
 		return createdAt;
 	}
 
-	public void setStatus(ProductProductEnum status) {
+	public void setStatus(ProductStatusEnum status) {
 		this.status = status;
 	}
 

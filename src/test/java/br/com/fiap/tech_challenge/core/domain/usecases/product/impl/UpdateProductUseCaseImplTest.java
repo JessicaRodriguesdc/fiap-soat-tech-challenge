@@ -3,7 +3,7 @@ package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,11 +39,11 @@ public class UpdateProductUseCaseImplTest {
 		MockitoAnnotations.openMocks(this);
 		productId = UUID.randomUUID();
 		existingProduct = new Product(productId, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductProductEnum.ACTIVE,
+				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
 				LocalDateTime.now());
 
 		updatedProduct = new Product(productId, "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductProductEnum.ACTIVE,
+				new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductStatusEnum.ACTIVE,
 				LocalDateTime.now());
 	}
 

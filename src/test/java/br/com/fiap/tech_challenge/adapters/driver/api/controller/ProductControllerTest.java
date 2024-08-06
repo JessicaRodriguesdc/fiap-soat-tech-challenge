@@ -5,7 +5,7 @@ import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +54,7 @@ public class ProductControllerTest {
 	public void testCreateProduct() throws Exception {
 		UUID id = UUID.randomUUID();
 		Product product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
-				BigDecimal.valueOf(99.99), "Sanduíche de frango com salada", ProductProductEnum.ACTIVE,
+				BigDecimal.valueOf(99.99), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
 				LocalDateTime.now());
 		ProductRequestDTO requestDTO = new ProductRequestDTO("Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
 				BigDecimal.valueOf(99.99), "Sanduíche de frango com salada");
@@ -81,7 +81,7 @@ public class ProductControllerTest {
 	public void testUpdateProduct() throws Exception {
 		UUID id = UUID.randomUUID();
 		Product product = new Product(id, "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
-				BigDecimal.valueOf(199.99), "Sanduíche de bacon com salada", ProductProductEnum.ACTIVE,
+				BigDecimal.valueOf(199.99), "Sanduíche de bacon com salada", ProductStatusEnum.ACTIVE,
 				LocalDateTime.now());
 		ProductRequestDTO requestDTO = new ProductRequestDTO("Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
 				BigDecimal.valueOf(199.99), "Sanduíche de bacon com salada");

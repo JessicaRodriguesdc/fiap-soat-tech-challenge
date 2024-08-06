@@ -2,7 +2,7 @@ package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ public class CreateProductUseCaseImplTest {
 		MockitoAnnotations.openMocks(this);
 		UUID id = UUID.randomUUID();
 		product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
-				"Sanduíche de frango com salada", ProductProductEnum.ACTIVE, LocalDateTime.now());
+				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
 	}
 
 	@Test

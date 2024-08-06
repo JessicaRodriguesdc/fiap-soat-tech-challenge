@@ -4,7 +4,7 @@ import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.ProductRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class ProductPersistenceImplTest {
 		MockitoAnnotations.openMocks(this);
 		UUID id = UUID.randomUUID();
 		product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
-				"Sanduíche de frango com salada", ProductProductEnum.ACTIVE, LocalDateTime.now());
+				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
 		productEntity = new ProductEntity(product);
 	}
 
@@ -82,7 +82,7 @@ public class ProductPersistenceImplTest {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
         Product updatedProduct = new Product(product.getId(), "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
-                new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductProductEnum.ACTIVE, LocalDateTime.now());
+                new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
         productEntity.update(updatedProduct);
 
         Product result = productPersistence.update(updatedProduct);
@@ -91,7 +91,7 @@ public class ProductPersistenceImplTest {
         assertEquals("Sanduíche de Bacon", result.getName());
         assertEquals(ProductCategoryEnum.MAIN_COURSE, result.getCategory());
         assertEquals(new BigDecimal("149.99"), result.getPrice());
-        assertEquals(ProductProductEnum.ACTIVE, result.getStatus());
+        assertEquals(ProductStatusEnum.ACTIVE, result.getStatus());
         assertEquals("Sanduíche de bacon com salada", result.getDescription());
         assertNotNull(result.getCreatedAt());
 

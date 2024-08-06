@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class ProductTest {
 	@BeforeEach
 	public void setUp() {
 		product = new Product(UUID.randomUUID(), "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductProductEnum.ACTIVE,
+				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
 				LocalDateTime.now());
 	}
 
@@ -32,7 +32,7 @@ public class ProductTest {
 		assertEquals(ProductCategoryEnum.MAIN_COURSE, product.getCategory());
 		assertEquals(new BigDecimal("99.99"), product.getPrice());
 		assertEquals("Sanduíche de frango com salada", product.getDescription());
-		assertEquals(ProductProductEnum.ACTIVE, product.getStatus());
+		assertEquals(ProductStatusEnum.ACTIVE, product.getStatus());
 		assertNotNull(product.getCreatedAt());
 	}
 
