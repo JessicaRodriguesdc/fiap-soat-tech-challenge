@@ -4,7 +4,7 @@ import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.ProductRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,7 +49,7 @@ public class ProductPersistenceImpl implements ProductPersistence {
 	@Override
 	public void delete(UUID id) {
 		repository.findById(id).ifPresent(product -> {
-			product.setStatus(ProductProductEnum.INACTIVE);
+			product.setStatus(ProductStatusEnum.INACTIVE);
 			repository.save(product);
 		});
 	}

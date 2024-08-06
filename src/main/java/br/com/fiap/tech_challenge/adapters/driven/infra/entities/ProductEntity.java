@@ -2,7 +2,7 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.entities;
 
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLRestriction;
@@ -31,7 +31,7 @@ public class ProductEntity {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private ProductProductEnum status = ProductProductEnum.ACTIVE;
+	private ProductStatusEnum status = ProductStatusEnum.ACTIVE;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -93,7 +93,7 @@ public class ProductEntity {
 		return description;
 	}
 
-	public ProductProductEnum getStatus() {
+	public ProductStatusEnum getStatus() {
 		return status;
 	}
 
@@ -101,7 +101,7 @@ public class ProductEntity {
 		return createdAt;
 	}
 
-	public void setStatus(ProductProductEnum status) {
+	public void setStatus(ProductStatusEnum status) {
 		this.status = status;
 	}
 

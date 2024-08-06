@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.ProductProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,37 +17,54 @@ public class ProductTest {
 
 	private Product product;
 
+	private String name;
+
+	private ProductCategoryEnum category;
+
+	private BigDecimal price;
+
+	private String description;
+
+	private ProductStatusEnum status;
+
 	@BeforeEach
-	public void setUp() {
-		product = new Product(UUID.randomUUID(), "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductProductEnum.ACTIVE,
-				LocalDateTime.now());
+	void setUp() {
+		this.buildArranges();
 	}
 
 	@Test
-	@DisplayName("Should create a Product of type MAIN_COURSE via constructor successfully.")
-	public void testProductConstructor() {
+	@DisplayName("Should create a Product via constructor successfully")
+	public void shouldCreateProductViaConstructor() {
 		assertNotNull(product.getId());
-		assertEquals("Sanduíche de Frango", product.getName());
-		assertEquals(ProductCategoryEnum.MAIN_COURSE, product.getCategory());
-		assertEquals(new BigDecimal("99.99"), product.getPrice());
-		assertEquals("Sanduíche de frango com salada", product.getDescription());
-		assertEquals(ProductProductEnum.ACTIVE, product.getStatus());
+		assertEquals(name, product.getName());
+		assertEquals(category, product.getCategory());
+		assertEquals(price, product.getPrice());
+		assertEquals(description, product.getDescription());
+		assertEquals(status, product.getStatus());
 		assertNotNull(product.getCreatedAt());
 	}
 
 	@Test
-	@DisplayName("Should update a Product of type MAIN_COURSE successfully.")
-	public void testProductUpdate() {
-		Product newProduct = new Product("Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("149.99"), "Sanduíche de bacon com salada");
+	@DisplayName("Should update a Product successfully")
+	public void shouldUpdateProduct() {
+		product.update(product);
 
-		product.update(newProduct);
+		assertEquals(name, product.getName());
+		assertEquals(category, product.getCategory());
+		assertEquals(price, product.getPrice());
+		assertEquals(description, product.getDescription());
+	}
 
-		assertEquals("Sanduíche de Bacon", product.getName());
-		assertEquals(ProductCategoryEnum.MAIN_COURSE, product.getCategory());
-		assertEquals(new BigDecimal("149.99"), product.getPrice());
-		assertEquals("Sanduíche de bacon com salada", product.getDescription());
+	private void buildArranges() {
+		UUID id = UUID.randomUUID();
+		name = "Sanduíche de Frango";
+		category = ProductCategoryEnum.MAIN_COURSE;
+		price = BigDecimal.valueOf(99.99);
+		description = "Sanduíche de frango com salada";
+		status = ProductStatusEnum.ACTIVE;
+		var createdAt = LocalDateTime.now();
+
+		product = new Product(id, name, category, price, description, status, createdAt);
 	}
 
 }

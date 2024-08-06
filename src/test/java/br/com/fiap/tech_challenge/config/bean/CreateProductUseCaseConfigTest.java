@@ -4,42 +4,30 @@ import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.impl.CreateProductUseCaseImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class CreateProductUseCaseConfigTest {
 
-	@Configuration
-	static class TestConfig {
+	@Mock
+	ProductPersistence persistence;
 
-		@Bean
-		public ProductPersistence productPersistence() {
-			return Mockito.mock(ProductPersistence.class);
-		}
-
-		@Bean
-		public CreateProductUseCaseImpl createProductUseCaseImpl(ProductPersistence persistence) {
-			return new CreateProductUseCaseImpl(persistence);
-		}
-
-	}
+	@InjectMocks
+	private CreateProductUseCaseConfig createProductUseCaseConfig;
 
 	@Test
-	@DisplayName("Should be created a bean of type CreateProductUseCaseImpl successfully.")
-	public void testCreateProductUseCaseBean() {
-		ApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class);
-		CreateProductUseCaseImpl createProductUseCase = context.getBean(CreateProductUseCaseImpl.class);
-		ProductPersistence persistence = context.getBean(ProductPersistence.class);
+	@DisplayName("Should Create a Singleton Instance Of CreateProductUseCaseImpl")
+	void shouldCreateSingletonInstanceOfCreateProductUseCaseImpl() {
+		var createProductUseCaseImpl = createProductUseCaseConfig.createProductUseCaseImpl(persistence);
 
-		assertNotNull(createProductUseCase, "O bean CreateProductUseCaseImpl não deve ser nulo");
-		assertInstanceOf(CreateProductUseCaseImpl.class, createProductUseCase,
-				"O bean deve ser uma instância de CreateProductUseCaseImpl");
-		assertNotNull(persistence, "O bean ProductPersistence não deve ser nulo");
+		assertNotNull(createProductUseCaseImpl);
+		assertNotNull(persistence);
+		assertInstanceOf(CreateProductUseCaseImpl.class, createProductUseCaseImpl);
 	}
 
 }
