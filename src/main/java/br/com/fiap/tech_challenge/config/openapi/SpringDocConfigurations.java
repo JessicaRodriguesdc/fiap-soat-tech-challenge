@@ -1,11 +1,7 @@
 package br.com.fiap.tech_challenge.config.openapi;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.*;
-import br.com.fiap.tech_challenge.config.openapi.schemas.PageableOrderResponseDTO;
-import br.com.fiap.tech_challenge.config.openapi.schemas.PageableProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ProblemDTO;
-import br.com.fiap.tech_challenge.config.openapi.schemas.PageablePageableResponseDTO;
-import br.com.fiap.tech_challenge.config.openapi.schemas.PageableSortResponseDTO;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -49,7 +45,7 @@ public class SpringDocConfigurations {
 		Map<String, Schema> productPageableResponseDto = ModelConverters.getInstance()
 			.read(PageableProductResponseDTO.class);
 		Map<String, Schema> orderPageableResponseDto = ModelConverters.getInstance()
-			.read(PageableOrderResponseDTO.class);
+			.read(PageableOrderSummaryResponseDTO.class);
 		Map<String, Schema> pageableSortResponseDto = ModelConverters.getInstance().read(PageableSortResponseDTO.class);
 		Map<String, Schema> pageablePageableResponseDto = ModelConverters.getInstance()
 			.read(PageablePageableResponseDTO.class);

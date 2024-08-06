@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.entities;
 
-import br.com.fiap.tech_challenge.core.domain.models.Product;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import jakarta.persistence.*;

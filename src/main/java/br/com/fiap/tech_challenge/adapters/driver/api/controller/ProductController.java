@@ -1,5 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
@@ -10,8 +11,6 @@ import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseC
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,12 +50,11 @@ public class ProductController implements ProductControllerOpenApi {
 
 	@Override
 	@GetMapping
-	public ResponseEntity<Page<ProductResponseDTO>> getProductsByCategory(@RequestParam ProductCategoryEnum category,
+	public ResponseEntity<PageableProductResponseDTO> getProductsByCategory(@RequestParam ProductCategoryEnum category,
 			@RequestParam(required = false, defaultValue = "0") int page,
 			@RequestParam(required = false, defaultValue = "10") int size) {
-		var products = getProductsByCategoryUseCase.getByCategory(category, PageRequest.of(page, size))
-			.map(ProductResponseDTO::new);
-		return ResponseEntity.status(HttpStatus.OK).body(products);
+		var pageableProduct = getProductsByCategoryUseCase.getByCategory(category, page, size);
+		return ResponseEntity.status(HttpStatus.OK).body(new PageableProductResponseDTO(pageableProduct));
 	}
 
 	@Override

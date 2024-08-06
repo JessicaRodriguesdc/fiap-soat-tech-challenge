@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
-import br.com.fiap.tech_challenge.core.domain.models.Product;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 

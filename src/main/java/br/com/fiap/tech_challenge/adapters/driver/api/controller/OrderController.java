@@ -2,15 +2,13 @@ package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CreateOrderRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CreateOrderResponseDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.OrderSummaryResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableOrderSummaryResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.OrderMapper;
 import br.com.fiap.tech_challenge.adapters.driver.api.openapi.OrderControllerOpenApi;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.CreateOrderUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.FindPaidOrdersUseCase;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,15 +32,14 @@ public class OrderController implements OrderControllerOpenApi {
 
 	@Override
 	@GetMapping
-	public ResponseEntity<Page<OrderSummaryResponseDTO>> findAllIsPaidOrders(
+	public ResponseEntity<PageableOrderSummaryResponseDTO> findByIsPaidAndStatus(
 			@RequestParam("status") OrderStatusEnum status, @RequestParam("isPaid") Boolean isPaid,
 			@RequestParam(required = false, defaultValue = "0") int page,
 			@RequestParam(required = false, defaultValue = "10") int size) {
 
-		var orders = findPaidOrdersUseCase.findAllPaidOrders(status, isPaid, PageRequest.of(page, size))
-			.map(OrderSummaryResponseDTO::new);
+		var pageableOrder = findPaidOrdersUseCase.findByIsPaidAndStatus(status, isPaid, page, size);
 
-		return ResponseEntity.status(HttpStatus.OK).body(orders);
+		return ResponseEntity.status(HttpStatus.OK).body(new PageableOrderSummaryResponseDTO(pageableOrder));
 	}
 
 	@Override

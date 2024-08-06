@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
-import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
