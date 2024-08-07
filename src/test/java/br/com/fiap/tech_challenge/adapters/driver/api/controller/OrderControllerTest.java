@@ -88,7 +88,7 @@ class OrderControllerTest {
 
     @Test
     @DisplayName("Should return NotFound when any product of order or identified customer not found")
-    void shouldReturnBadRequestWhenProductOrIdentifiedCustomerNotFound() throws Exception {
+    void shouldReturnNotFoundWhenProductOrIdentifiedCustomerNotFound() throws Exception {
         when(mapper.toCreateOrder(any())).thenReturn(createOrderDTO);
         when(createOrderUseCase.create(createOrderDTO)).thenThrow(DoesNotExistException.class);
 
