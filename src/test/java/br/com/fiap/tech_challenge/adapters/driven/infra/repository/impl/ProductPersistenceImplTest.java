@@ -8,9 +8,10 @@ import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ProductPersistenceImplTest {
 
 	@Mock
@@ -33,17 +35,13 @@ public class ProductPersistenceImplTest {
 	private ProductEntity productEntity;
 
 	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.openMocks(this);
-		UUID id = UUID.randomUUID();
-		product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
-				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
-		productEntity = new ProductEntity(product);
+	void setUp() {
+		this.buildArranges();
 	}
 
 	@Test
     @DisplayName("Should successfully save a ProductEntity to the database.")
-    public void testCreate() {
+    public void shouldSaveProductEntity() {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
         Product createdProduct = productPersistence.create(product);
@@ -59,8 +57,8 @@ public class ProductPersistenceImplTest {
     }
 
 	@Test
-    @DisplayName("Should successfully return a specific ProductEntity in the database.")
-    public void testFindById() {
+    @DisplayName("Should successfully return a specific ProductEntity in the database")
+    public void shouldReturnAProductEntity() {
         when(repository.findById(any(UUID.class))).thenReturn(Optional.of(productEntity));
 
         Optional<Product> foundProduct = productPersistence.findById(product.getId());
@@ -77,25 +75,30 @@ public class ProductPersistenceImplTest {
     }
 
 	@Test
-    @DisplayName("Should successfully update a ProductEntity to the database.")
-    public void testUpdate() {
+    @DisplayName("Should successfully update a ProductEntity to the database")
+    public void shouldUpdateProductEntity() {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
-        Product updatedProduct = new Product(product.getId(), "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
-                new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
-        productEntity.update(updatedProduct);
+        productEntity.update(product);
 
-        Product result = productPersistence.update(updatedProduct);
+        Product result = productPersistence.update(product);
 
-        assertEquals(updatedProduct.getId(), result.getId());
-        assertEquals("Sanduíche de Bacon", result.getName());
-        assertEquals(ProductCategoryEnum.MAIN_COURSE, result.getCategory());
-        assertEquals(new BigDecimal("149.99"), result.getPrice());
-        assertEquals(ProductStatusEnum.ACTIVE, result.getStatus());
-        assertEquals("Sanduíche de bacon com salada", result.getDescription());
+        assertEquals(product.getId(), result.getId());
+        assertEquals(product.getName(), result.getName());
+        assertEquals(product.getCategory(), result.getCategory());
+        assertEquals(product.getPrice(), result.getPrice());
+        assertEquals(product.getStatus(), result.getStatus());
+        assertEquals(product.getDescription(), result.getDescription());
         assertNotNull(result.getCreatedAt());
 
         verify(repository).save(any(ProductEntity.class));
     }
+
+	private void buildArranges() {
+		UUID id = UUID.randomUUID();
+		product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
+				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
+		productEntity = new ProductEntity(product);
+	}
 
 }

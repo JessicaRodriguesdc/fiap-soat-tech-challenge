@@ -8,9 +8,10 @@ import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class UpdateProductUseCaseImplTest {
 
 	@Mock
@@ -28,56 +30,50 @@ public class UpdateProductUseCaseImplTest {
 	@InjectMocks
 	private UpdateProductUseCaseImpl updateProductUseCase;
 
-	private Product existingProduct;
-
-	private Product updatedProduct;
-
-	private UUID productId;
+	private Product product;
 
 	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.openMocks(this);
-		productId = UUID.randomUUID();
-		existingProduct = new Product(productId, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
-				LocalDateTime.now());
-
-		updatedProduct = new Product(productId, "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
-				new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductStatusEnum.ACTIVE,
-				LocalDateTime.now());
+	void setUp() {
+		this.buildArranges();
 	}
 
 	@Test
     @DisplayName("Should update a Product of type MAIN_COURSE successfully.")
-    public void testUpdateProductSuccess() {
-        when(persistence.findById(productId)).thenReturn(Optional.of(existingProduct));
-        when(persistence.update(any(Product.class))).thenReturn(updatedProduct);
+    public void shouldUpdateProduct() {
+        when(persistence.findById(product.getId())).thenReturn(Optional.of(product));
+        when(persistence.update(any(Product.class))).thenReturn(product);
 
-        Product result = updateProductUseCase.update(productId, updatedProduct);
+        Product result = updateProductUseCase.update(product.getId(), product);
 
         assertNotNull(result);
-        assertEquals(updatedProduct.getName(), result.getName());
-        assertEquals(updatedProduct.getCategory(), result.getCategory());
-        assertEquals(updatedProduct.getPrice(), result.getPrice());
-        assertEquals(updatedProduct.getDescription(), result.getDescription());
+        assertEquals(product.getName(), result.getName());
+        assertEquals(product.getCategory(), result.getCategory());
+        assertEquals(product.getPrice(), result.getPrice());
+        assertEquals(product.getDescription(), result.getDescription());
 
-        verify(persistence).findById(productId);
+        verify(persistence).findById(product.getId());
         verify(persistence).update(any(Product.class));
     }
 
 	@Test
     @DisplayName("Should be thrown an when trying exception of type DoesNotExistException to update a product of type MAIN_COURSE.")
-    public void testUpdateProductNotFound() {
-        when(persistence.findById(productId)).thenReturn(Optional.empty());
+    public void shouldThrowExceptionWhenTryingToUpdateProduct() {
+        when(persistence.findById(product.getId())).thenReturn(Optional.empty());
 
         DoesNotExistException exception = assertThrows(DoesNotExistException.class, () ->
-                updateProductUseCase.update(productId, updatedProduct)
+                updateProductUseCase.update(product.getId(), product)
         );
 
         assertEquals("Product Doesn't Exist", exception.getMessage());
 
-        verify(persistence).findById(productId);
+        verify(persistence).findById(product.getId());
         verify(persistence, never()).update(any(Product.class));
     }
+
+	private void buildArranges() {
+		product = new Product(UUID.randomUUID(), "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
+				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
+				LocalDateTime.now());
+	}
 
 }
