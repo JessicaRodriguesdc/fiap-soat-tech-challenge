@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Este microserviço é responsável por gerenciar a entrada de pedidos de um restaurante. Ele lida com o processamento dos
+Este monolito é responsável por gerenciar a entrada de pedidos de um restaurante. Ele lida com o processamento dos
 pedidos, gerenciamento de pagamentos e envio dos pedidos para a cozinha após a confirmação do pagamento.
 
 ## Tecnologias Utilizadas
@@ -35,15 +35,20 @@ O projeto segue a Arquitetura Hexagonal (Ports and Adapters), permitindo maior f
 
 ### Imagem Docker
 
-A imagem docker desse projeto foi buildada através do arquivo `Dockerfile` presente neste repositório, e enviada a um container registry (Docker HUB). Para visualizá-la, basta acessar o link: https://hub.docker.com/r/willosouza/fiap-soat-tech-challenge
+A imagem docker desse projeto foi buildada através do arquivo `Dockerfile` presente neste repositório, e enviada a um
+container registry (Docker HUB). Para visualizá-la, basta acessar o
+link: https://hub.docker.com/r/willosouza/fiap-soat-tech-challenge
 
 ### Execução
 
 #### Subindo a aplicação via docker compose
 
-Este projeto conta com um arquivo `docker-compose.yml` que pode ser utilizado para subir o container da aplicação e suas respectivas dependências (banco de dados).
+Este projeto conta com um arquivo `docker-compose.yml` que pode ser utilizado para subir o container da aplicação e suas
+respectivas dependências (banco de dados).
 
-Para subir as aplicações, primeiro se faz necessária a existência de um arquivo `.env` na raiz do projeto, para que as variáveis de ambiente sejam definidas. Esse projeto já conta com um arquivo versionado nesse repositório, para que a definição das variáveis não precise ser feita. Abaixo segue a estrutura desse arquivo:
+Para subir as aplicações, primeiro se faz necessária a existência de um arquivo `.env` na raiz do projeto, para que as
+variáveis de ambiente sejam definidas. Esse projeto já conta com um arquivo versionado nesse repositório, para que a
+definição das variáveis não precise ser feita. Abaixo segue a estrutura desse arquivo:
 
 ```sh
 POSTGRES_URL=<url_do_banco_de_dados>
@@ -52,7 +57,9 @@ POSTGRES_USERNAME=<usuário_do_banco_de_dados>
 POSTGRES_PASSWORD=<senha_do_usuário_no_banco_de_dados>
 ```
 
-Após se certificar que o arquivo `.env` existe e está definindo as variáveis citadas acima, basta executar o comando `docker compose up` para iniciar o build da imagem da aplicação (Definida no arquivo `Dockerfile`) e realizar a inicialização do container do banco de dados (Postgres) seguido pelo container da aplicação. 
+Após se certificar que o arquivo `.env` existe e está definindo as variáveis citadas acima, basta executar o
+comando `docker compose up` para iniciar o build da imagem da aplicação (Definida no arquivo `Dockerfile`) e realizar a
+inicialização do container do banco de dados (Postgres) seguido pelo container da aplicação.
 
 Caso tudo dê certo, as seguintes linhas de log devem ter sido exibidas no terminal cujo comando foi executado:
 
@@ -76,13 +83,15 @@ Caso tudo dê certo, as seguintes linhas de log devem ter sido exibidas no termi
 
 ![Container da aplicação de pé](./assets/application_started.png)
 
-Após todos esses passos, basta rodar o comando `docker container ls` para verificar quais containers estão sendo executados. Caso tudo tenha corrido com sucesso, o comando deve ter o seguinte resultado:
+Após todos esses passos, basta rodar o comando `docker container ls` para verificar quais containers estão sendo
+executados. Caso tudo tenha corrido com sucesso, o comando deve ter o seguinte resultado:
 
 ![Listagem de containers em execução](./assets/docker_container_ls.png)
 
 Por fim, o serviço estará disponível em http://localhost:8357.
 
-Obs: Caso queira subir os containers no modo `detached`(Sem travar o terminal em que o comando for executado), basta rodar o seguinte comando: `docker compose up -d`
+Obs: Caso queira subir os containers no modo `detached`(Sem travar o terminal em que o comando for executado), basta
+rodar o seguinte comando: `docker compose up -d`
 
 ![Docker compose detached mode](./assets/compose_detached_mode.png)
 
