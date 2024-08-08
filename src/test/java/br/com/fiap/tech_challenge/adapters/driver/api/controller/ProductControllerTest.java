@@ -7,6 +7,8 @@ import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -21,11 +25,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ProductControllerTest {
 
@@ -36,6 +43,12 @@ public class ProductControllerTest {
 
     @Mock
     private UpdateProductUseCase updateProductUseCase;
+
+    @Mock
+    private GetProductsByCategoryUseCase getProductsByCategoryUseCase;
+
+    @Mock
+    private DeleteProductByIdUseCase deleteProductByIdUseCase;
 
     @Mock
     private ProductMapper mapper;
@@ -95,4 +108,32 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$.description").value(responseDTO.description().toString()));
     }
 
+    @Test
+    @DisplayName("Should get Products by category successfully.")
+    public void testGetProductsByCategory() throws Exception {
+        UUID id = UUID.randomUUID();
+        Product product = new Product(id, "Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE, BigDecimal.valueOf(199.99), "Sanduíche de bacon com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());
+        var page = PageRequest.of(0, 10);
+
+        when(getProductsByCategoryUseCase.getByCategory(CategoryProductEnum.MAIN_COURSE, page))
+                .thenReturn(new PageImpl<>(List.of(product)));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/products")
+                        .queryParam("category", CategoryProductEnum.MAIN_COURSE.name())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Should delete a Product by id successfully.")
+    public void testDeleteProductById() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/products/{id}", id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(deleteProductByIdUseCase).delete(id);
+    }
 }
