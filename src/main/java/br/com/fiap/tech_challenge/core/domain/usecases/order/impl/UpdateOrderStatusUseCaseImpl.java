@@ -2,12 +2,11 @@ package br.com.fiap.tech_challenge.core.domain.usecases.order.impl;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyInStatusException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.UpdateOrderStatusUseCase;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
@@ -27,7 +26,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
 		}
 
 		var isPaid = orderFound.isPaid();
-		if (Objects.equals(status, OrderStatusEnum.PREPARING)) {
+		if (OrderStatusEnum.PREPARING.equals(status)) {
 			isPaid = true;
 		}
 		var newOrder = new Order(orderFound.getId(), orderFound.getAmount(), orderFound.getSequence(), status, isPaid,

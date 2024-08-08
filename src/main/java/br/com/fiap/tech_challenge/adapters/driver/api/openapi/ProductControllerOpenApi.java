@@ -1,5 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.openapi;
 
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ErrorsValidateData;
@@ -10,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
@@ -35,7 +35,7 @@ public interface ProductControllerOpenApi {
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
 	@ApiResponse(responseCode = "500", description = "Internal Server Error Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
-	ResponseEntity<Page<ProductResponseDTO>> getProductsByCategory(ProductCategoryEnum category, int page, int size);
+	ResponseEntity<PageableProductResponseDTO> getProductsByCategory(ProductCategoryEnum category, int page, int size);
 
 	@Operation(summary = "Update a Product By ID")
 	@ApiResponse(responseCode = "200", description = "Ok Response",

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public final class OrderProduct {
+public class OrderProduct {
 
 	private final UUID id;
 

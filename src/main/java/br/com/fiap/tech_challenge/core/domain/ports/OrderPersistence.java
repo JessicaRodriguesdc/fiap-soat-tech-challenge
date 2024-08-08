@@ -1,9 +1,8 @@
 package br.com.fiap.tech_challenge.core.domain.ports;
 
-import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -14,6 +13,6 @@ public interface OrderPersistence {
 
 	Order create(Order customer);
 
-	Page<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Pageable pageable);
+	PageableOrder findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Integer page, Integer size);
 
 }
