@@ -22,22 +22,22 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class CreateCustomerUseCaseImplTest {
 
-    @Mock
-    private CustomerPersistenceImpl customerPersistence;
+	@Mock
+	private CustomerPersistenceImpl customerPersistence;
 
-    @InjectMocks
-    private CreateCustomerUseCaseImpl createCustomerUseCase;
+	@InjectMocks
+	private CreateCustomerUseCaseImpl createCustomerUseCase;
 
-    private Customer customer;
+	private Customer customer;
 
-    private Customer customerExpectedCreated;
+	private Customer customerExpectedCreated;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-    @Test
+	@Test
     @DisplayName("Should be able create and return a new Customer")
     void shouldBeAbleCreateAndReturnANewCustomer(){
         when(customerPersistence.findByDocument(customer.getDocument())).thenReturn(Optional.empty());
@@ -54,7 +54,7 @@ class CreateCustomerUseCaseImplTest {
         assertEquals(customerExpectedCreated.getEmail(), created.getEmail());
     }
 
-    @Test
+	@Test
     @DisplayName("Should Return AlreadyExistsException when document already exists in database and not create a new Customer")
     void shouldReturnAlreadyExistsExceptionWhenDocumentAlreadyExistsInDatabaseAndNotCreateNewCustomer(){
         when(customerPersistence.findByDocument(customer.getDocument())).thenReturn(Optional.of(customerExpectedCreated));
@@ -67,11 +67,11 @@ class CreateCustomerUseCaseImplTest {
         verify(customerPersistence,times(ConstantTimes.NO_INTERACTIONS)).create(any());
     }
 
-    private void buildArranges() {
-        customer = new Customer("Walter White", "31739380037", "heisenberg@gmail.com");
+	private void buildArranges() {
+		customer = new Customer("Walter White", "31739380037", "heisenberg@gmail.com");
 
-        customerExpectedCreated = new Customer(UUID.randomUUID(), "Walter White", "31739380037",
-                "heisenberg@gmail.com");
-    }
+		customerExpectedCreated = new Customer(UUID.randomUUID(), "Walter White", "31739380037",
+				"heisenberg@gmail.com");
+	}
 
 }

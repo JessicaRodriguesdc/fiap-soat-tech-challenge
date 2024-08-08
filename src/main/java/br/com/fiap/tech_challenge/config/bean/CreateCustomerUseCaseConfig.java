@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CreateCustomerUseCaseConfig {
 
-    @Bean
-    public CreateCustomerUseCaseImpl createCustomerUseCaseImpl(CustomerPersistence persistence){
-        return new CreateCustomerUseCaseImpl(persistence);
-    }
+	@Bean
+	public CreateCustomerUseCaseImpl createCustomerUseCaseImpl(CustomerPersistence persistence) {
+		return new CreateCustomerUseCaseImpl(persistence);
+	}
+
 }

@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DeleteProductByIdUseCaseConfig {
 
-    @Bean
-    public DeleteProductByIdUseCaseImpl createDeleteProductByIdUseCaseImpl(ProductPersistence persistence) {
-        return new DeleteProductByIdUseCaseImpl(persistence);
-    }
+	@Bean
+	public DeleteProductByIdUseCaseImpl createDeleteProductByIdUseCaseImpl(ProductPersistence persistence) {
+		return new DeleteProductByIdUseCaseImpl(persistence);
+	}
+
 }

@@ -2,15 +2,13 @@ package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CreateOrderRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.CreateOrderResponseDTO;
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.OrderSummaryResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableOrderSummaryResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.OrderMapper;
 import br.com.fiap.tech_challenge.adapters.driver.api.openapi.OrderControllerOpenApi;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.CreateOrderUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.FindPaidOrdersUseCase;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,39 +17,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/orders")
 public class OrderController implements OrderControllerOpenApi {
 
-    private final CreateOrderUseCase createOrderUseCase;
-    private final FindPaidOrdersUseCase findPaidOrdersUseCase;
-    private final OrderMapper mapper;
+	private final CreateOrderUseCase createOrderUseCase;
 
-    public OrderController(CreateOrderUseCase createOrderUseCase,
-                           FindPaidOrdersUseCase findPaidOrdersUseCase,
-                           OrderMapper mapper) {
-        this.createOrderUseCase = createOrderUseCase;
-        this.findPaidOrdersUseCase = findPaidOrdersUseCase;
-        this.mapper = mapper;
-    }
+	private final FindPaidOrdersUseCase findPaidOrdersUseCase;
 
-    @Override
-    @GetMapping
-    public ResponseEntity<Page<OrderSummaryResponseDTO>> findAllIsPaidOrders(@RequestParam("status") OrderStatusEnum status,
-                                                                              @RequestParam("isPaid") Boolean isPaid,
-                                                                              @RequestParam(required = false, defaultValue = "0") int page,
-                                                                              @RequestParam(required = false, defaultValue = "10") int size) {
+	private final OrderMapper mapper;
 
-        var orders = findPaidOrdersUseCase
-                .findAllPaidOrders(status, isPaid, PageRequest.of(page, size))
-                .map(OrderSummaryResponseDTO::new);
+	public OrderController(CreateOrderUseCase createOrderUseCase, FindPaidOrdersUseCase findPaidOrdersUseCase,
+			OrderMapper mapper) {
+		this.createOrderUseCase = createOrderUseCase;
+		this.findPaidOrdersUseCase = findPaidOrdersUseCase;
+		this.mapper = mapper;
+	}
 
-        return ResponseEntity.status(HttpStatus.OK).body(orders);
-    }
+	@Override
+	@GetMapping
+	public ResponseEntity<PageableOrderSummaryResponseDTO> findByIsPaidAndStatus(
+			@RequestParam("status") OrderStatusEnum status, @RequestParam("isPaid") Boolean isPaid,
+			@RequestParam(required = false, defaultValue = "0") int page,
+			@RequestParam(required = false, defaultValue = "10") int size) {
 
-    @Override
-    @PostMapping
-    public ResponseEntity<CreateOrderResponseDTO> create(@RequestBody @Valid CreateOrderRequestDTO orderRequest){
-        var mapperCreateOrder = mapper.toCreateOrder(orderRequest);
-        var order = createOrderUseCase.create(mapperCreateOrder);
-        var response = new CreateOrderResponseDTO(order.getId(), order.getPaymentId());
+		var pageableOrder = findPaidOrdersUseCase.findByIsPaidAndStatus(status, isPaid, page, size);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+		return ResponseEntity.status(HttpStatus.OK).body(new PageableOrderSummaryResponseDTO(pageableOrder));
+	}
+
+	@Override
+	@PostMapping
+	public ResponseEntity<CreateOrderResponseDTO> create(@RequestBody @Valid CreateOrderRequestDTO orderRequest) {
+		var mapperCreateOrder = mapper.toCreateOrder(orderRequest);
+		var order = createOrderUseCase.create(mapperCreateOrder);
+		var response = new CreateOrderResponseDTO(order.getId(), order.getPaymentId());
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+
 }

@@ -14,20 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class CreateCustomerUseCaseConfigTest {
 
-    @Mock
-    CustomerPersistence persistence;
+	@Mock
+	CustomerPersistence persistence;
 
-    @InjectMocks
-    private CreateCustomerUseCaseConfig createCustomerUseCaseConfig;
+	@InjectMocks
+	private CreateCustomerUseCaseConfig createCustomerUseCaseConfig;
 
-    @Test
-    @DisplayName("Should Create a Singleton Instance Of CreateCustomerUseCaseImpl")
-    void shouldCreateSingletonInstanceOfCreateCustomerUseCaseImpl(){
-        var createCustomerUseCaseImpl =
-                createCustomerUseCaseConfig.createCustomerUseCaseImpl(persistence);
+	@Test
+	@DisplayName("Should Create a Singleton Instance Of CreateCustomerUseCaseImpl")
+	void shouldCreateSingletonInstanceOfCreateCustomerUseCaseImpl() {
+		var createCustomerUseCaseImpl = createCustomerUseCaseConfig.createCustomerUseCaseImpl(persistence);
 
-        assertNotNull(createCustomerUseCaseImpl);
-        assertNotNull(persistence);
-        assertInstanceOf(CreateCustomerUseCaseImpl.class, createCustomerUseCaseImpl);
-    }
+		assertNotNull(createCustomerUseCaseImpl);
+		assertNotNull(persistence);
+		assertInstanceOf(CreateCustomerUseCaseImpl.class, createCustomerUseCaseImpl);
+	}
+
 }

@@ -1,10 +1,10 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.order;
 
-import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
 
 public interface FindPaidOrdersUseCase {
-    Page<Order> findAllPaidOrders(OrderStatusEnum status, Boolean isPaid, Pageable pageable);
+
+	PageableOrder findByIsPaidAndStatus(OrderStatusEnum status, Boolean isPaid, Integer page, Integer size);
+
 }

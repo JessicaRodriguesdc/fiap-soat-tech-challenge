@@ -6,9 +6,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerPersistence {
-    Customer create(Customer customer);
 
-    Optional<Customer> findByDocument(String document);
+	Customer create(Customer customer);
 
-    Optional<Customer> findById(UUID id);
+	Optional<Customer> findByDocument(String document);
+
+	Optional<Customer> findById(UUID id);
+
 }

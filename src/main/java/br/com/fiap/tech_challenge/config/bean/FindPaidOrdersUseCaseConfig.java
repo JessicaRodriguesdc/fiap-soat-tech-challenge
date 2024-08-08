@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FindPaidOrdersUseCaseConfig {
 
-    @Bean
-    public FindPaidOrdersUseCaseImpl findPaidOrdersUseCaseImpl(OrderPersistence persistence) {
-        return new FindPaidOrdersUseCaseImpl(persistence);
-    }
+	@Bean
+	public FindPaidOrdersUseCaseImpl findPaidOrdersUseCaseImpl(OrderPersistence persistence) {
+		return new FindPaidOrdersUseCaseImpl(persistence);
+	}
+
 }

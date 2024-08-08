@@ -7,20 +7,21 @@ import br.com.fiap.tech_challenge.core.domain.usecases.customer.CreateCustomerUs
 
 public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
 
-    private final CustomerPersistence persistence;
+	private final CustomerPersistence persistence;
 
-    public CreateCustomerUseCaseImpl(CustomerPersistence persistence) {
-        this.persistence = persistence;
-    }
+	public CreateCustomerUseCaseImpl(CustomerPersistence persistence) {
+		this.persistence = persistence;
+	}
 
-    @Override
-    public Customer create(Customer customer) {
-        var customerFound = persistence.findByDocument(customer.getDocument());
+	@Override
+	public Customer create(Customer customer) {
+		var customerFound = persistence.findByDocument(customer.getDocument());
 
-        if(customerFound.isPresent()){
-            throw new AlreadyExistsException("Customer Already Exists");
-        }
+		if (customerFound.isPresent()) {
+			throw new AlreadyExistsException("Customer Already Exists");
+		}
 
-        return persistence.create(customer);
-    }
+		return persistence.create(customer);
+	}
+
 }

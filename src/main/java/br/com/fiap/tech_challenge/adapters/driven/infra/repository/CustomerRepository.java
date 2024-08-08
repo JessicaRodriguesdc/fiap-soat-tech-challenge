@@ -8,7 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID>{
+public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> {
 
-    Optional<CustomerEntity> findByDocument(String document);
+	Optional<CustomerEntity> findByDocument(String document);
+
 }

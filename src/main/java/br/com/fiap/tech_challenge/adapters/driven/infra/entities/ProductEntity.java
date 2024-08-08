@@ -1,8 +1,8 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.entities;
 
-import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLRestriction;
@@ -17,89 +17,92 @@ import java.util.UUID;
 @SQLRestriction("status <> 'INACTIVE'")
 public class ProductEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private UUID id;
 
-    private String name;
+	private String name;
 
-    @Enumerated(EnumType.STRING)
-    private CategoryProductEnum category;
+	@Enumerated(EnumType.STRING)
+	private ProductCategoryEnum category;
 
-    private BigDecimal price;
+	private BigDecimal price;
 
-    private String description;
+	private String description;
 
-    @Enumerated(EnumType.STRING)
-    private StatusProductEnum status = StatusProductEnum.ACTIVE;
+	@Enumerated(EnumType.STRING)
+	private ProductStatusEnum status = ProductStatusEnum.ACTIVE;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+	@CreationTimestamp
+	private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
 
-    public ProductEntity() {
-    }
+	public ProductEntity() {
+	}
 
-    public ProductEntity(UUID id, String name, CategoryProductEnum category, BigDecimal price, String description) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.price = price;
-        this.description = description;
-    }
+	public ProductEntity(UUID id, String name, ProductCategoryEnum category, BigDecimal price, String description) {
+		this.id = id;
+		this.name = name;
+		this.category = category;
+		this.price = price;
+		this.description = description;
+	}
 
-    public ProductEntity(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.category = product.getCategory();
-        this.price = product.getPrice();
-        this.description = product.getDescription();
-    }
+	public ProductEntity(Product product) {
+		this.id = product.getId();
+		this.name = product.getName();
+		this.category = product.getCategory();
+		this.price = product.getPrice();
+		this.description = product.getDescription();
+	}
 
-    public Product toProduct() {
-        return new Product(id, name, category, price, description, status, createdAt);
-    }
+	public Product toProduct() {
+		return new Product(id, name, category, price, description, status, createdAt);
+	}
 
-    public ProductEntity update(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.category = product.getCategory();
-        this.price = product.getPrice();
-        this.description = product.getDescription();
-        this.status = product.getStatus();
-        this.createdAt = product.getCreatedAt();
-        return this;
-    }
+	public ProductEntity update(Product product) {
+		this.id = product.getId();
+		this.name = product.getName();
+		this.category = product.getCategory();
+		this.price = product.getPrice();
+		this.description = product.getDescription();
+		this.status = product.getStatus();
+		this.createdAt = product.getCreatedAt();
+		return this;
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public CategoryProductEnum getCategory() {
-        return category;
-    }
+	public ProductCategoryEnum getCategory() {
+		return category;
+	}
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+	public BigDecimal getPrice() {
+		return price;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public StatusProductEnum getStatus() {
-        return status;
-    }
+	public ProductStatusEnum getStatus() {
+		return status;
+	}
 
-    public LocalDateTime getCreatedAt() {return createdAt;}
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setStatus(StatusProductEnum status) {
-        this.status = status;
-    }
+	public void setStatus(ProductStatusEnum status) {
+		this.status = status;
+	}
+
 }

@@ -12,57 +12,57 @@ import java.util.UUID;
 @Table(name = "customer")
 public class CustomerEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private UUID id;
 
-    private String name;
+	private String name;
 
-    private String document;
+	private String document;
 
-    private String email;
+	private String email;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+	@CreationTimestamp
+	private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
 
-    public CustomerEntity() {
-    }
+	public CustomerEntity() {
+	}
 
-    public CustomerEntity(UUID id, String name, String document, String email) {
-        this.id = id;
-        this.name = name;
-        this.document = document;
-        this.email = email;
-    }
+	public CustomerEntity(UUID id, String name, String document, String email) {
+		this.id = id;
+		this.name = name;
+		this.document = document;
+		this.email = email;
+	}
 
-    public CustomerEntity(Customer customer) {
-        this.id = customer.getId();
-        this.name = customer.getName();
-        this.document = customer.getDocument();
-        this.email = customer.getEmail();
-    }
+	public CustomerEntity(Customer customer) {
+		this.id = customer.getId();
+		this.name = customer.getName();
+		this.document = customer.getDocument();
+		this.email = customer.getEmail();
+	}
 
-    public Customer toCustomer(){
-        return new Customer(id, name, document, email);
-    }
+	public Customer toCustomer() {
+		return new Customer(id, name, document, email);
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDocument() {
-        return document;
-    }
+	public String getDocument() {
+		return document;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
 }
