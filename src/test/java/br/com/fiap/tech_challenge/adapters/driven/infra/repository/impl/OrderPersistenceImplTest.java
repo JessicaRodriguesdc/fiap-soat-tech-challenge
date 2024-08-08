@@ -31,20 +31,20 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class OrderPersistenceImplTest {
 
-    @Mock
-    private OrderRepository repository;
+	@Mock
+	private OrderRepository repository;
 
-    @InjectMocks
-    private OrderPersistenceImpl orderPersistence;
+	@InjectMocks
+	private OrderPersistenceImpl orderPersistence;
 
-    private Order order;
+	private Order order;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-    @Test
+	@Test
     @DisplayName("Should create and save a new Order")
     void shouldCreateAndSaveNewOrder() {
         when(repository.save(any())).thenReturn(new OrderEntity(order));
@@ -64,32 +64,30 @@ class OrderPersistenceImplTest {
         assertEquals(order.getUpdatedAt(), created.getUpdatedAt());
     }
 
-    @Test
-    @DisplayName("Should Find is paid Order by status and pageable")
-    void shouldFindPaidOrderByStatusAndPagination() {
-        var isPaid = true;
-        var orderStatus = OrderStatusEnum.PREPARING;
-        var pageable = PageRequest.of(0, 10);
+	@Test
+	@DisplayName("Should Find is paid Order by status and pageable")
+	void shouldFindPaidOrderByStatusAndPagination() {
+		var isPaid = true;
+		var orderStatus = OrderStatusEnum.PREPARING;
+		var pageable = PageRequest.of(0, 10);
 
-        Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
+		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
 
-        when(repository.findByIsPaidAndStatus(any(), any(), any()))
-                .thenReturn(orderEntityPage);
+		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
 
-        var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable);
+		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable);
 
-        var orderFound = orderFoundOpt.get();
+		var orderFound = orderFoundOpt.get();
 
-        verify(repository, times(ConstantTimes.ONLY_ONCE))
-                .findByIsPaidAndStatus(isPaid, orderStatus, pageable);
+		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
 
-        verifyNoMoreInteractions(repository);
+		verifyNoMoreInteractions(repository);
 
-        assertNotNull(orderFound);
-        assertEquals(orderFound.toList().size(), 1);
-    }
+		assertNotNull(orderFound);
+		assertEquals(orderFound.toList().size(), 1);
+	}
 
-    @Test
+	@Test
     @DisplayName("Should Find Order by ID")
     void shouldFindCustomerById() {
         when(repository.findById(order.getId()))
@@ -109,37 +107,20 @@ class OrderPersistenceImplTest {
         assertNotNull(orderFound.getSequence());
     }
 
-    private void buildArranges() {
-        OrderProduct orderProduct1 = new OrderProduct(
-                UUID.randomUUID(),
-                new BigDecimal("100.00"),
-                "Customization 1",
-                UUID.randomUUID(),
-                UUID.randomUUID(),
-                LocalDateTime.now()
-        );
+	private void buildArranges() {
+		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
+				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
 
-        var id = UUID.randomUUID();
-        var paymentId = "paymentIdMock";
-        var amount = new BigDecimal("200.00");
-        var createdAt = LocalDateTime.now();
-        var updatedAt = LocalDateTime.now();
-        var products = List.of(orderProduct1, orderProduct1);
-        var sequence = 2;
-        var orderStatus = OrderStatusEnum.RECEIVED;
+		var id = UUID.randomUUID();
+		var paymentId = "paymentIdMock";
+		var amount = new BigDecimal("200.00");
+		var createdAt = LocalDateTime.now();
+		var updatedAt = LocalDateTime.now();
+		var products = List.of(orderProduct1, orderProduct1);
+		var sequence = 2;
+		var orderStatus = OrderStatusEnum.RECEIVED;
 
-        order = new Order(
-                id,
-                amount,
-                sequence,
-                orderStatus,
-                true,
-                products,
-                null,
-                paymentId,
-                createdAt,
-                updatedAt
-        );
-    }
+		order = new Order(id, amount, sequence, orderStatus, true, products, null, paymentId, createdAt, updatedAt);
+	}
 
 }

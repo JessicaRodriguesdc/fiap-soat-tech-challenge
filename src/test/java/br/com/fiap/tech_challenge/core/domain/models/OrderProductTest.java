@@ -13,48 +13,53 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class OrderProductTest {
 
-    private UUID id;
-    private UUID productId;
-    private UUID orderId;
-    private String customization;
-    private LocalDateTime createdAt;
+	private UUID id;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	private UUID productId;
 
-    @Test
-    @DisplayName("Should return OrderProduct attributes as the object was created without ID")
+	private UUID orderId;
 
-    public void shouldInstantiateOrderProductConstructor() {
-        BigDecimal price = BigDecimal.valueOf(100.00);
-        OrderProduct orderProduct = new OrderProduct(id, price, customization, productId, orderId, createdAt);
+	private String customization;
 
-        assertEquals(id, orderProduct.getId());
-        assertEquals(price, orderProduct.getPrice());
-        assertEquals(customization, orderProduct.getCustomization());
-        assertEquals(productId, orderProduct.getProductId());
-    }
+	private LocalDateTime createdAt;
 
-    @Test
-    @DisplayName("Should return OrderProducts attributes as the object was created")
-    public void shouldCreateOrderProduct() {
-        BigDecimal price = BigDecimal.valueOf(99.99);
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-        OrderProduct orderProduct = OrderProduct.create(price, customization, productId);
+	@Test
+	@DisplayName("Should return OrderProduct attributes as the object was created without ID")
 
-        assertNull(orderProduct.getId());
-        assertEquals(price, orderProduct.getPrice());
-        assertEquals(customization, orderProduct.getCustomization());
-        assertEquals(productId, orderProduct.getProductId());
-    }
+	public void shouldInstantiateOrderProductConstructor() {
+		BigDecimal price = BigDecimal.valueOf(100.00);
+		OrderProduct orderProduct = new OrderProduct(id, price, customization, productId, orderId, createdAt);
 
-    private void buildArranges() {
-        this.id = UUID.randomUUID();
-        this.productId = UUID.randomUUID();
-        this.orderId = UUID.randomUUID();
-        this.customization = "Extra cheese";
-        this.createdAt = LocalDateTime.now();
-    }
+		assertEquals(id, orderProduct.getId());
+		assertEquals(price, orderProduct.getPrice());
+		assertEquals(customization, orderProduct.getCustomization());
+		assertEquals(productId, orderProduct.getProductId());
+	}
+
+	@Test
+	@DisplayName("Should return OrderProducts attributes as the object was created")
+	public void shouldCreateOrderProduct() {
+		BigDecimal price = BigDecimal.valueOf(99.99);
+
+		OrderProduct orderProduct = OrderProduct.create(price, customization, productId);
+
+		assertNull(orderProduct.getId());
+		assertEquals(price, orderProduct.getPrice());
+		assertEquals(customization, orderProduct.getCustomization());
+		assertEquals(productId, orderProduct.getProductId());
+	}
+
+	private void buildArranges() {
+		this.id = UUID.randomUUID();
+		this.productId = UUID.randomUUID();
+		this.orderId = UUID.randomUUID();
+		this.customization = "Extra cheese";
+		this.createdAt = LocalDateTime.now();
+	}
+
 }

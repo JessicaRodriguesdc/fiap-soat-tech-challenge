@@ -37,41 +37,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class OrderControllerTest {
 
-    private MockMvc mockMvc;
+	private MockMvc mockMvc;
 
-    @Mock
-    private CreateOrderUseCase createOrderUseCase;
+	@Mock
+	private CreateOrderUseCase createOrderUseCase;
 
-    @Mock
-    private FindPaidOrdersUseCase findPaidOrdersUseCase;
+	@Mock
+	private FindPaidOrdersUseCase findPaidOrdersUseCase;
 
-    @Mock
-    private OrderMapper mapper;
+	@Mock
+	private OrderMapper mapper;
 
-    @InjectMocks
-    private OrderController orderController;
+	@InjectMocks
+	private OrderController orderController;
 
-    private final String baseUrl = "/v1/orders";
+	private final String baseUrl = "/v1/orders";
 
-    private CreateOrderDTO createOrderDTO;
+	private CreateOrderDTO createOrderDTO;
 
-    private Order order;
+	private Order order;
 
-    private CreateOrderResponseDTO createOrderResponseDTO;
+	private CreateOrderResponseDTO createOrderResponseDTO;
 
-    @BeforeEach
-    void setUp() {
-        buildOrder();
-        buildRequest();
-        buildResponse();
+	@BeforeEach
+	void setUp() {
+		buildOrder();
+		buildRequest();
+		buildResponse();
 
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(orderController)
-                .setControllerAdvice(new ControllerAdvice())
-                .build();
-    }
+		mockMvc = MockMvcBuilders.standaloneSetup(orderController).setControllerAdvice(new ControllerAdvice()).build();
+	}
 
-    @Test
+	@Test
     @DisplayName("Should Create A New Order")
     void shouldCreateANewOrder() throws Exception {
         when(mapper.toCreateOrder(any())).thenReturn(createOrderDTO);
@@ -86,7 +83,7 @@ class OrderControllerTest {
                 .andExpect(jsonPath("$.qrCode").value(createOrderResponseDTO.qrCode()));
     }
 
-    @Test
+	@Test
     @DisplayName("Should return NotFound when any product of order or identified customer not found")
     void shouldReturnNotFoundWhenProductOrIdentifiedCustomerNotFound() throws Exception {
         when(mapper.toCreateOrder(any())).thenReturn(createOrderDTO);
@@ -99,76 +96,39 @@ class OrderControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public static String asJsonString(final Object obj) {
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    private void buildOrder() {
-        var id = UUID.randomUUID();
-        var paymentId = "paymentIdMock";
-        var amount = new BigDecimal("200.00");
-        var status = OrderStatusEnum.PREPARING;
-        var customer = new Customer(id,
-                "Walter White",
-                "31739380037",
-                "heisenberg@gmail.com"
-        );
-        OrderProduct orderProduct1 = new OrderProduct(
-                UUID.randomUUID(),
-                new BigDecimal("100.00"),
-                "Customization 1",
-                UUID.randomUUID(),
-                UUID.randomUUID(),
-                LocalDateTime.now()
-        );
-        OrderProduct orderProduct2 = new OrderProduct(
-                UUID.randomUUID(),
-                new BigDecimal("100.00"),
-                "Customization 2",
-                UUID.randomUUID(),
-                UUID.randomUUID(),
-                LocalDateTime.now()
-        );
-        var products = List.of(orderProduct1, orderProduct2);
+	private void buildOrder() {
+		var id = UUID.randomUUID();
+		var paymentId = "paymentIdMock";
+		var amount = new BigDecimal("200.00");
+		var status = OrderStatusEnum.PREPARING;
+		var customer = new Customer(id, "Walter White", "31739380037", "heisenberg@gmail.com");
+		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
+				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
+		OrderProduct orderProduct2 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 2",
+				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
+		var products = List.of(orderProduct1, orderProduct2);
 
-        order = new Order(
-                id,
-                amount,
-                2,
-                status,
-                true,
-                products,
-                customer,
-                paymentId,
-                null,
-                null
-        );
-    }
+		order = new Order(id, amount, 2, status, true, products, customer, paymentId, null, null);
+	}
 
-    private void buildRequest() {
-        CreateOrderDTO.OrderProducts product = new CreateOrderDTO.OrderProducts(
-                UUID.randomUUID(),
-                "mock observation"
-        );
-        createOrderDTO = new CreateOrderDTO(
-                UUID.randomUUID(),
-                List.of(
-                        product,
-                        product
-                )
+	private void buildRequest() {
+		CreateOrderDTO.OrderProducts product = new CreateOrderDTO.OrderProducts(UUID.randomUUID(), "mock observation");
+		createOrderDTO = new CreateOrderDTO(UUID.randomUUID(), List.of(product, product)
 
-        );
-    }
+		);
+	}
 
-    private void buildResponse() {
-        createOrderResponseDTO = new CreateOrderResponseDTO(
-                order.getId(),
-                order.getPaymentId()
-        );
-    }
+	private void buildResponse() {
+		createOrderResponseDTO = new CreateOrderResponseDTO(order.getId(), order.getPaymentId());
+	}
 
 }

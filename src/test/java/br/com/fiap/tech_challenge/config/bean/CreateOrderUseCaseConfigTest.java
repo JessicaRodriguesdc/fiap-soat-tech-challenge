@@ -18,34 +18,33 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(MockitoExtension.class)
 class CreateOrderUseCaseConfigTest {
 
-    @Mock
-    OrderPersistence orderPersistence;
-    @Mock
-    ProductPersistence productPersistence;
-    @Mock
-    CustomerPersistence customerPersistence;
-    @Mock
-    PaymentGateway paymentGateway;
+	@Mock
+	OrderPersistence orderPersistence;
 
-    @InjectMocks
-    private CreateOrderUseCaseConfig createOrderUseCaseConfig;
+	@Mock
+	ProductPersistence productPersistence;
 
-    @Test
-    @DisplayName("Should Create a Singleton Instance Of CreateOrderUseCaseImpl")
-    void shouldCreateSingletonInstanceOfCreateOrderUseCaseImpl() {
-        var createOrderUseCaseImpl =
-                createOrderUseCaseConfig.createOrderUseCaseImpl(
-                        orderPersistence,
-                        productPersistence,
-                        customerPersistence,
-                        paymentGateway
-                );
+	@Mock
+	CustomerPersistence customerPersistence;
 
-        assertNotNull(createOrderUseCaseImpl);
-        assertNotNull(orderPersistence);
-        assertNotNull(productPersistence);
-        assertNotNull(customerPersistence);
-        assertNotNull(paymentGateway);
-        assertInstanceOf(CreateOrderUseCaseImpl.class, createOrderUseCaseImpl);
-    }
+	@Mock
+	PaymentGateway paymentGateway;
+
+	@InjectMocks
+	private CreateOrderUseCaseConfig createOrderUseCaseConfig;
+
+	@Test
+	@DisplayName("Should Create a Singleton Instance Of CreateOrderUseCaseImpl")
+	void shouldCreateSingletonInstanceOfCreateOrderUseCaseImpl() {
+		var createOrderUseCaseImpl = createOrderUseCaseConfig.createOrderUseCaseImpl(orderPersistence,
+				productPersistence, customerPersistence, paymentGateway);
+
+		assertNotNull(createOrderUseCaseImpl);
+		assertNotNull(orderPersistence);
+		assertNotNull(productPersistence);
+		assertNotNull(customerPersistence);
+		assertNotNull(paymentGateway);
+		assertInstanceOf(CreateOrderUseCaseImpl.class, createOrderUseCaseImpl);
+	}
+
 }

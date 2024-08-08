@@ -32,147 +32,135 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CreateOrderUseCaseImplTest {
 
-    @Mock
-    private OrderPersistence orderPersistence;
+	@Mock
+	private OrderPersistence orderPersistence;
 
-    @Mock
-    private ProductPersistence productPersistence;
+	@Mock
+	private ProductPersistence productPersistence;
 
-    @Mock
-    private CustomerPersistence customerPersistence;
+	@Mock
+	private CustomerPersistence customerPersistence;
 
-    @Mock
-    private PaymentGateway paymentGateway;
+	@Mock
+	private PaymentGateway paymentGateway;
 
-    @InjectMocks
-    private CreateOrderUseCaseImpl createOrderUseCase;
+	@InjectMocks
+	private CreateOrderUseCaseImpl createOrderUseCase;
 
-    private UUID customerId;
-    private UUID productId;
-    private BigDecimal price;
+	private UUID customerId;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	private UUID productId;
 
-    @Test
-    @DisplayName("Should create an order successfully for an identified customer with valid products")
-    void shouldCreateOrderToIdentifiedCustomerSuccessfully() {
-        CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
-        CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(orderProductDTO, orderProductDTO));
+	private BigDecimal price;
 
-        Customer customer = buildCustomer();
-        Product product = buildProduct();
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-        when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
-        when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
-        when(paymentGateway.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
-        when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+	@Test
+	@DisplayName("Should create an order successfully for an identified customer with valid products")
+	void shouldCreateOrderToIdentifiedCustomerSuccessfully() {
+		CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
+		CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(orderProductDTO, orderProductDTO));
 
-        Order order = createOrderUseCase.create(createOrderDTO);
+		Customer customer = buildCustomer();
+		Product product = buildProduct();
 
-        assertNotNull(order);
-        assertEquals("qrCode123", order.getPaymentId());
-        assertEquals(price, order.getAmount());
-    }
+		when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
+		when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
+		when(paymentGateway.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
+		when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-    @Test
-    @DisplayName("Should create an order successfully even when the customer is not identified")
-    void shouldCreateOrderSuccessfullyForUnidentifiedCustomer() {
-        CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
-        CreateOrderDTO createOrderDTO = new CreateOrderDTO(null, List.of(orderProductDTO, orderProductDTO));
+		Order order = createOrderUseCase.create(createOrderDTO);
 
-        Product product = buildProduct();
+		assertNotNull(order);
+		assertEquals("qrCode123", order.getPaymentId());
+		assertEquals(price, order.getAmount());
+	}
 
-        when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
-        when(paymentGateway.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
-        when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+	@Test
+	@DisplayName("Should create an order successfully even when the customer is not identified")
+	void shouldCreateOrderSuccessfullyForUnidentifiedCustomer() {
+		CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
+		CreateOrderDTO createOrderDTO = new CreateOrderDTO(null, List.of(orderProductDTO, orderProductDTO));
 
-        Order order = createOrderUseCase.create(createOrderDTO);
+		Product product = buildProduct();
 
-        assertNotNull(order);
-        assertEquals("qrCode123", order.getPaymentId());
-        assertEquals(price, order.getAmount());
+		when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
+		when(paymentGateway.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
+		when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        verify(customerPersistence, never()).findById(any(UUID.class));
-    }
+		Order order = createOrderUseCase.create(createOrderDTO);
 
-    @Test
-    @DisplayName("Should successfully calculate total amount to an order")
-    void shouldCalculateOrderAmount() {
-        CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
-        CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(
-                orderProductDTO,
-                orderProductDTO,
-                orderProductDTO,
-                orderProductDTO,
-                orderProductDTO
-        ));
+		assertNotNull(order);
+		assertEquals("qrCode123", order.getPaymentId());
+		assertEquals(price, order.getAmount());
 
-        Customer customer = buildCustomer();
-        Product product = buildProduct();
+		verify(customerPersistence, never()).findById(any(UUID.class));
+	}
 
-        when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
-        when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
-        when(paymentGateway.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
-        when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+	@Test
+	@DisplayName("Should successfully calculate total amount to an order")
+	void shouldCalculateOrderAmount() {
+		CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
+		CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId,
+				List.of(orderProductDTO, orderProductDTO, orderProductDTO, orderProductDTO, orderProductDTO));
 
-        Order order = createOrderUseCase.create(createOrderDTO);
+		Customer customer = buildCustomer();
+		Product product = buildProduct();
 
-        assertEquals(BigDecimal.valueOf(499.95), order.getAmount());
-    }
+		when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
+		when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
+		when(paymentGateway.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
+		when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-    @Test
-    @DisplayName("Should throw DoesNotExistException when customer does not exist during order creation")
-    void shouldThrowExceptionWhenCustomerNotFound() {
-        CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
-        CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(orderProductDTO));
+		Order order = createOrderUseCase.create(createOrderDTO);
 
-        when(customerPersistence.findById(customerId)).thenReturn(Optional.empty());
+		assertEquals(BigDecimal.valueOf(499.95), order.getAmount());
+	}
 
-        DoesNotExistException exception = assertThrows(
-                DoesNotExistException.class,
-                () -> createOrderUseCase.create(createOrderDTO)
-        );
-        assertEquals("Customer not found with ID: " + customerId, exception.getMessage());
-    }
+	@Test
+	@DisplayName("Should throw DoesNotExistException when customer does not exist during order creation")
+	void shouldThrowExceptionWhenCustomerNotFound() {
+		CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
+		CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(orderProductDTO));
 
-    @Test
-    @DisplayName("Should throw DoesNotExistException when product does not exist during order creation")
-    void shouldThrowExceptionWhenProductNotFound() {
-        CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
-        CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(orderProductDTO));
-        Customer customer = buildCustomer();
+		when(customerPersistence.findById(customerId)).thenReturn(Optional.empty());
 
-        when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
-        when(productPersistence.findById(productId)).thenReturn(Optional.empty());
+		DoesNotExistException exception = assertThrows(DoesNotExistException.class,
+				() -> createOrderUseCase.create(createOrderDTO));
+		assertEquals("Customer not found with ID: " + customerId, exception.getMessage());
+	}
 
-        DoesNotExistException exception = assertThrows(
-                DoesNotExistException.class,
-                () -> createOrderUseCase.create(createOrderDTO)
-        );
-        assertEquals("Product not found with ID: " + productId, exception.getMessage());
-    }
+	@Test
+	@DisplayName("Should throw DoesNotExistException when product does not exist during order creation")
+	void shouldThrowExceptionWhenProductNotFound() {
+		CreateOrderDTO.OrderProducts orderProductDTO = new CreateOrderDTO.OrderProducts(productId, "Extra cheese");
+		CreateOrderDTO createOrderDTO = new CreateOrderDTO(customerId, List.of(orderProductDTO));
+		Customer customer = buildCustomer();
 
-    private void buildArranges() {
-        this.customerId = UUID.randomUUID();
-        this.productId = UUID.randomUUID();
-        this.price = BigDecimal.valueOf(199.98);
-    }
+		when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
+		when(productPersistence.findById(productId)).thenReturn(Optional.empty());
 
-    private Customer buildCustomer() {
-       return new Customer(customerId, "John Doe", "31739380037", "john.doe@example.com");
-    }
+		DoesNotExistException exception = assertThrows(DoesNotExistException.class,
+				() -> createOrderUseCase.create(createOrderDTO));
+		assertEquals("Product not found with ID: " + productId, exception.getMessage());
+	}
 
-    private Product buildProduct() {
-        return new Product(
-                productId,
-                "Sanduíche de Frango",
-                CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("99.99"),
-                "Sanduíche de frango com salada",
-                StatusProductEnum.ACTIVE,
-                LocalDateTime.now());
-    }
+	private void buildArranges() {
+		this.customerId = UUID.randomUUID();
+		this.productId = UUID.randomUUID();
+		this.price = BigDecimal.valueOf(199.98);
+	}
+
+	private Customer buildCustomer() {
+		return new Customer(customerId, "John Doe", "31739380037", "john.doe@example.com");
+	}
+
+	private Product buildProduct() {
+		return new Product(productId, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE, new BigDecimal("99.99"),
+				"Sanduíche de frango com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());
+	}
+
 }
