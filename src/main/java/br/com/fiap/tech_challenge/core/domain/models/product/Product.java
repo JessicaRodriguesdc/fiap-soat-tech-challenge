@@ -1,9 +1,7 @@
-package br.com.fiap.tech_challenge.core.domain.models;
+package br.com.fiap.tech_challenge.core.domain.models.product;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,14 +13,12 @@ public class Product {
 
 	private String name;
 
-	@Enumerated(EnumType.STRING)
 	private ProductCategoryEnum category;
 
 	private BigDecimal price;
 
 	private String description;
 
-	@Enumerated(EnumType.STRING)
 	private ProductStatusEnum status;
 
 	private LocalDateTime createdAt;

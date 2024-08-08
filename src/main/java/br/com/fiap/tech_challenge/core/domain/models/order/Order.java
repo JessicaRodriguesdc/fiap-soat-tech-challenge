@@ -1,5 +1,7 @@
-package br.com.fiap.tech_challenge.core.domain.models;
+package br.com.fiap.tech_challenge.core.domain.models.order;
 
+import br.com.fiap.tech_challenge.core.domain.models.Customer;
+import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 
 import java.math.BigDecimal;
