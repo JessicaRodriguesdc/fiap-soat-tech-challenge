@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
 
@@ -8,21 +9,24 @@ import java.util.UUID;
 
 public class DeleteProductByIdUseCaseImpl implements DeleteProductByIdUseCase {
 
-	private final ProductPersistence persistence;
+    private final ProductPersistence persistence;
 
-	public DeleteProductByIdUseCaseImpl(ProductPersistence persistence) {
-		this.persistence = persistence;
-	}
+    public DeleteProductByIdUseCaseImpl(ProductPersistence persistence) {
+        this.persistence = persistence;
+    }
 
-	@Override
-	public void delete(UUID id) {
-		var product = persistence.findById(id);
+    @Override
+    public void delete(UUID id) {
+        var productOpt = persistence.findById(id);
 
-		if (product.isEmpty()) {
-			throw new DoesNotExistException("Product not found");
-		}
+        if (productOpt.isEmpty()) {
+            throw new DoesNotExistException("Product not found");
+        }
 
-		persistence.delete(id);
-	}
+        var product = productOpt.get();
+        product.setStatus(StatusProductEnum.INACTIVE);
+        persistence.update(product);
 
+        persistence.delete(id);
+    }
 }
