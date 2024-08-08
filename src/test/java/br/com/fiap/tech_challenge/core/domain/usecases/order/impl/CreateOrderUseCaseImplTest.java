@@ -2,10 +2,10 @@ package br.com.fiap.tech_challenge.core.domain.usecases.order.impl;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Customer;
-import br.com.fiap.tech_challenge.core.domain.models.Order;
-import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.order.Order;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.core.domain.ports.CustomerPersistence;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import br.com.fiap.tech_challenge.core.domain.ports.PaymentGateway;
@@ -159,8 +159,8 @@ class CreateOrderUseCaseImplTest {
 	}
 
 	private Product buildProduct() {
-		return new Product(productId, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE, new BigDecimal("99.99"),
-				"Sanduíche de frango com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());
+		return new Product(productId, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
+				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
 	}
 
 }

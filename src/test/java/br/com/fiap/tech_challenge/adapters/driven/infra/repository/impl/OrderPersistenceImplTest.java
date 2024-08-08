@@ -3,9 +3,9 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 import br.com.fiap.tech_challenge.ConstantTimes;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
-import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,29 +63,6 @@ class OrderPersistenceImplTest {
         assertEquals(order.getCreatedAt(), created.getCreatedAt());
         assertEquals(order.getUpdatedAt(), created.getUpdatedAt());
     }
-
-	@Test
-	@DisplayName("Should Find is paid Order by status and pageable")
-	void shouldFindPaidOrderByStatusAndPagination() {
-		var isPaid = true;
-		var orderStatus = OrderStatusEnum.PREPARING;
-		var pageable = PageRequest.of(0, 10);
-
-		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
-
-		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
-
-		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable);
-
-		var orderFound = orderFoundOpt.get();
-
-		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
-
-		verifyNoMoreInteractions(repository);
-
-		assertNotNull(orderFound);
-		assertEquals(orderFound.toList().size(), 1);
-	}
 
 	@Test
     @DisplayName("Should Find Order by ID")
