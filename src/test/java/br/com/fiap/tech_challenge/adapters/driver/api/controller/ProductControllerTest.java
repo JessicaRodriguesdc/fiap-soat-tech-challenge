@@ -6,7 +6,7 @@ import br.com.fiap.tech_challenge.adapters.driver.api.handler.ControllerAdvice;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyExistsException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.core.domain.models.Product;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
