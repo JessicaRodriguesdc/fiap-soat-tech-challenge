@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UpdateOrderStatusUseCaseConfig {
 
-    @Bean
-    public UpdateOrderStatusUseCaseImpl updateOrderStatusUseCaseImpl(OrderPersistence orderPersistence) {
-        return new UpdateOrderStatusUseCaseImpl(orderPersistence);
-    }
+	@Bean
+	public UpdateOrderStatusUseCaseImpl updateOrderStatusUseCaseImpl(OrderPersistence orderPersistence) {
+		return new UpdateOrderStatusUseCaseImpl(orderPersistence);
+	}
+
 }

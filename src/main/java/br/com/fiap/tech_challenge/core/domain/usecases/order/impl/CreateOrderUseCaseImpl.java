@@ -20,85 +20,72 @@ import java.util.stream.Collectors;
 
 public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
-    private final OrderPersistence persistence;
-    private final ProductPersistence productPersistence;
-    private final CustomerPersistence customerPersistence;
-    private final PaymentGateway paymentGateway;
+	private final OrderPersistence persistence;
 
-    public CreateOrderUseCaseImpl(
-            OrderPersistence persistence,
-            ProductPersistence productPersistence,
-            CustomerPersistence customerPersistence,
-            PaymentGateway paymentGateway) {
-        this.persistence = persistence;
-        this.productPersistence = productPersistence;
-        this.customerPersistence = customerPersistence;
-        this.paymentGateway = paymentGateway;
-    }
+	private final ProductPersistence productPersistence;
 
-    @Override
-    public Order create(CreateOrderDTO input) {
-        Customer customer = null;
+	private final CustomerPersistence customerPersistence;
 
-        if (input.customerId() != null) {
-             customer = getCustomer(input.customerId());
-        }
+	private final PaymentGateway paymentGateway;
 
-        var orderProducts = getOrderProducts(input);
-        var calculatedAmount = reduceAmount(orderProducts);
-        var qrCode = paymentGateway.generatePixQrCode(calculatedAmount);
+	public CreateOrderUseCaseImpl(OrderPersistence persistence, ProductPersistence productPersistence,
+			CustomerPersistence customerPersistence, PaymentGateway paymentGateway) {
+		this.persistence = persistence;
+		this.productPersistence = productPersistence;
+		this.customerPersistence = customerPersistence;
+		this.paymentGateway = paymentGateway;
+	}
 
-        var newOrder = Order.create(calculatedAmount, orderProducts, customer, qrCode);
+	@Override
+	public Order create(CreateOrderDTO input) {
+		Customer customer = null;
 
-        return persistence.create(newOrder);
-    }
+		if (input.customerId() != null) {
+			customer = getCustomer(input.customerId());
+		}
 
-    private Customer getCustomer(UUID customerId) {
-        return customerPersistence.findById(customerId)
-                .orElseThrow(() -> new DoesNotExistException("Customer not found with ID: " + customerId));
-    }
+		var orderProducts = getOrderProducts(input);
+		var calculatedAmount = reduceAmount(orderProducts);
+		var qrCode = paymentGateway.generatePixQrCode(calculatedAmount);
 
-    private BigDecimal reduceAmount(List<OrderProduct> products) {
-        return products.stream()
-                .map(OrderProduct::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+		var newOrder = Order.create(calculatedAmount, orderProducts, customer, qrCode);
 
-    private List<OrderProduct> getOrderProducts(CreateOrderDTO order) {
-        var productIdList = getListOfProductIds(order);
-        var productsMap = getProductMap(findProductListOrThrowException(productIdList));
+		return persistence.create(newOrder);
+	}
 
-        return order
-                .products()
-                .stream()
-                .map(orderProduct -> {
-                    BigDecimal price = productsMap.get(orderProduct.id()).getPrice();
-                    return OrderProduct.create(price, orderProduct.observation(), orderProduct.id());
-                }).toList();
-    }
+	private Customer getCustomer(UUID customerId) {
+		return customerPersistence.findById(customerId)
+			.orElseThrow(() -> new DoesNotExistException("Customer not found with ID: " + customerId));
+	}
 
-    private List<Product> findProductListOrThrowException(List<UUID> productIdList) {
-       return productIdList.stream().map(
-                uuid -> productPersistence.findById(uuid).orElseThrow(
-                        () -> new DoesNotExistException("Product not found with ID: " + uuid)
-                )
-        ).toList();
-    }
+	private BigDecimal reduceAmount(List<OrderProduct> products) {
+		return products.stream().map(OrderProduct::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
 
-    private Map<UUID, Product> getProductMap(List<Product> products) {
-        return products
-                .stream()
-                .collect(Collectors.toMap(
-                        Product::getId,
-                        product -> product,
-                        (existing, replacement) -> existing
-                ));
-    }
+	private List<OrderProduct> getOrderProducts(CreateOrderDTO order) {
+		var productIdList = getListOfProductIds(order);
+		var productsMap = getProductMap(findProductListOrThrowException(productIdList));
 
-    private List<UUID> getListOfProductIds(CreateOrderDTO input) {
-        return input.products()
-                .stream()
-                .map(CreateOrderDTO.OrderProducts::id)
-                .toList();
-    }
+		return order.products().stream().map(orderProduct -> {
+			BigDecimal price = productsMap.get(orderProduct.id()).getPrice();
+			return OrderProduct.create(price, orderProduct.observation(), orderProduct.id());
+		}).toList();
+	}
+
+	private List<Product> findProductListOrThrowException(List<UUID> productIdList) {
+		return productIdList.stream()
+			.map(uuid -> productPersistence.findById(uuid)
+				.orElseThrow(() -> new DoesNotExistException("Product not found with ID: " + uuid)))
+			.toList();
+	}
+
+	private Map<UUID, Product> getProductMap(List<Product> products) {
+		return products.stream()
+			.collect(Collectors.toMap(Product::getId, product -> product, (existing, replacement) -> existing));
+	}
+
+	private List<UUID> getListOfProductIds(CreateOrderDTO input) {
+		return input.products().stream().map(CreateOrderDTO.OrderProducts::id).toList();
+	}
+
 }

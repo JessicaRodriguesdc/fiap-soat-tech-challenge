@@ -9,7 +9,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface OrderPersistence {
-    Optional<Order> findById(UUID id);
-    Order create(Order customer);
-    Page<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Pageable pageable);
+
+	Optional<Order> findById(UUID id);
+
+	Order create(Order customer);
+
+	Page<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Pageable pageable);
+
 }

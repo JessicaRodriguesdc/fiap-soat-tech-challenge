@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface UpdateProductUseCase {
 
-    Product update(UUID id, Product product);
+	Product update(UUID id, Product product);
 
 }

@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.core.domain.models.enums;
 
-public enum StatusProductEnum {
+public enum ProductStatusEnum {
 
-    ACTIVE, INACTIVE
+	ACTIVE, INACTIVE
 
 }

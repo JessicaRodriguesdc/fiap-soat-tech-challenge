@@ -3,8 +3,8 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.ProductRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,26 +22,26 @@ import static org.mockito.Mockito.*;
 
 public class ProductPersistenceImplTest {
 
-    @Mock
-    private ProductRepository repository;
+	@Mock
+	private ProductRepository repository;
 
-    @InjectMocks
-    private ProductPersistenceImpl productPersistence;
+	@InjectMocks
+	private ProductPersistenceImpl productPersistence;
 
-    private Product product;
-    private ProductEntity productEntity;
+	private Product product;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        UUID id = UUID.randomUUID();
-        product = new Product(id, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("99.99"), "Sanduíche de frango com salada",
-                StatusProductEnum.ACTIVE, LocalDateTime.now());
-        productEntity = new ProductEntity(product);
-    }
+	private ProductEntity productEntity;
 
-    @Test
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		UUID id = UUID.randomUUID();
+		product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
+				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
+		productEntity = new ProductEntity(product);
+	}
+
+	@Test
     @DisplayName("Should successfully save a ProductEntity to the database.")
     public void testCreate() {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
@@ -58,7 +58,7 @@ public class ProductPersistenceImplTest {
         verify(repository).save(any(ProductEntity.class));
     }
 
-    @Test
+	@Test
     @DisplayName("Should successfully return a specific ProductEntity in the database.")
     public void testFindById() {
         when(repository.findById(any(UUID.class))).thenReturn(Optional.of(productEntity));
@@ -76,22 +76,22 @@ public class ProductPersistenceImplTest {
         verify(repository).findById(any(UUID.class));
     }
 
-    @Test
+	@Test
     @DisplayName("Should successfully update a ProductEntity to the database.")
     public void testUpdate() {
         when(repository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
-        Product updatedProduct = new Product(product.getId(), "Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("149.99"), "Sanduíche de bacon com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());
+        Product updatedProduct = new Product(product.getId(), "Sanduíche de Bacon", ProductCategoryEnum.MAIN_COURSE,
+                new BigDecimal("149.99"), "Sanduíche de bacon com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
         productEntity.update(updatedProduct);
 
         Product result = productPersistence.update(updatedProduct);
 
         assertEquals(updatedProduct.getId(), result.getId());
         assertEquals("Sanduíche de Bacon", result.getName());
-        assertEquals(CategoryProductEnum.MAIN_COURSE, result.getCategory());
+        assertEquals(ProductCategoryEnum.MAIN_COURSE, result.getCategory());
         assertEquals(new BigDecimal("149.99"), result.getPrice());
-        assertEquals(StatusProductEnum.ACTIVE, result.getStatus());
+        assertEquals(ProductStatusEnum.ACTIVE, result.getStatus());
         assertEquals("Sanduíche de bacon com salada", result.getDescription());
         assertNotNull(result.getCreatedAt());
 

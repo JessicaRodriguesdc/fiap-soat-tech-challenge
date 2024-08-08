@@ -12,39 +12,29 @@ import java.util.UUID;
 
 public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
 
-    private final OrderPersistence persistence;
+	private final OrderPersistence persistence;
 
-    public UpdateOrderStatusUseCaseImpl(OrderPersistence persistence) {
-        this.persistence = persistence;
-    }
+	public UpdateOrderStatusUseCaseImpl(OrderPersistence persistence) {
+		this.persistence = persistence;
+	}
 
-    @Override
-    public void updateStatusById(OrderStatusEnum status, UUID id) {
-        var orderFound = persistence.findById(id).orElseThrow(
-                () -> new DoesNotExistException("Order does no exist!")
-        );
+	@Override
+	public void updateStatusById(OrderStatusEnum status, UUID id) {
+		var orderFound = persistence.findById(id).orElseThrow(() -> new DoesNotExistException("Order does no exist!"));
 
-        if (orderFound.getStatus().equals(status)) {
-            throw new AlreadyInStatusException("Order already in PREPARING status!");
-        }
+		if (orderFound.getStatus().equals(status)) {
+			throw new AlreadyInStatusException("Order already in PREPARING status!");
+		}
 
-        var isPaid = orderFound.isPaid();
-        if (Objects.equals(status, OrderStatusEnum.PREPARING)) {
-            isPaid = true;
-        }
-        var newOrder = new Order(
-                orderFound.getId(),
-                orderFound.getAmount(),
-                orderFound.getSequence(),
-                status,
-                isPaid,
-                orderFound.getProducts(),
-                orderFound.getCustomer(),
-                orderFound.getPaymentId(),
-                orderFound.getCreatedAt(),
-                orderFound.getUpdatedAt()
-        );
+		var isPaid = orderFound.isPaid();
+		if (Objects.equals(status, OrderStatusEnum.PREPARING)) {
+			isPaid = true;
+		}
+		var newOrder = new Order(orderFound.getId(), orderFound.getAmount(), orderFound.getSequence(), status, isPaid,
+				orderFound.getProducts(), orderFound.getCustomer(), orderFound.getPaymentId(),
+				orderFound.getCreatedAt(), orderFound.getUpdatedAt());
 
-        persistence.create(newOrder);
-    }
+		persistence.create(newOrder);
+	}
+
 }

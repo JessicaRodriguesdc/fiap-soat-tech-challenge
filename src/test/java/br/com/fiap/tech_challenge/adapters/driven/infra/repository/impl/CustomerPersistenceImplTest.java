@@ -22,22 +22,22 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CustomerPersistenceImplTest {
 
-    @Mock
-    private CustomerRepository repository;
+	@Mock
+	private CustomerRepository repository;
 
-    @InjectMocks
-    private CustomerPersistenceImpl customerPersistence;
+	@InjectMocks
+	private CustomerPersistenceImpl customerPersistence;
 
-    private Customer customer;
+	private Customer customer;
 
-    private Customer customerExpected;
+	private Customer customerExpected;
 
-    @BeforeEach
-    void setUp() {
-        this.buildArranges();
-    }
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-    @Test
+	@Test
     @DisplayName("Should create and save a new Customer")
     void shouldCreateAndSaveNewCustomer(){
         when(repository.save(any())).thenReturn(new CustomerEntity(customerExpected));
@@ -53,7 +53,7 @@ class CustomerPersistenceImplTest {
         assertEquals(customerExpected.getEmail(), created.getEmail());
     }
 
-    @Test
+	@Test
     @DisplayName("Should Find Customer by document")
     void shouldFindCustomerByDocument(){
         when(repository.findByDocument(customerExpected.getDocument()))
@@ -72,7 +72,7 @@ class CustomerPersistenceImplTest {
         assertNotNull(customerFound.getEmail());
     }
 
-    @Test
+	@Test
     @DisplayName("Should Find Customer by ID")
     void shouldFindCustomerById() {
         when(repository.findById(customerExpected.getId()))
@@ -91,11 +91,10 @@ class CustomerPersistenceImplTest {
         assertNotNull(customerFound.getEmail());
     }
 
-    private void buildArranges() {
-        customer = new Customer("Walter White", "31739380037", "heisenberg@gmail.com");
+	private void buildArranges() {
+		customer = new Customer("Walter White", "31739380037", "heisenberg@gmail.com");
 
-        customerExpected = new Customer(UUID.randomUUID(), "Walter White", "31739380037",
-                "heisenberg@gmail.com");
-    }
+		customerExpected = new Customer(UUID.randomUUID(), "Walter White", "31739380037", "heisenberg@gmail.com");
+	}
 
 }

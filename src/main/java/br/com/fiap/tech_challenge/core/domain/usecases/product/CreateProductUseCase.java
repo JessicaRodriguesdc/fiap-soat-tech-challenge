@@ -4,6 +4,6 @@ import br.com.fiap.tech_challenge.core.domain.models.Product;
 
 public interface CreateProductUseCase {
 
-    Product create(Product product);
+	Product create(Product product);
 
 }

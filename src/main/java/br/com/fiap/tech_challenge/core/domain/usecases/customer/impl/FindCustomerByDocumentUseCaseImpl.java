@@ -7,20 +7,21 @@ import br.com.fiap.tech_challenge.core.domain.usecases.customer.FindCustomerByDo
 
 public class FindCustomerByDocumentUseCaseImpl implements FindCustomerByDocumentUseCase {
 
-    private final CustomerPersistence persistence;
+	private final CustomerPersistence persistence;
 
-    public FindCustomerByDocumentUseCaseImpl(CustomerPersistence persistence) {
-        this.persistence = persistence;
-    }
+	public FindCustomerByDocumentUseCaseImpl(CustomerPersistence persistence) {
+		this.persistence = persistence;
+	}
 
-    @Override
-    public Customer findByDocument(String document) {
-        var customerFound = persistence.findByDocument(document);
+	@Override
+	public Customer findByDocument(String document) {
+		var customerFound = persistence.findByDocument(document);
 
-        if(customerFound.isEmpty()){
-            throw new DoesNotExistException("Customer Doesn't Exist");
-        }
+		if (customerFound.isEmpty()) {
+			throw new DoesNotExistException("Customer Doesn't Exist");
+		}
 
-        return customerFound.get();
-    }
+		return customerFound.get();
+	}
+
 }

@@ -25,78 +25,78 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ControllerAdviceTest {
 
-    @Mock
-    private WebRequest mockWebRequest;
+	@Mock
+	private WebRequest mockWebRequest;
 
-    @Mock
-    private MethodParameter methodParameter;
+	@Mock
+	private MethodParameter methodParameter;
 
-    @Mock
-    private BindingResult bindingResult;
+	@Mock
+	private BindingResult bindingResult;
 
-    @InjectMocks
-    private ControllerAdvice controllerAdvice;
+	@InjectMocks
+	private ControllerAdvice controllerAdvice;
 
-    @Test
-    @DisplayName("Should return HTTP Status Bad Request when application throws AlreadyExistsException")
-    void handleAlreadyExists() {
-        AlreadyExistsException exception = new AlreadyExistsException("");
+	@Test
+	@DisplayName("Should return HTTP Status Bad Request when application throws AlreadyExistsException")
+	void handleAlreadyExists() {
+		AlreadyExistsException exception = new AlreadyExistsException("");
 
-        assertEquals(controllerAdvice.alreadyExists(exception).getStatusCode(), HttpStatus.BAD_REQUEST);
-    }
+		assertEquals(controllerAdvice.alreadyExists(exception).getStatusCode(), HttpStatus.BAD_REQUEST);
+	}
 
-    @Test
-    @DisplayName("Should return HTTP Status Not Found when application throws DoesNotExistException")
-    void handleNotFound() {
-        DoesNotExistException exception = new DoesNotExistException("");
+	@Test
+	@DisplayName("Should return HTTP Status Not Found when application throws DoesNotExistException")
+	void handleNotFound() {
+		DoesNotExistException exception = new DoesNotExistException("");
 
-        assertEquals(controllerAdvice.notFound(exception).getStatusCode(), HttpStatus.NOT_FOUND);
-    }
+		assertEquals(controllerAdvice.notFound(exception).getStatusCode(), HttpStatus.NOT_FOUND);
+	}
 
-    @Test
-    @DisplayName("Should return HTTP Status Conflict when application throws AlreadyInStatusException")
-    void handleAlreadyInStatus() {
-        AlreadyInStatusException exception = new AlreadyInStatusException("");
+	@Test
+	@DisplayName("Should return HTTP Status Conflict when application throws AlreadyInStatusException")
+	void handleAlreadyInStatus() {
+		AlreadyInStatusException exception = new AlreadyInStatusException("");
 
-        assertEquals(controllerAdvice.alreadyInStatus(exception).getStatusCode(), HttpStatus.CONFLICT);
-    }
+		assertEquals(controllerAdvice.alreadyInStatus(exception).getStatusCode(), HttpStatus.CONFLICT);
+	}
 
-    @Test
-    @DisplayName("Should return HTTP Status Bad Request when application throws DateTimeException")
-    void dateTimeException() {
-        DateTimeException exception = new DateTimeException("");
+	@Test
+	@DisplayName("Should return HTTP Status Bad Request when application throws DateTimeException")
+	void dateTimeException() {
+		DateTimeException exception = new DateTimeException("");
 
-        assertEquals(controllerAdvice.dateTimeException(exception).getStatusCode(), HttpStatus.BAD_REQUEST);
-    }
+		assertEquals(controllerAdvice.dateTimeException(exception).getStatusCode(), HttpStatus.BAD_REQUEST);
+	}
 
-    @Test
-    @DisplayName("Should return HTTP Status Bad Request when application throws MethodArgumentNotValidException")
-    void handleMethodArgumentNotValid() {
-        MethodArgumentNotValidException exception = new MethodArgumentNotValidException(methodParameter, bindingResult);
-        HttpHeaders headers = new HttpHeaders();
-        HttpStatusCode status = HttpStatus.BAD_REQUEST;
+	@Test
+	@DisplayName("Should return HTTP Status Bad Request when application throws MethodArgumentNotValidException")
+	void handleMethodArgumentNotValid() {
+		MethodArgumentNotValidException exception = new MethodArgumentNotValidException(methodParameter, bindingResult);
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatusCode status = HttpStatus.BAD_REQUEST;
 
-        assertEquals(controllerAdvice.handleMethodArgumentNotValid(exception, headers, status, mockWebRequest).getStatusCode(), status);
-    }
+		assertEquals(controllerAdvice.handleMethodArgumentNotValid(exception, headers, status, mockWebRequest)
+			.getStatusCode(), status);
+	}
 
-    @Test
-    @DisplayName("Should return HTTP Status Bad Request when application throws HttpMessageNotReadableException")
-    void handleHttpMessageNotReadable() {
-        HttpMessageNotReadableException exception = new HttpMessageNotReadableException("");
-        HttpHeaders headers = new HttpHeaders();
-        HttpStatusCode status = HttpStatus.BAD_REQUEST;
+	@Test
+	@DisplayName("Should return HTTP Status Bad Request when application throws HttpMessageNotReadableException")
+	void handleHttpMessageNotReadable() {
+		HttpMessageNotReadableException exception = new HttpMessageNotReadableException("");
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatusCode status = HttpStatus.BAD_REQUEST;
 
-        assertEquals(controllerAdvice.handleHttpMessageNotReadable(exception, headers, status, mockWebRequest).getStatusCode(), status);
-    }
+		assertEquals(controllerAdvice.handleHttpMessageNotReadable(exception, headers, status, mockWebRequest)
+			.getStatusCode(), status);
+	}
 
-    @Test
-    @DisplayName("Should return HTTP Status Internal Server Error when application throws Exception")
-    void handle500Error() {
-        Exception exception = new Exception();
+	@Test
+	@DisplayName("Should return HTTP Status Internal Server Error when application throws Exception")
+	void handle500Error() {
+		Exception exception = new Exception();
 
-        assertEquals(controllerAdvice.handle500Error(exception).getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-
+		assertEquals(controllerAdvice.handle500Error(exception).getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 }

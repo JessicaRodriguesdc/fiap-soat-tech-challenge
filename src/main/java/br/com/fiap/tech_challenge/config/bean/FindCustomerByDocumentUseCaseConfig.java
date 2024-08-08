@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FindCustomerByDocumentUseCaseConfig {
 
-    @Bean
-    public FindCustomerByDocumentUseCaseImpl findCustomerByDocumentUseCaseImpl(CustomerPersistence persistence){
-        return new FindCustomerByDocumentUseCaseImpl(persistence);
-    }
+	@Bean
+	public FindCustomerByDocumentUseCaseImpl findCustomerByDocumentUseCaseImpl(CustomerPersistence persistence) {
+		return new FindCustomerByDocumentUseCaseImpl(persistence);
+	}
+
 }

@@ -6,15 +6,15 @@ import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseC
 
 public class CreateProductUseCaseImpl implements CreateProductUseCase {
 
-    private final ProductPersistence persistence;
+	private final ProductPersistence persistence;
 
-    public CreateProductUseCaseImpl(ProductPersistence persistence) {
-        this.persistence = persistence;
-    }
+	public CreateProductUseCaseImpl(ProductPersistence persistence) {
+		this.persistence = persistence;
+	}
 
-    @Override
-    public Product create(Product product) {
-        return persistence.create(product);
-    }
+	@Override
+	public Product create(Product product) {
+		return persistence.create(product);
+	}
 
 }

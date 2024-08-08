@@ -1,8 +1,8 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
 import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,24 +20,23 @@ import static org.mockito.Mockito.*;
 
 public class CreateProductUseCaseImplTest {
 
-    @Mock
-    private ProductPersistence persistence;
+	@Mock
+	private ProductPersistence persistence;
 
-    @InjectMocks
-    private CreateProductUseCaseImpl createProductUseCase;
+	@InjectMocks
+	private CreateProductUseCaseImpl createProductUseCase;
 
-    private Product product;
+	private Product product;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        UUID id = UUID.randomUUID();
-        product = new Product(id, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("99.99"), "Sanduíche de frango com salada",
-                StatusProductEnum.ACTIVE, LocalDateTime.now());
-    }
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+		UUID id = UUID.randomUUID();
+		product = new Product(id, "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE, new BigDecimal("99.99"),
+				"Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
+	}
 
-    @Test
+	@Test
     @DisplayName("Should create a Product of type MAIN_COURSE successfully.")
     public void testCreateProduct() {
         when(persistence.create(any(Product.class))).thenReturn(product);
@@ -50,4 +49,5 @@ public class CreateProductUseCaseImplTest {
 
         verify(persistence).create(any(Product.class));
     }
+
 }
