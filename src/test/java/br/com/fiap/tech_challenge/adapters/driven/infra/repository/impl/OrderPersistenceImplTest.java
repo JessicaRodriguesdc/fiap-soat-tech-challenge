@@ -2,10 +2,14 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
+import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.OrderPageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.core.domain.models.order.Order;
+import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
+import br.com.fiap.tech_challenge.core.domain.models.order.PageablePageableOrder;
+import br.com.fiap.tech_challenge.core.domain.models.order.PageableSortOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +37,9 @@ class OrderPersistenceImplTest {
 
 	@Mock
 	private OrderRepository repository;
+
+    @Mock
+    private OrderPageMapper mapper;
 
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
@@ -63,6 +70,38 @@ class OrderPersistenceImplTest {
         assertEquals(order.getCreatedAt(), created.getCreatedAt());
         assertEquals(order.getUpdatedAt(), created.getUpdatedAt());
     }
+
+	@Test
+	@DisplayName("Should Find is paid Order by status and pageable")
+	void shouldFindPaidOrderByStatusAndPagination() {
+		var isPaid = true;
+		var orderStatus = OrderStatusEnum.PREPARING;
+		var pageable = PageRequest.of(0, 10);
+
+		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
+
+		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
+        when(mapper.toDomainPage(any())).thenReturn(buildPageableOrder());
+
+		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(
+                isPaid,
+                orderStatus,
+                pageable.getPageNumber(),
+                pageable.getPageSize()
+        );
+
+        List<Order> orderFound = orderFoundOpt.getContent();
+
+		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
+
+		verifyNoMoreInteractions(repository);
+
+		assertNotNull(orderFound);
+		assertEquals(orderFound.size(), 1);
+        assertEquals(orderFoundOpt.getSize(), 1);
+        assertEquals(orderFoundOpt.getTotalElements(), 1);
+        assertEquals(orderFoundOpt.getNumberOfElements(), 1);
+	}
 
 	@Test
     @DisplayName("Should Find Order by ID")
@@ -99,5 +138,33 @@ class OrderPersistenceImplTest {
 
 		order = new Order(id, amount, sequence, orderStatus, true, products, null, paymentId, createdAt, updatedAt);
 	}
+
+    private PageableOrder buildPageableOrder() {
+        Long totalPages = 1L;
+        Long totalElements = 1L;
+        Long size = 1L;
+        List<Order> content = List.of(order);
+        Long number = null;
+        PageableSortOrder sort = null;
+        Boolean first = null;
+        Boolean last = null;
+        Long numberOfElements = 1L;
+        PageablePageableOrder pageable = null;
+        Boolean empty = null;
+
+        return new PageableOrder(
+            totalPages,
+            totalElements,
+            size,
+            content,
+            number,
+            sort,
+            first,
+            last,
+            numberOfElements,
+            pageable,
+            empty
+        );
+    }
 
 }
