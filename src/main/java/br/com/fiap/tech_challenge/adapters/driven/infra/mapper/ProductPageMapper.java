@@ -15,7 +15,7 @@ public class ProductPageMapper {
 	}
 
 	private PageableProduct buildPageableProduct(Page<Product> page) {
-		return new PageableProduct(page.getTotalElements(), page.getTotalElements(), (long) page.getSize(),
+		return new PageableProduct((long) page.getTotalPages(), page.getTotalElements(), (long) page.getSize(),
 				page.getContent(), (long) page.getNumber(), this.buildPageableSortOrder(page), page.isFirst(),
 				page.isLast(), (long) page.getNumberOfElements(), this.buildPageablePageable(page), page.isEmpty());
 	}
