@@ -22,6 +22,8 @@ public interface FakeCheckoutControllerOpenApi {
 					array = @ArraySchema(schema = @Schema(implementation = ErrorsValidateData.class))))
 	@ApiResponse(responseCode = "404", description = "Not Found Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
+	@ApiResponse(responseCode = "409", description = "Conflict Response",
+			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
 	@ApiResponse(responseCode = "500", description = "Internal Server Error Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
 	ResponseEntity<Void> checkout(@RequestBody FakeCheckoutRequestDTO fakeCheckoutRequestDTO);
