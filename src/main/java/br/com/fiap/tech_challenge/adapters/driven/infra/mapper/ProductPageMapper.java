@@ -1,39 +1,21 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.mapper;
 
-import br.com.fiap.tech_challenge.core.domain.models.product.PageablePageableProduct;
-import br.com.fiap.tech_challenge.core.domain.models.product.PageableProduct;
-import br.com.fiap.tech_challenge.core.domain.models.product.PageableSortProduct;
-import br.com.fiap.tech_challenge.core.domain.models.product.Product;
+import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
+import br.com.fiap.tech_challenge.core.domain.models.Product;
+import br.com.fiap.tech_challenge.core.domain.models.ProductPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductPageMapper {
 
-	public PageableProduct toDomainPage(Page<Product> page) {
-		return this.buildPageableProduct(page);
+	public ProductPage toDomainPage(Page<Product> page) {
+		return new ProductPage(page.getContent(), this.buildDomainPage(page));
 	}
 
-	private PageableProduct buildPageableProduct(Page<Product> page) {
-		return new PageableProduct((long) page.getTotalPages(), page.getTotalElements(), (long) page.getSize(),
-				page.getContent(), (long) page.getNumber(), this.buildPageableSortOrder(page), page.isFirst(),
-				page.isLast(), (long) page.getNumberOfElements(), this.buildPageablePageable(page), page.isEmpty());
+	private DomainPage buildDomainPage(Page<Product> page) {
+		return new DomainPage((long) page.getTotalPages(), page.getTotalElements(), (long) page.getSize(),
+				(long) page.getNumber(), page.isFirst(), page.isLast(), (long) page.getNumberOfElements(),
+				page.isEmpty());
 	}
-
-	private PageableSortProduct buildPageablePageableSort(Page<Product> page) {
-		return new PageableSortProduct(page.getPageable().getSort().isEmpty(), page.getPageable().getSort().isSorted(),
-				page.getPageable().getSort().isUnsorted());
-	}
-
-	private PageablePageableProduct buildPageablePageable(Page<Product> page) {
-		return new PageablePageableProduct((long) page.getPageable().getPageNumber(),
-				(long) page.getPageable().getPageSize(), this.buildPageablePageableSort(page),
-				page.getPageable().getOffset(), page.getPageable().isPaged(), page.getPageable().isUnpaged());
-	}
-
-	private PageableSortProduct buildPageableSortOrder(Page<Product> page) {
-		return new PageableSortProduct(page.getSort().isEmpty(), page.getSort().isSorted(),
-				page.getSort().isUnsorted());
-	}
-
 }

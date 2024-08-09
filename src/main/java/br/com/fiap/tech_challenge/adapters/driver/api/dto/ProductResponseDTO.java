@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.dto;
 
-import br.com.fiap.tech_challenge.core.domain.models.product.Product;
+import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -14,5 +14,4 @@ public record ProductResponseDTO(@Schema(example = "ab69e046-fb5a-4a79-98d6-363e
 	public ProductResponseDTO(Product product) {
 		this(product.getId(), product.getName(), product.getCategory(), product.getPrice(), product.getDescription());
 	}
-
 }

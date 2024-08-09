@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableProductResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductPageResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
@@ -9,7 +9,7 @@ import br.com.fiap.tech_challenge.adapters.driver.api.openapi.ProductControllerO
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
-import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.FindProductsByCategoryUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class ProductController implements ProductControllerOpenApi {
 
 	private final CreateProductUseCase createProductUseCase;
 
-	private final GetProductsByCategoryUseCase getProductsByCategoryUseCase;
+	private final FindProductsByCategoryUseCase findProductsByCategoryUseCase;
 
 	private final UpdateProductUseCase updateProductUseCase;
 
@@ -32,10 +32,10 @@ public class ProductController implements ProductControllerOpenApi {
 	private final ProductMapper mapper;
 
 	public ProductController(CreateProductUseCase createProductUseCase,
-			GetProductsByCategoryUseCase getProductsByCategoryUseCase, UpdateProductUseCase updateProductUseCase,
-			DeleteProductByIdUseCase deleteProductByIdUseCase, ProductMapper mapper) {
+							 FindProductsByCategoryUseCase findProductsByCategoryUseCase, UpdateProductUseCase updateProductUseCase,
+							 DeleteProductByIdUseCase deleteProductByIdUseCase, ProductMapper mapper) {
 		this.createProductUseCase = createProductUseCase;
-		this.getProductsByCategoryUseCase = getProductsByCategoryUseCase;
+		this.findProductsByCategoryUseCase = findProductsByCategoryUseCase;
 		this.updateProductUseCase = updateProductUseCase;
 		this.deleteProductByIdUseCase = deleteProductByIdUseCase;
 		this.mapper = mapper;
@@ -50,11 +50,11 @@ public class ProductController implements ProductControllerOpenApi {
 
 	@Override
 	@GetMapping
-	public ResponseEntity<PageableProductResponseDTO> getProductsByCategory(@RequestParam ProductCategoryEnum category,
+	public ResponseEntity<ProductPageResponseDTO> findProductsByCategory(@RequestParam ProductCategoryEnum category,
 			@RequestParam(required = false, defaultValue = "0") int page,
 			@RequestParam(required = false, defaultValue = "10") int size) {
-		var pageableProduct = getProductsByCategoryUseCase.getByCategory(category, page, size);
-		return ResponseEntity.status(HttpStatus.OK).body(new PageableProductResponseDTO(pageableProduct));
+		var pageableProduct = findProductsByCategoryUseCase.findByCategory(category, page, size);
+		return ResponseEntity.status(HttpStatus.OK).body(new ProductPageResponseDTO(pageableProduct));
 	}
 
 	@Override

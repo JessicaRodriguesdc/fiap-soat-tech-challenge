@@ -2,21 +2,21 @@ package br.com.fiap.tech_challenge.core.domain.models;
 
 public class DomainPage {
 
-	private Long totalPages;
+	private final Long totalPages;
 
-	private Long totalElements;
+	private final Long totalElements;
 
-	private Long size;
+	private final Long size;
 
-	private Long number;
+	private final Long number;
 
-	private Boolean first;
+	private final Boolean first;
 
-	private Boolean last;
+	private final Boolean last;
 
-	private Long numberOfElements;
+	private final Long numberOfElements;
 
-	private Boolean empty;
+	private final Boolean empty;
 
 	public DomainPage(Long totalPages, Long totalElements, Long size, Long number, Boolean first, Boolean last,
 			Long numberOfElements, Boolean empty) {

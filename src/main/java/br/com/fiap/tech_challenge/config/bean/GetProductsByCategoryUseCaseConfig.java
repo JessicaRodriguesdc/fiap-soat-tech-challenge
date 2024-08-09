@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.config.bean;
 
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
-import br.com.fiap.tech_challenge.core.domain.usecases.product.impl.GetProductsByCategoryUseCaseImpl;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.impl.FindProductsByCategoryUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class GetProductsByCategoryUseCaseConfig {
 
 	@Bean
-	public GetProductsByCategoryUseCaseImpl getProductsByCategoryUseCaseImpl(ProductPersistence persistence) {
-		return new GetProductsByCategoryUseCaseImpl(persistence);
+	public FindProductsByCategoryUseCaseImpl getProductsByCategoryUseCaseImpl(ProductPersistence persistence) {
+		return new FindProductsByCategoryUseCaseImpl(persistence);
 	}
 
 }
