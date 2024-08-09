@@ -2,13 +2,13 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
-import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.OrderPageMapper;
+import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.PageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
-import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
 import br.com.fiap.tech_challenge.core.domain.models.Order;
-import br.com.fiap.tech_challenge.core.domain.models.OrderPage;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPage;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,14 +38,14 @@ class OrderPersistenceImplTest {
 	private OrderRepository repository;
 
 	@Mock
-	private OrderPageMapper mapper;
+	private PageMapper<Order> mapper;
 
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
 
 	private Order order;
 
-	private OrderPage orderPage;
+	private CustomPageable<Order> orderPage;
 
 	@BeforeEach
 	void setUp() {
@@ -87,17 +87,17 @@ class OrderPersistenceImplTest {
 		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable.getPageNumber(),
 				pageable.getPageSize());
 
-		List<Order> orderFound = orderFoundOpt.getContent();
+		List<Order> orderFound = orderFoundOpt.content();
 
 		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
 
 		verifyNoMoreInteractions(repository);
 
 		assertNotNull(orderFound);
-		assertEquals(orderFound.size(), orderPage.getContent().size());
-		assertEquals(orderFoundOpt.getPage().getSize(), orderPage.getPage().getSize());
-		assertEquals(orderFoundOpt.getPage().getTotalElements(), orderPage.getPage().getTotalElements());
-		assertEquals(orderFoundOpt.getPage().getNumberOfElements(), orderPage.getPage().getNumberOfElements());
+		assertEquals(orderFound.size(), orderPage.content().size());
+		assertEquals(orderFoundOpt.page().size(), orderPage.page().size());
+		assertEquals(orderFoundOpt.page().totalElements(), orderPage.page().totalElements());
+		assertEquals(orderFoundOpt.page().numberOfElements(), orderPage.page().numberOfElements());
 	}
 
 	@Test
@@ -127,7 +127,7 @@ class OrderPersistenceImplTest {
 		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
 				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
 
-		orderPage = new OrderPage(List.of(order), new DomainPage(1L, 1L, 1L, 1L, true, false, 1L, false));
+		orderPage = new CustomPageable<>(List.of(order), new CustomPage(1L, 1L, 1L, 1L, true, false, 1L, false));
 	}
 
 }

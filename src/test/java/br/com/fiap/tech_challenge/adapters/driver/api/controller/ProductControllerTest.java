@@ -7,12 +7,12 @@ import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyExistsException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.ProductPage;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ControllerAdvice;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPage;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.FindProductsByCategoryUseCase;
@@ -74,7 +74,7 @@ public class ProductControllerTest {
 
 	private ProductResponseDTO responseDTO;
 
-	private DomainPage domainPage;
+	private CustomPage domainPage;
 
 	private ProductPageResponseDTO productPageResponseDto;
 
@@ -152,7 +152,7 @@ public class ProductControllerTest {
 	@DisplayName("Should get Products by category successfully.")
 	void shouldGetProductsByCategory() throws Exception {
 		when(findProductsByCategoryUseCase.findByCategory(ProductCategoryEnum.MAIN_COURSE, 0, 10))
-				.thenReturn(new ProductPage(List.of(product), domainPage));
+				.thenReturn(new CustomPageable<>(List.of(product), domainPage));
 
 		mockMvc.perform(MockMvcRequestBuilders.get(baseUrl)
 						.queryParam("category", ProductCategoryEnum.MAIN_COURSE.toString())
@@ -190,7 +190,7 @@ public class ProductControllerTest {
 		product = new Product(id, name, category, price, description, status, createdAt);
 		requestDTO = new ProductRequestDTO(name, category, price, description);
 		responseDTO = new ProductResponseDTO(product);
-		domainPage = new DomainPage(1L, 1L, 1L, 1L, true, true, 1L, false);
+		domainPage = new CustomPage(1L, 1L, 1L, 1L, true, true, 1L, false);
 
 		productPageResponseDto = new ProductPageResponseDTO(List.of(responseDTO),
 				new PageResponseDTO(1L, 1L, 1L, 1L, true, true, 1L, false));

@@ -1,10 +1,10 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
-import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.ProductPage;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPage;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +35,7 @@ class FindProductsByCategoryUseCaseImplTest {
 
 	private Product product;
 
-	private DomainPage domainPage;
+	private CustomPage domainPage;
 
 	@BeforeEach
 	void setUp() {
@@ -46,17 +46,17 @@ class FindProductsByCategoryUseCaseImplTest {
     @DisplayName("Should get Products by category successfully.")
     void shouldGetProductsByCategorySuccessfully() {
         when(persistence.findByCategory(product.getCategory(), 0,10))
-                .thenReturn(new ProductPage(List.of(product), domainPage));
+                .thenReturn(new CustomPageable<Product>(List.of(product), domainPage));
 
         var result = getProductsByCategoryUseCase.findByCategory(product.getCategory(),0,10 );
 
         assertNotNull(result);
-        assertEquals(domainPage.getNumberOfElements(), result.getPage().getNumberOfElements());
-        assertEquals(product.getId(), result.getContent().getFirst().getId());
-        assertEquals(product.getName(), result.getContent().getFirst().getName());
-        assertEquals(product.getCategory(), result.getContent().getFirst().getCategory());
-        assertEquals(product.getPrice(), result.getContent().getFirst().getPrice());
-        assertEquals(product.getDescription(), result.getContent().getFirst().getDescription());
+        assertEquals(domainPage.numberOfElements(), result.page().numberOfElements());
+        assertEquals(product.getId(), result.content().getFirst().getId());
+        assertEquals(product.getName(), result.content().getFirst().getName());
+        assertEquals(product.getCategory(), result.content().getFirst().getCategory());
+        assertEquals(product.getPrice(), result.content().getFirst().getPrice());
+        assertEquals(product.getDescription(), result.content().getFirst().getDescription());
 
         verify(persistence).findByCategory(product.getCategory(), 0,10);
     }
@@ -66,7 +66,7 @@ class FindProductsByCategoryUseCaseImplTest {
 				BigDecimal.valueOf(99.99), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
 				LocalDateTime.now());
 
-		domainPage = new DomainPage(1L, 1L, 1L, 1L, true, true, 1L, false);
+		domainPage = new CustomPage(1L, 1L, 1L, 1L, true, true, 1L, false);
 
 	}
 
