@@ -37,7 +37,7 @@ public class OrderController implements OrderControllerOpenApi {
 			@RequestParam("isPaid") Boolean isPaid, @RequestParam(required = false, defaultValue = "0") int page,
 			@RequestParam(required = false, defaultValue = "10") int size) {
 
-		OrderPage pageableOrder = findPaidOrdersUseCase.findByIsPaidAndStatus(status, isPaid, page, size);
+		var pageableOrder = findPaidOrdersUseCase.findByIsPaidAndStatus(status, isPaid, page, size);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new OrderPageResponseDTO(pageableOrder));
 	}
