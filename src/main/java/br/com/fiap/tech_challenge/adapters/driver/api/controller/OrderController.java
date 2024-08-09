@@ -5,8 +5,9 @@ import br.com.fiap.tech_challenge.adapters.driver.api.dto.CreateOrderResponseDTO
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.OrderPageResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.OrderMapper;
 import br.com.fiap.tech_challenge.adapters.driver.api.openapi.OrderControllerOpenApi;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.OrderPage;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.CreateOrderUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.FindPaidOrdersUseCase;
 import jakarta.validation.Valid;

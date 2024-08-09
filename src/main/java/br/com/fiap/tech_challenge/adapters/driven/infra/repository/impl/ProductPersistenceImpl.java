@@ -1,11 +1,11 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
-import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.ProductPageMapper;
+import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.PageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.ProductRepository;
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
-import br.com.fiap.tech_challenge.core.domain.models.ProductPage;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -18,9 +18,9 @@ public class ProductPersistenceImpl implements ProductPersistence {
 
 	private final ProductRepository repository;
 
-	private final ProductPageMapper mapper;
+	private final PageMapper<Product> mapper;
 
-	public ProductPersistenceImpl(ProductRepository repository, ProductPageMapper mapper) {
+	public ProductPersistenceImpl(ProductRepository repository, PageMapper<Product> mapper) {
 		this.repository = repository;
 		this.mapper = mapper;
 	}
@@ -33,7 +33,7 @@ public class ProductPersistenceImpl implements ProductPersistence {
 	}
 
 	@Override
-	public ProductPage findByCategory(ProductCategoryEnum category, Integer page, Integer size) {
+	public CustomPageable<Product> findByCategory(ProductCategoryEnum category, Integer page, Integer size) {
 		var products = repository.findByCategory(category, PageRequest.of(page, size)).map(ProductEntity::toProduct);
 		return mapper.toDomainPage(products);
 	}
