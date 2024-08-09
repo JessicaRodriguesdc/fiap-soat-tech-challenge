@@ -35,8 +35,7 @@ class FindProductsByCategoryUseCaseImplTest {
 
 	private Product product;
 
-    private DomainPage domainPage;
-
+	private DomainPage domainPage;
 
 	@BeforeEach
 	void setUp() {
@@ -63,12 +62,11 @@ class FindProductsByCategoryUseCaseImplTest {
     }
 
 	private void buildArranges() {
-        product = new Product(UUID.randomUUID(), "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
-                BigDecimal.valueOf(99.99), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE, LocalDateTime.now());
+		product = new Product(UUID.randomUUID(), "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
+				BigDecimal.valueOf(99.99), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
+				LocalDateTime.now());
 
-
-        domainPage = new DomainPage(1L,
-                1L, 1L, 1L, true, true, 1L, false);
+		domainPage = new DomainPage(1L, 1L, 1L, 1L, true, true, 1L, false);
 
 	}
 

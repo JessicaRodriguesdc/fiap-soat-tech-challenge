@@ -190,11 +190,10 @@ public class ProductControllerTest {
 		product = new Product(id, name, category, price, description, status, createdAt);
 		requestDTO = new ProductRequestDTO(name, category, price, description);
 		responseDTO = new ProductResponseDTO(product);
-		domainPage = new DomainPage(1L,
-				1L, 1L, 1L, true, true, 1L, false);
+		domainPage = new DomainPage(1L, 1L, 1L, 1L, true, true, 1L, false);
 
-		productPageResponseDto = new ProductPageResponseDTO(List.of(responseDTO), new PageResponseDTO(1L,
-				1L, 1L, 1L, true, true, 1L, false));
+		productPageResponseDto = new ProductPageResponseDTO(List.of(responseDTO),
+				new PageResponseDTO(1L, 1L, 1L, 1L, true, true, 1L, false));
 	}
 
 	public static String asJsonString(final Object obj) {

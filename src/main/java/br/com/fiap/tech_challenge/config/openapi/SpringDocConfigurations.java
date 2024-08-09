@@ -39,7 +39,8 @@ public class SpringDocConfigurations {
 		Map<String, Schema> problemSchema = ModelConverters.getInstance().read(ProblemDTO.class);
 		Map<String, Schema> customerResponseDto = ModelConverters.getInstance().read(CustomerResponseDTO.class);
 		Map<String, Schema> createOrderResponseDto = ModelConverters.getInstance().read(CreateOrderResponseDTO.class);
-		Map<String, Schema> orderProductsResponseDto = ModelConverters.getInstance().read(CreateOrderRequestDTO.OrderProducts.class);
+		Map<String, Schema> orderProductsResponseDto = ModelConverters.getInstance()
+			.read(CreateOrderRequestDTO.OrderProducts.class);
 		Map<String, Schema> orderPageResponseDto = ModelConverters.getInstance().read(OrderPageResponseDTO.class);
 		Map<String, Schema> orderResponseDto = ModelConverters.getInstance().read(OrderResponseDTO.class);
 		Map<String, Schema> productPageResponseDto = ModelConverters.getInstance().read(ProductPageResponseDTO.class);

@@ -32,8 +32,8 @@ public class ProductController implements ProductControllerOpenApi {
 	private final ProductMapper mapper;
 
 	public ProductController(CreateProductUseCase createProductUseCase,
-							 FindProductsByCategoryUseCase findProductsByCategoryUseCase, UpdateProductUseCase updateProductUseCase,
-							 DeleteProductByIdUseCase deleteProductByIdUseCase, ProductMapper mapper) {
+			FindProductsByCategoryUseCase findProductsByCategoryUseCase, UpdateProductUseCase updateProductUseCase,
+			DeleteProductByIdUseCase deleteProductByIdUseCase, ProductMapper mapper) {
 		this.createProductUseCase = createProductUseCase;
 		this.findProductsByCategoryUseCase = findProductsByCategoryUseCase;
 		this.updateProductUseCase = updateProductUseCase;

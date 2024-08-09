@@ -18,4 +18,5 @@ public class ProductPageMapper {
 				(long) page.getNumber(), page.isFirst(), page.isLast(), (long) page.getNumberOfElements(),
 				page.isEmpty());
 	}
+
 }
