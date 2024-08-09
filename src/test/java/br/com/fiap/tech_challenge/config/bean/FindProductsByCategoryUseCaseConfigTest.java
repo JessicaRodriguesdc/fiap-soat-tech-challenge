@@ -13,23 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-public class FindProductsByCategoryUseCaseConfigTest {
+class FindProductsByCategoryUseCaseConfigTest {
 
 	@Mock
 	ProductPersistence persistence;
 
 	@InjectMocks
-	private GetProductsByCategoryUseCaseConfig getProductsByCategoryUseCaseConfig;
+	private FindProductsByCategoryUseCaseConfig findProductsByCategoryUseCaseConfig;
 
 	@Test
-	@DisplayName("Should Create a Singleton Instance Of GetProductsByCategoryUseCaseImpl")
-	void shouldCreateSingletonInstanceOfGetProductsByCategoryUseCaseImpl() {
-		var getProductsByCategoryUseCaseImpl = getProductsByCategoryUseCaseConfig
-			.getProductsByCategoryUseCaseImpl(persistence);
+	@DisplayName("Should Create a Singleton Instance Of FindProductsByCategoryUseCaseImpl")
+	void shouldCreateSingletonInstanceOfFindProductsByCategoryUseCaseImpl() {
+		var findProductsByCategoryUseCaseImpl = findProductsByCategoryUseCaseConfig
+			.findProductsByCategoryUseCaseImpl(persistence);
 
-		assertNotNull(getProductsByCategoryUseCaseImpl);
+		assertNotNull(findProductsByCategoryUseCaseImpl);
 		assertNotNull(persistence);
-		assertInstanceOf(FindProductsByCategoryUseCaseImpl.class, getProductsByCategoryUseCaseImpl);
+		assertInstanceOf(FindProductsByCategoryUseCaseImpl.class, findProductsByCategoryUseCaseImpl);
 	}
 
 }

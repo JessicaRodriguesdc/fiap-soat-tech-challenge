@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class GetProductsByCategoryUseCaseConfig {
+public class FindProductsByCategoryUseCaseConfig {
 
 	@Bean
-	public FindProductsByCategoryUseCaseImpl getProductsByCategoryUseCaseImpl(ProductPersistence persistence) {
+	public FindProductsByCategoryUseCaseImpl findProductsByCategoryUseCaseImpl(ProductPersistence persistence) {
 		return new FindProductsByCategoryUseCaseImpl(persistence);
 	}
 
