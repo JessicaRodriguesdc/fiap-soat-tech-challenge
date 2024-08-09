@@ -38,8 +38,8 @@ class OrderPersistenceImplTest {
 	@Mock
 	private OrderRepository repository;
 
-    @Mock
-    private OrderPageMapper mapper;
+	@Mock
+	private OrderPageMapper mapper;
 
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
@@ -81,16 +81,12 @@ class OrderPersistenceImplTest {
 		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
 
 		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
-        when(mapper.toDomainPage(any())).thenReturn(buildPageableOrder());
+		when(mapper.toDomainPage(any())).thenReturn(buildPageableOrder());
 
-		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(
-                isPaid,
-                orderStatus,
-                pageable.getPageNumber(),
-                pageable.getPageSize()
-        );
+		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable.getPageNumber(),
+				pageable.getPageSize());
 
-        List<Order> orderFound = orderFoundOpt.getContent();
+		List<Order> orderFound = orderFoundOpt.getContent();
 
 		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
 
@@ -98,9 +94,9 @@ class OrderPersistenceImplTest {
 
 		assertNotNull(orderFound);
 		assertEquals(orderFound.size(), 1);
-        assertEquals(orderFoundOpt.getSize(), 1);
-        assertEquals(orderFoundOpt.getTotalElements(), 1);
-        assertEquals(orderFoundOpt.getNumberOfElements(), 1);
+		assertEquals(orderFoundOpt.getSize(), 1);
+		assertEquals(orderFoundOpt.getTotalElements(), 1);
+		assertEquals(orderFoundOpt.getNumberOfElements(), 1);
 	}
 
 	@Test
@@ -139,32 +135,21 @@ class OrderPersistenceImplTest {
 		order = new Order(id, amount, sequence, orderStatus, true, products, null, paymentId, createdAt, updatedAt);
 	}
 
-    private PageableOrder buildPageableOrder() {
-        Long totalPages = 1L;
-        Long totalElements = 1L;
-        Long size = 1L;
-        List<Order> content = List.of(order);
-        Long number = null;
-        PageableSortOrder sort = null;
-        Boolean first = null;
-        Boolean last = null;
-        Long numberOfElements = 1L;
-        PageablePageableOrder pageable = null;
-        Boolean empty = null;
+	private PageableOrder buildPageableOrder() {
+		Long totalPages = 1L;
+		Long totalElements = 1L;
+		Long size = 1L;
+		List<Order> content = List.of(order);
+		Long number = null;
+		PageableSortOrder sort = null;
+		Boolean first = null;
+		Boolean last = null;
+		Long numberOfElements = 1L;
+		PageablePageableOrder pageable = null;
+		Boolean empty = null;
 
-        return new PageableOrder(
-            totalPages,
-            totalElements,
-            size,
-            content,
-            number,
-            sort,
-            first,
-            last,
-            numberOfElements,
-            pageable,
-            empty
-        );
-    }
+		return new PageableOrder(totalPages, totalElements, size, content, number, sort, first, last, numberOfElements,
+				pageable, empty);
+	}
 
 }
