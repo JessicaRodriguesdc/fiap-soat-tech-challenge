@@ -3,9 +3,9 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
 import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.OrderPageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
+import br.com.fiap.tech_challenge.core.domain.models.OrderPage;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	}
 
 	@Override
-	public PageableOrder findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Integer page, Integer size) {
+	public OrderPage findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Integer page, Integer size) {
 		var orders = repository.findByIsPaidAndStatus(isPaid, status, PageRequest.of(page, size));
 
 		return mapper.toDomainPage(orders.map(OrderEntity::toOrder));

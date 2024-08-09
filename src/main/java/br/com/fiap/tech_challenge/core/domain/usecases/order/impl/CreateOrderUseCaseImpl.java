@@ -2,7 +2,7 @@ package br.com.fiap.tech_challenge.core.domain.usecases.order.impl;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Customer;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.core.domain.ports.CustomerPersistence;

@@ -1,8 +1,6 @@
-package br.com.fiap.tech_challenge.core.domain.models.order;
+package br.com.fiap.tech_challenge.core.domain.models;
 
-import java.util.List;
-
-public class PageableOrder {
+public class DomainPage {
 
 	private Long totalPages;
 
@@ -10,11 +8,7 @@ public class PageableOrder {
 
 	private Long size;
 
-	private List<Order> content;
-
 	private Long number;
-
-	private PageableSortOrder sort;
 
 	private Boolean first;
 
@@ -22,23 +16,17 @@ public class PageableOrder {
 
 	private Long numberOfElements;
 
-	private PageablePageableOrder pageable;
-
 	private Boolean empty;
 
-	public PageableOrder(Long totalPages, Long totalElements, Long size, List<Order> content, Long number,
-			PageableSortOrder sort, Boolean first, Boolean last, Long numberOfElements, PageablePageableOrder pageable,
-			Boolean empty) {
+	public DomainPage(Long totalPages, Long totalElements, Long size, Long number, Boolean first, Boolean last,
+			Long numberOfElements, Boolean empty) {
 		this.totalPages = totalPages;
 		this.totalElements = totalElements;
 		this.size = size;
-		this.content = content;
 		this.number = number;
-		this.sort = sort;
 		this.first = first;
 		this.last = last;
 		this.numberOfElements = numberOfElements;
-		this.pageable = pageable;
 		this.empty = empty;
 	}
 
@@ -54,16 +42,8 @@ public class PageableOrder {
 		return size;
 	}
 
-	public List<Order> getContent() {
-		return content;
-	}
-
 	public Long getNumber() {
 		return number;
-	}
-
-	public PageableSortOrder getSort() {
-		return sort;
 	}
 
 	public Boolean getFirst() {
@@ -76,10 +56,6 @@ public class PageableOrder {
 
 	public Long getNumberOfElements() {
 		return numberOfElements;
-	}
-
-	public PageablePageableOrder getPageable() {
-		return pageable;
 	}
 
 	public Boolean getEmpty() {

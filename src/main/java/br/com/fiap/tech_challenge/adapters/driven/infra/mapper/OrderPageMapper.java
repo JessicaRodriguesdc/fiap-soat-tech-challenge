@@ -1,38 +1,22 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.mapper;
 
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageablePageableOrder;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableSortOrder;
+import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.OrderPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderPageMapper {
 
-	public PageableOrder toDomainPage(Page<Order> page) {
-		return this.buildPageableOrder(page);
+	public OrderPage toDomainPage(Page<Order> page) {
+		return new OrderPage(page.getContent(), this.buildDomainPage(page));
 	}
 
-	private PageableOrder buildPageableOrder(Page<Order> page) {
-		return new PageableOrder((long) page.getTotalPages(), page.getTotalElements(), (long) page.getSize(),
-				page.getContent(), (long) page.getNumber(), this.buildPageableSortOrder(page), page.isFirst(),
-				page.isLast(), (long) page.getNumberOfElements(), this.buildPageablePageable(page), page.isEmpty());
-	}
-
-	private PageableSortOrder buildPageablePageableSort(Page<Order> page) {
-		return new PageableSortOrder(page.getPageable().getSort().isEmpty(), page.getPageable().getSort().isSorted(),
-				page.getPageable().getSort().isUnsorted());
-	}
-
-	private PageablePageableOrder buildPageablePageable(Page<Order> page) {
-		return new PageablePageableOrder((long) page.getPageable().getPageNumber(),
-				(long) page.getPageable().getPageSize(), this.buildPageablePageableSort(page),
-				page.getPageable().getOffset(), page.getPageable().isPaged(), page.getPageable().isUnpaged());
-	}
-
-	private PageableSortOrder buildPageableSortOrder(Page<Order> page) {
-		return new PageableSortOrder(page.getSort().isEmpty(), page.getSort().isSorted(), page.getSort().isUnsorted());
+	private DomainPage buildDomainPage(Page<Order> page) {
+		return new DomainPage((long) page.getTotalPages(), page.getTotalElements(), (long) page.getSize(),
+				(long) page.getNumber(), page.isFirst(), page.isLast(), (long) page.getNumberOfElements(),
+				page.isEmpty());
 	}
 
 }
