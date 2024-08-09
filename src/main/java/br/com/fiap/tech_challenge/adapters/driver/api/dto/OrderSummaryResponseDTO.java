@@ -10,7 +10,7 @@ public record OrderSummaryResponseDTO(@Schema(example = "1") Integer sequence,
 		@Schema(example = "2024-08-03T01:15:58Z") LocalDateTime createdAt,
 		@Schema(example = "2024-08-03T01:17:58Z") LocalDateTime updatedAt) {
 	public OrderSummaryResponseDTO(Order order) {
-		this(order.getSequence(), order.getCustomer() != null ? order.getCustomer().getName() : "",
+		this(order.getSequence(), order.getCustomer() != null ? order.getCustomer().getName() : null,
 				order.getCreatedAt(), order.getUpdatedAt());
 	}
 }
