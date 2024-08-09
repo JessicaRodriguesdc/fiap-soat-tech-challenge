@@ -1,4 +1,4 @@
-package br.com.fiap.tech_challenge.core.domain.models.product;
+package br.com.fiap.tech_challenge.core.domain.models;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;

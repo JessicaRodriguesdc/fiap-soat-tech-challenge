@@ -7,7 +7,7 @@ import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.models.Customer;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.CreateOrderUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.FindPaidOrdersUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.dto.CreateOrderDTO;

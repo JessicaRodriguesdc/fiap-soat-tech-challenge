@@ -1,7 +1,6 @@
 package br.com.fiap.tech_challenge.core.domain.models;
 
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

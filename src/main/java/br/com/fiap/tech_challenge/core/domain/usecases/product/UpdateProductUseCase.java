@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product;
 
-import br.com.fiap.tech_challenge.core.domain.models.product.Product;
+import br.com.fiap.tech_challenge.core.domain.models.Product;
 
 import java.util.UUID;
 

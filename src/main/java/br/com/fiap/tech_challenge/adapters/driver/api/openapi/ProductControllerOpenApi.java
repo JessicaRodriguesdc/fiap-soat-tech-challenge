@@ -1,6 +1,6 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.openapi;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableProductResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductPageResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ErrorsValidateData;
@@ -30,12 +30,12 @@ public interface ProductControllerOpenApi {
 
 	@Operation(summary = "Find a Product By Category")
 	@ApiResponse(responseCode = "200", description = "Ok Response",
-			content = @Content(mediaType = "application/json", schema = @Schema(ref = "PageableProductResponseDTO")))
+			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProductPageResponseDTO")))
 	@ApiResponse(responseCode = "404", description = "Not Found Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
 	@ApiResponse(responseCode = "500", description = "Internal Server Error Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
-	ResponseEntity<PageableProductResponseDTO> getProductsByCategory(ProductCategoryEnum category, int page, int size);
+	ResponseEntity<ProductPageResponseDTO> findProductsByCategory(ProductCategoryEnum category, int page, int size);
 
 	@Operation(summary = "Update a Product By ID")
 	@ApiResponse(responseCode = "200", description = "Ok Response",

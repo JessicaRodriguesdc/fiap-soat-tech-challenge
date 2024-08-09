@@ -4,12 +4,11 @@ import br.com.fiap.tech_challenge.ConstantTimes;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
 import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.OrderPageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
+import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
+import br.com.fiap.tech_challenge.core.domain.models.OrderPage;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageablePageableOrder;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableSortOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,6 +45,8 @@ class OrderPersistenceImplTest {
 
 	private Order order;
 
+	private OrderPage orderPage;
+
 	@BeforeEach
 	void setUp() {
 		this.buildArranges();
@@ -81,7 +82,7 @@ class OrderPersistenceImplTest {
 		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
 
 		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
-		when(mapper.toDomainPage(any())).thenReturn(buildPageableOrder());
+		when(mapper.toDomainPage(any())).thenReturn(orderPage);
 
 		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable.getPageNumber(),
 				pageable.getPageSize());
@@ -93,10 +94,10 @@ class OrderPersistenceImplTest {
 		verifyNoMoreInteractions(repository);
 
 		assertNotNull(orderFound);
-		assertEquals(orderFound.size(), 1);
-		assertEquals(orderFoundOpt.getSize(), 1);
-		assertEquals(orderFoundOpt.getTotalElements(), 1);
-		assertEquals(orderFoundOpt.getNumberOfElements(), 1);
+		assertEquals(orderFound.size(), orderPage.getContent().size());
+		assertEquals(orderFoundOpt.getPage().getSize(), orderPage.getPage().getSize());
+		assertEquals(orderFoundOpt.getPage().getTotalElements(), orderPage.getPage().getTotalElements());
+		assertEquals(orderFoundOpt.getPage().getNumberOfElements(), orderPage.getPage().getNumberOfElements());
 	}
 
 	@Test
@@ -123,33 +124,10 @@ class OrderPersistenceImplTest {
 		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
 				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
 
-		var id = UUID.randomUUID();
-		var paymentId = "paymentIdMock";
-		var amount = new BigDecimal("200.00");
-		var createdAt = LocalDateTime.now();
-		var updatedAt = LocalDateTime.now();
-		var products = List.of(orderProduct1, orderProduct1);
-		var sequence = 2;
-		var orderStatus = OrderStatusEnum.RECEIVED;
+		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
+				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
 
-		order = new Order(id, amount, sequence, orderStatus, true, products, null, paymentId, createdAt, updatedAt);
-	}
-
-	private PageableOrder buildPageableOrder() {
-		Long totalPages = 1L;
-		Long totalElements = 1L;
-		Long size = 1L;
-		List<Order> content = List.of(order);
-		Long number = null;
-		PageableSortOrder sort = null;
-		Boolean first = null;
-		Boolean last = null;
-		Long numberOfElements = 1L;
-		PageablePageableOrder pageable = null;
-		Boolean empty = null;
-
-		return new PageableOrder(totalPages, totalElements, size, content, number, sort, first, last, numberOfElements,
-				pageable, empty);
+		orderPage = new OrderPage(List.of(order), new DomainPage(1L, 1L, 1L, 1L, true, false, 1L, false));
 	}
 
 }

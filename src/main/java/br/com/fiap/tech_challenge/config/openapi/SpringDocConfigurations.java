@@ -38,31 +38,27 @@ public class SpringDocConfigurations {
 
 		Map<String, Schema> problemSchema = ModelConverters.getInstance().read(ProblemDTO.class);
 		Map<String, Schema> customerResponseDto = ModelConverters.getInstance().read(CustomerResponseDTO.class);
-		Map<String, Schema> orderResponseDto = ModelConverters.getInstance().read(CreateOrderResponseDTO.class);
+		Map<String, Schema> createOrderResponseDto = ModelConverters.getInstance().read(CreateOrderResponseDTO.class);
 		Map<String, Schema> orderProductsResponseDto = ModelConverters.getInstance()
 			.read(CreateOrderRequestDTO.OrderProducts.class);
+		Map<String, Schema> orderPageResponseDto = ModelConverters.getInstance().read(OrderPageResponseDTO.class);
+		Map<String, Schema> orderResponseDto = ModelConverters.getInstance().read(OrderResponseDTO.class);
+		Map<String, Schema> productPageResponseDto = ModelConverters.getInstance().read(ProductPageResponseDTO.class);
 		Map<String, Schema> productResponseDto = ModelConverters.getInstance().read(ProductResponseDTO.class);
-		Map<String, Schema> productPageableResponseDto = ModelConverters.getInstance()
-			.read(PageableProductResponseDTO.class);
-		Map<String, Schema> orderPageableResponseDto = ModelConverters.getInstance()
-			.read(PageableOrderSummaryResponseDTO.class);
-		Map<String, Schema> pageableSortResponseDto = ModelConverters.getInstance().read(PageableSortResponseDTO.class);
-		Map<String, Schema> pageablePageableResponseDto = ModelConverters.getInstance()
-			.read(PageablePageableResponseDTO.class);
-		Map<String, Schema> orderSummaryResponseDTO = ModelConverters.getInstance().read(OrderSummaryResponseDTO.class);
+		Map<String, Schema> pageResponseDto = ModelConverters.getInstance().read(PageResponseDTO.class);
+
 		Schema errorsValidateDataArraySchema = new ArraySchema()
 			.items(new Schema<>().$ref("#/components/schemas/ErrorsValidateData"));
 
 		schemaMap.putAll(problemSchema);
 		schemaMap.putAll(customerResponseDto);
-		schemaMap.putAll(orderResponseDto);
+		schemaMap.putAll(createOrderResponseDto);
 		schemaMap.putAll(orderProductsResponseDto);
+		schemaMap.putAll(orderPageResponseDto);
+		schemaMap.putAll(orderResponseDto);
+		schemaMap.putAll(productPageResponseDto);
 		schemaMap.putAll(productResponseDto);
-		schemaMap.putAll(orderPageableResponseDto);
-		schemaMap.putAll(productPageableResponseDto);
-		schemaMap.putAll(pageableSortResponseDto);
-		schemaMap.putAll(pageablePageableResponseDto);
-		schemaMap.putAll(orderSummaryResponseDTO);
+		schemaMap.putAll(pageResponseDto);
 		schemaMap.put("ErrorsValidateDataList", errorsValidateDataArraySchema);
 
 		return schemaMap;
