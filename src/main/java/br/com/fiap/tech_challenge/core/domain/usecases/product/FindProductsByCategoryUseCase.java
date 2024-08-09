@@ -1,22 +1,11 @@
-package br.com.fiap.tech_challenge.core.domain.ports;
+package br.com.fiap.tech_challenge.core.domain.usecases.product;
 
 import br.com.fiap.tech_challenge.core.domain.models.Product;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 
-import java.util.Optional;
-import java.util.UUID;
-
-public interface ProductPersistence {
+public interface FindProductsByCategoryUseCase {
 
 	CustomPageable<Product> findByCategory(ProductCategoryEnum category, Integer page, Integer size);
-
-	Product create(Product product);
-
-	Optional<Product> findById(UUID id);
-
-	Product update(Product product);
-
-	void delete(UUID id);
 
 }
