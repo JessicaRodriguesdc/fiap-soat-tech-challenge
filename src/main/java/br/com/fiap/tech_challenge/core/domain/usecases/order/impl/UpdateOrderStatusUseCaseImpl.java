@@ -22,21 +22,17 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
 	public void updateStatusById(OrderStatusEnum status, UUID id) {
 		var orderFound = persistence.findById(id).orElseThrow(() -> new DoesNotExistException("Order does no exist!"));
 
-		if (orderFound.getStatus().equals(status)) {
-			throw new AlreadyInStatusException("Order already in " + status + " status!");
-		}
-
 		var validPreviousStatus = status.validPreviousStatus();
 		if (!validPreviousStatus.contains(orderFound.getStatus())) {
 			throw new InvalidStatusUpdateException(
 					"Order must be at one of the following status: " + validPreviousStatus);
 		}
 
-		var isPaid = orderFound.isPaid();
-		if (OrderStatusEnum.PREPARING.equals(status)) {
-			isPaid = true;
+		if (orderFound.getStatus().equals(status)) {
+			throw new AlreadyInStatusException("Order already in " + status + " status!");
 		}
 
+		var isPaid = OrderStatusEnum.PREPARING.equals(status) || orderFound.isPaid();
 		var updatedOrder = new Order(orderFound.getId(), orderFound.getAmount(), orderFound.getSequence(), status,
 				isPaid, orderFound.getProducts(), orderFound.getCustomer(), orderFound.getPaymentId(),
 				orderFound.getCreatedAt(), orderFound.getUpdatedAt());
