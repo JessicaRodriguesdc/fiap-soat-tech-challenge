@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.config.bean;
 
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
-import br.com.fiap.tech_challenge.core.domain.usecases.product.impl.GetProductsByCategoryUseCaseImpl;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.impl.FindProductsByCategoryUseCaseImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-public class GetProductsByCategoryUseCaseConfigTest {
+public class FindProductsByCategoryUseCaseConfigTest {
 
 	@Mock
 	ProductPersistence persistence;
@@ -29,7 +29,7 @@ public class GetProductsByCategoryUseCaseConfigTest {
 
 		assertNotNull(getProductsByCategoryUseCaseImpl);
 		assertNotNull(persistence);
-		assertInstanceOf(GetProductsByCategoryUseCaseImpl.class, getProductsByCategoryUseCaseImpl);
+		assertInstanceOf(FindProductsByCategoryUseCaseImpl.class, getProductsByCategoryUseCaseImpl);
 	}
 
 }

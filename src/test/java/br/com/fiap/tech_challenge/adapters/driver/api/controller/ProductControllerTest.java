@@ -1,21 +1,21 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
-import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableProductResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageResponseDTO;
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductPageResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyExistsException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.core.domain.models.DomainPage;
+import br.com.fiap.tech_challenge.core.domain.models.Product;
+import br.com.fiap.tech_challenge.core.domain.models.ProductPage;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.product.PageablePageableProduct;
-import br.com.fiap.tech_challenge.core.domain.models.product.PageableProduct;
-import br.com.fiap.tech_challenge.core.domain.models.product.PageableSortProduct;
-import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.adapters.driver.api.handler.ControllerAdvice;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
-import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.FindProductsByCategoryUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -55,7 +55,7 @@ public class ProductControllerTest {
 	private UpdateProductUseCase updateProductUseCase;
 
 	@Mock
-	private GetProductsByCategoryUseCase getProductsByCategoryUseCase;
+	private FindProductsByCategoryUseCase findProductsByCategoryUseCase;
 
 	@Mock
 	private DeleteProductByIdUseCase deleteProductByIdUseCase;
@@ -74,9 +74,9 @@ public class ProductControllerTest {
 
 	private ProductResponseDTO responseDTO;
 
-	private PageableProduct pageableProduct;
+	private DomainPage domainPage;
 
-	private PageableProductResponseDTO pageableProductResponseDTO;
+	private ProductPageResponseDTO productPageResponseDto;
 
 	@BeforeEach
 	public void setup() {
@@ -88,7 +88,7 @@ public class ProductControllerTest {
 
 	@Test
 	@DisplayName("Should Create A New Product")
-	public void shouldCreateANewProduct() throws Exception {
+	void shouldCreateANewProduct() throws Exception {
 		when(mapper.toProduct(requestDTO)).thenReturn(product);
 		when(createProductUseCase.create(product)).thenReturn(product);
 
@@ -119,7 +119,7 @@ public class ProductControllerTest {
 
 	@Test
 	@DisplayName("Should Update A Exist Product")
-	public void shouldUpdateAProduct() throws Exception {
+	void shouldUpdateAProduct() throws Exception {
 		when(mapper.toProduct(requestDTO)).thenReturn(product);
 		when(updateProductUseCase.update(any(UUID.class), any(Product.class))).thenReturn(product);
 
@@ -150,26 +150,26 @@ public class ProductControllerTest {
 
 	@Test
 	@DisplayName("Should get Products by category successfully.")
-	public void shouldGetProductsByCategory() throws Exception {
-		when(getProductsByCategoryUseCase.getByCategory(ProductCategoryEnum.MAIN_COURSE, 0, 10))
-				.thenReturn(pageableProduct);
+	void shouldGetProductsByCategory() throws Exception {
+		when(findProductsByCategoryUseCase.findByCategory(ProductCategoryEnum.MAIN_COURSE, 0, 10))
+				.thenReturn(new ProductPage(List.of(product), domainPage));
 
 		mockMvc.perform(MockMvcRequestBuilders.get(baseUrl)
 						.queryParam("category", ProductCategoryEnum.MAIN_COURSE.toString())
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.totalPages").value(1))
-				.andExpect(jsonPath("$.totalElements").value(10))
-				.andExpect(jsonPath("$.content[0].id").value(pageableProductResponseDTO.content().getFirst().id().toString()))
-				.andExpect(jsonPath("$.content[0].name").value(pageableProductResponseDTO.content().getFirst().name()))
-				.andExpect(jsonPath("$.content[0].category").value(pageableProductResponseDTO.content().getFirst().category().toString()))
-				.andExpect(jsonPath("$.content[0].price").value(pageableProductResponseDTO.content().getFirst().price().toString()))
-				.andExpect(jsonPath("$.content[0].description").value(pageableProductResponseDTO.content().getFirst().description()));
+				.andExpect(jsonPath("$.page.totalPages").value(productPageResponseDto.page().totalPages()))
+				.andExpect(jsonPath("$.page.totalElements").value(productPageResponseDto.page().totalElements()))
+				.andExpect(jsonPath("$.content[0].id").value(productPageResponseDto.content().getFirst().id().toString()))
+				.andExpect(jsonPath("$.content[0].name").value(productPageResponseDto.content().getFirst().name()))
+				.andExpect(jsonPath("$.content[0].category").value(productPageResponseDto.content().getFirst().category().toString()))
+				.andExpect(jsonPath("$.content[0].price").value(productPageResponseDto.content().getFirst().price().toString()))
+				.andExpect(jsonPath("$.content[0].description").value(productPageResponseDto.content().getFirst().description()));
 	}
 
 	@Test
 	@DisplayName("Should delete a Product by id successfully.")
-	public void shouldDeleteAProductById() throws Exception {
+	void shouldDeleteAProductById() throws Exception {
 		UUID id = UUID.randomUUID();
 
 		mockMvc.perform(MockMvcRequestBuilders.delete("/v1/products/{id}", id).accept(MediaType.APPLICATION_JSON))
@@ -186,17 +186,15 @@ public class ProductControllerTest {
 		var description = "Sanduíche de frango com salada";
 		var status = ProductStatusEnum.ACTIVE;
 		var createdAt = LocalDateTime.now();
-		var pageableSortProduct = new PageableSortProduct(false, false, false);
-		var pageablePageableSortProduct = new PageableSortProduct(false, false, false);
-		var pageablePageableProduct = new PageablePageableProduct(0L, 10L, pageablePageableSortProduct, 1L, true,
-				false);
 
 		product = new Product(id, name, category, price, description, status, createdAt);
 		requestDTO = new ProductRequestDTO(name, category, price, description);
 		responseDTO = new ProductResponseDTO(product);
-		pageableProduct = new PageableProduct(1L, 10L, 1L, List.of(product), 1L, pageableSortProduct, true, true, 10L,
-				pageablePageableProduct, false);
-		pageableProductResponseDTO = new PageableProductResponseDTO(pageableProduct);
+		domainPage = new DomainPage(1L,
+				1L, 1L, 1L, true, true, 1L, false);
+
+		productPageResponseDto = new ProductPageResponseDTO(List.of(responseDTO), new PageResponseDTO(1L,
+				1L, 1L, 1L, true, true, 1L, false));
 	}
 
 	public static String asJsonString(final Object obj) {
