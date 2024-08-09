@@ -15,7 +15,7 @@ public class OrderPageMapper {
 	}
 
 	private PageableOrder buildPageableOrder(Page<Order> page) {
-		return new PageableOrder(page.getTotalElements(), page.getTotalElements(), (long) page.getSize(),
+		return new PageableOrder((long) page.getTotalPages(), page.getTotalElements(), (long) page.getSize(),
 				page.getContent(), (long) page.getNumber(), this.buildPageableSortOrder(page), page.isFirst(),
 				page.isLast(), (long) page.getNumberOfElements(), this.buildPageablePageable(page), page.isEmpty());
 	}
