@@ -33,6 +33,10 @@ O projeto segue a Arquitetura Hexagonal (Ports and Adapters), permitindo maior f
 
 - Docker Compose
 
+### Imagem Docker
+
+A imagem docker desse projeto foi buildada através do arquivo `Dockerfile` presente neste repositório, e enviada a um container registry (Docker HUB). Para visualizá-la, basta acessar o link: https://hub.docker.com/r/willosouza/fiap-soat-tech-challenge
+
 ### Execução
 
 #### Subindo a aplicação via docker compose
