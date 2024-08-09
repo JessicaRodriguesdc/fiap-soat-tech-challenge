@@ -1,16 +1,17 @@
 package br.com.fiap.tech_challenge.core.domain.usecases.product.impl;
 
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,55 +22,51 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class DeleteProductByIdUseCaseImplTest {
 
-    @Mock
-    private ProductPersistence persistence;
+	@Mock
+	private ProductPersistence persistence;
 
-    @InjectMocks
-    private DeleteProductByIdUseCaseImpl deleteProductByIdUseCase;
+	@InjectMocks
+	private DeleteProductByIdUseCaseImpl deleteProductByIdUseCase;
 
-    private UUID productId;
+	private Product product;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        productId = UUID.randomUUID();
-    }
+	@BeforeEach
+	void setUp() {
+		this.buildArranges();
+	}
 
-    @Test
+	@Test
     @DisplayName("Should delete a Product by ID successfully.")
-    public void testDeleteProductByIdSuccess() {
-        // Configure mock to find the product by ID
-        when(persistence.findById(productId)).thenReturn(Optional.of(new Product(
-                productId, "Sanduíche de Frango", CategoryProductEnum.MAIN_COURSE,
-                new BigDecimal("99.99"), "Sanduíche de frango com salada",
-                StatusProductEnum.ACTIVE, LocalDateTime.now()
-        )));
+    public void shouldDeleteProductById() {
+        when(persistence.findById(product.getId())).thenReturn(Optional.of(product));
 
-        doNothing().when(persistence).delete(productId);
+        doNothing().when(persistence).delete(product.getId());
 
-        // Call the method under test
-        deleteProductByIdUseCase.delete(productId);
+        deleteProductByIdUseCase.delete(product.getId());
 
-        // Verify the behavior
-        verify(persistence, times(1)).delete(productId);
+        verify(persistence).delete(product.getId());
     }
 
-    @Test
+	@Test
     @DisplayName("Should throw DoesNotExistException when trying to delete a non-existent Product.")
-    public void testDeleteProductByIdNotFound() {
-        // Configure mock to return empty for product ID
-        when(persistence.findById(productId)).thenReturn(Optional.empty());
+    public void shouldThrowDoesNotExistException() {
+        when(persistence.findById(product.getId())).thenReturn(Optional.empty());
 
-        // Assert that the exception is thrown
         DoesNotExistException exception = assertThrows(DoesNotExistException.class, () ->
-                deleteProductByIdUseCase.delete(productId)
-        );
+                deleteProductByIdUseCase.delete(product.getId()));
 
         assertEquals("Product not found", exception.getMessage());
 
-        // Verify no delete operation was performed
-        verify(persistence, never()).delete(productId);
+        verify(persistence, never()).delete(product.getId());
     }
+
+	private void buildArranges() {
+		product = new Product(UUID.randomUUID(), "Sanduíche de Frango", ProductCategoryEnum.MAIN_COURSE,
+				new BigDecimal("99.99"), "Sanduíche de frango com salada", ProductStatusEnum.ACTIVE,
+				LocalDateTime.now());
+	}
+
 }

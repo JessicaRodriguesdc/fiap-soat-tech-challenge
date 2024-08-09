@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class GetProductsByCategoryUseCaseConfig {
 
 	@Bean
-	public GetProductsByCategoryUseCaseImpl createGetProductsByCategoryUseCaseImpl(ProductPersistence persistence) {
+	public GetProductsByCategoryUseCaseImpl getProductsByCategoryUseCaseImpl(ProductPersistence persistence) {
 		return new GetProductsByCategoryUseCaseImpl(persistence);
 	}
 

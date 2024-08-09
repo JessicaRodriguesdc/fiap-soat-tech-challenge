@@ -1,13 +1,13 @@
 package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.ProductEntity;
+import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.ProductPageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.ProductRepository;
-import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.models.product.PageableProduct;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.core.domain.ports.ProductPersistence;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -50,8 +50,9 @@ public class ProductPersistenceImpl implements ProductPersistence {
 		return productUpdated.toProduct();
 	}
 
-    @Override
-    public void delete(UUID id) {
-        repository.findById(id).ifPresent(repository::save);
-    }
+	@Override
+	public void delete(UUID id) {
+		repository.findById(id).ifPresent(repository::save);
+	}
+
 }

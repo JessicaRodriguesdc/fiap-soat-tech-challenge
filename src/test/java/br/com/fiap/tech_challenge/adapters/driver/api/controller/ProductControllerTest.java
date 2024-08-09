@@ -1,19 +1,32 @@
 package br.com.fiap.tech_challenge.adapters.driver.api.controller;
 
+import br.com.fiap.tech_challenge.adapters.driver.api.dto.PageableProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.adapters.driver.api.mapper.ProductMapper;
-import br.com.fiap.tech_challenge.core.domain.models.Product;
-import br.com.fiap.tech_challenge.core.domain.models.enums.CategoryProductEnum;
-import br.com.fiap.tech_challenge.core.domain.models.enums.StatusProductEnum;
+import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyExistsException;
+import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductCategoryEnum;
+import br.com.fiap.tech_challenge.core.domain.models.enums.ProductStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.product.PageablePageableProduct;
+import br.com.fiap.tech_challenge.core.domain.models.product.PageableProduct;
+import br.com.fiap.tech_challenge.core.domain.models.product.PageableSortProduct;
+import br.com.fiap.tech_challenge.core.domain.models.product.Product;
+import br.com.fiap.tech_challenge.adapters.driver.api.handler.ControllerAdvice;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.CreateProductUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.DeleteProductByIdUseCase;
+import br.com.fiap.tech_challenge.core.domain.usecases.product.GetProductsByCategoryUseCase;
 import br.com.fiap.tech_challenge.core.domain.usecases.product.UpdateProductUseCase;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -41,14 +54,14 @@ public class ProductControllerTest {
 	@Mock
 	private UpdateProductUseCase updateProductUseCase;
 
-    @Mock
-    private GetProductsByCategoryUseCase getProductsByCategoryUseCase;
+	@Mock
+	private GetProductsByCategoryUseCase getProductsByCategoryUseCase;
 
-    @Mock
-    private DeleteProductByIdUseCase deleteProductByIdUseCase;
+	@Mock
+	private DeleteProductByIdUseCase deleteProductByIdUseCase;
 
-    @Mock
-    private ProductMapper mapper;
+	@Mock
+	private ProductMapper mapper;
 
 	@InjectMocks
 	private ProductController productController;
@@ -60,6 +73,10 @@ public class ProductControllerTest {
 	private ProductRequestDTO requestDTO;
 
 	private ProductResponseDTO responseDTO;
+
+	private PageableProduct pageableProduct;
+
+	private PageableProductResponseDTO pageableProductResponseDTO;
 
 	@BeforeEach
 	public void setup() {
@@ -131,6 +148,36 @@ public class ProductControllerTest {
 				.andExpect(status().isNotFound());
 	}
 
+	@Test
+	@DisplayName("Should get Products by category successfully.")
+	public void shouldGetProductsByCategory() throws Exception {
+		when(getProductsByCategoryUseCase.getByCategory(ProductCategoryEnum.MAIN_COURSE, 0, 10))
+				.thenReturn(pageableProduct);
+
+		mockMvc.perform(MockMvcRequestBuilders.get(baseUrl)
+						.queryParam("category", ProductCategoryEnum.MAIN_COURSE.toString())
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.totalPages").value(1))
+				.andExpect(jsonPath("$.totalElements").value(10))
+				.andExpect(jsonPath("$.content[0].id").value(pageableProductResponseDTO.content().getFirst().id().toString()))
+				.andExpect(jsonPath("$.content[0].name").value(pageableProductResponseDTO.content().getFirst().name()))
+				.andExpect(jsonPath("$.content[0].category").value(pageableProductResponseDTO.content().getFirst().category().toString()))
+				.andExpect(jsonPath("$.content[0].price").value(pageableProductResponseDTO.content().getFirst().price().toString()))
+				.andExpect(jsonPath("$.content[0].description").value(pageableProductResponseDTO.content().getFirst().description()));
+	}
+
+	@Test
+	@DisplayName("Should delete a Product by id successfully.")
+	public void shouldDeleteAProductById() throws Exception {
+		UUID id = UUID.randomUUID();
+
+		mockMvc.perform(MockMvcRequestBuilders.delete("/v1/products/{id}", id).accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNoContent());
+
+		verify(deleteProductByIdUseCase).delete(id);
+	}
+
 	private void buildArranges() {
 		var id = UUID.randomUUID();
 		var name = "Sanduíche de Frango";
@@ -139,10 +186,17 @@ public class ProductControllerTest {
 		var description = "Sanduíche de frango com salada";
 		var status = ProductStatusEnum.ACTIVE;
 		var createdAt = LocalDateTime.now();
+		var pageableSortProduct = new PageableSortProduct(false, false, false);
+		var pageablePageableSortProduct = new PageableSortProduct(false, false, false);
+		var pageablePageableProduct = new PageablePageableProduct(0L, 10L, pageablePageableSortProduct, 1L, true,
+				false);
 
 		product = new Product(id, name, category, price, description, status, createdAt);
 		requestDTO = new ProductRequestDTO(name, category, price, description);
 		responseDTO = new ProductResponseDTO(product);
+		pageableProduct = new PageableProduct(1L, 10L, 1L, List.of(product), 1L, pageableSortProduct, true, true, 10L,
+				pageablePageableProduct, false);
+		pageableProductResponseDTO = new PageableProductResponseDTO(pageableProduct);
 	}
 
 	public static String asJsonString(final Object obj) {
@@ -157,32 +211,4 @@ public class ProductControllerTest {
 		}
 	}
 
-    @Test
-    @DisplayName("Should get Products by category successfully.")
-    public void testGetProductsByCategory() throws Exception {
-        UUID id = UUID.randomUUID();
-        Product product = new Product(id, "Sanduíche de Bacon", CategoryProductEnum.MAIN_COURSE, BigDecimal.valueOf(199.99), "Sanduíche de bacon com salada", StatusProductEnum.ACTIVE, LocalDateTime.now());
-        var page = PageRequest.of(0, 10);
-
-        when(getProductsByCategoryUseCase.getByCategory(CategoryProductEnum.MAIN_COURSE, page))
-                .thenReturn(new PageImpl<>(List.of(product)));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/products")
-                        .queryParam("category", CategoryProductEnum.MAIN_COURSE.name())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("Should delete a Product by id successfully.")
-    public void testDeleteProductById() throws Exception {
-        UUID id = UUID.randomUUID();
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/products/{id}", id)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
-
-        verify(deleteProductByIdUseCase).delete(id);
-    }
 }
