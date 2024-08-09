@@ -3,12 +3,11 @@ package br.com.fiap.tech_challenge.core.domain.usecases.order.impl;
 import br.com.fiap.tech_challenge.core.domain.exceptions.AlreadyInStatusException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.core.domain.exceptions.InvalidStatusUpdateException;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
+import br.com.fiap.tech_challenge.core.domain.models.order.Order;
 import br.com.fiap.tech_challenge.core.domain.ports.OrderPersistence;
 import br.com.fiap.tech_challenge.core.domain.usecases.order.UpdateOrderStatusUseCase;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
