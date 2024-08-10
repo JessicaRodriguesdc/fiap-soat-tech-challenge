@@ -95,6 +95,17 @@ rodar o seguinte comando: `docker compose up -d`
 
 ![Docker compose detached mode](./assets/compose_detached_mode.png)
 
+### Swagger
+
+Link para acessar ao swagger após subir a aplicação:
+http://localhost:8357/api/swagger-ui/index.html
+
+### MIRO - Event Storming
+
+Acesso ao MIRO com o Event Storming:
+[Event Storming](https://miro.com/welcomeonboard/OFd5QUNidmhXdGhNbmoyZzcwSWR3MmRyeFA5VW5WRlNCcWgxcDBlT1FteENpcmphc09mVHlJaXFOaXlvdTFYaHwzMDc0NDU3MzQ3OTIwNTcxNTU5fDI=?share_link_id=381296204220)
+
+
 ### Contribuição
 
 Este é um projeto que está em construção pelos desenvolvedores:
@@ -104,7 +115,3 @@ Este é um projeto que está em construção pelos desenvolvedores:
 - Jéssica Rodrigues - RM357218
 - Rodrigo Sartori - RM358002
 - Wilton Souza - RM357991
-
-### Licença
-
-Distribuído sob a licença MIT. Veja LICENSE para mais informações.
