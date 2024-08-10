@@ -88,7 +88,7 @@ executados. Caso tudo tenha corrido com sucesso, o comando deve ter o seguinte r
 
 ![Listagem de containers em execução](./assets/docker_container_ls.png)
 
-Por fim, o serviço estará disponível em http://localhost:8357.
+Por fim, o serviço estará disponível em `http://localhost:8357` com contextPath `/api`
 
 Obs: Caso queira subir os containers no modo `detached`(Sem travar o terminal em que o comando for executado), basta
 rodar o seguinte comando: `docker compose up -d`
@@ -97,14 +97,12 @@ rodar o seguinte comando: `docker compose up -d`
 
 ### Swagger
 
-Link para acessar ao swagger após subir a aplicação:
-http://localhost:8357/api/swagger-ui/index.html
+Link para acessar ao swagger após subir a aplicação: http://localhost:8357/api/swagger-ui/index.html
 
 ### MIRO - Event Storming
 
 Acesso ao MIRO com o Event Storming:
-[Event Storming](https://miro.com/welcomeonboard/OFd5QUNidmhXdGhNbmoyZzcwSWR3MmRyeFA5VW5WRlNCcWgxcDBlT1FteENpcmphc09mVHlJaXFOaXlvdTFYaHwzMDc0NDU3MzQ3OTIwNTcxNTU5fDI=?share_link_id=381296204220)
-
+[Event Storming](https://miro.com/app/board/uXjVK1ekBDM=/)
 
 ### Contribuição
 
