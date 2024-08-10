@@ -17,6 +17,4 @@ public interface ProductPersistence {
 
 	Product update(Product product);
 
-	void delete(UUID id);
-
 }

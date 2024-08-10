@@ -50,9 +50,4 @@ public class ProductPersistenceImpl implements ProductPersistence {
 		return productUpdated.toProduct();
 	}
 
-	@Override
-	public void delete(UUID id) {
-		repository.findById(id).ifPresent(repository::save);
-	}
-
 }

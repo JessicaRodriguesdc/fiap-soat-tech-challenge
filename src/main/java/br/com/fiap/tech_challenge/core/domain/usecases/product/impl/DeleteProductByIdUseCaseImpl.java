@@ -26,8 +26,6 @@ public class DeleteProductByIdUseCaseImpl implements DeleteProductByIdUseCase {
 		var product = productOpt.get();
 		product.setStatus(ProductStatusEnum.INACTIVE);
 		persistence.update(product);
-
-		persistence.delete(id);
 	}
 
 }
