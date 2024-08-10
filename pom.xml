@@ -10,10 +10,10 @@
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>tech-challenge</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>tech-challenge</name>
 	<packaging>jar</packaging>
-	<description>Demo project for Spring Boot</description>
+	<description>FIAP SOAT Tech Challenge APP</description>
 	<url/>
 	<licenses>
 		<license/>

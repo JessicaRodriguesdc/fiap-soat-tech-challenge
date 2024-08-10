@@ -5,7 +5,7 @@ RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:21.0.4_7-jre-alpine AS layers
 WORKDIR layer
-COPY --from=builder /build/target/tech-challenge-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /build/target/tech-challenge-1.0.0.jar app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
 
 FROM eclipse-temurin:21.0.4_7-jre-alpine
