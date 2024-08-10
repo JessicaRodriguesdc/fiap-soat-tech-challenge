@@ -1,45 +1,67 @@
+<div align="center">
+
 # Pós Tech - Tech Challenge Microservice
 
-## Descrição
+![GitHub Release Date](https://img.shields.io/badge/Release%20Date-Agosto%202024-yellowgreen)
+![](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellowgreen)
+<br>
+![](https://img.shields.io/badge/Version-%20v1.0.0-brightgreen)
+</div>
+
+### 👨‍💼👩‍💼‍ Autores
+
+Este é um projeto que está em construção pelos desenvolvedores:
+
+![](https://img.shields.io/badge/Autor-Alexandre%20Miranda%20RM357321-blue)
+<br>
+![](https://img.shields.io/badge/Autor-Diego%20Ceccon%20RM357437-blue)
+<br>
+![](https://img.shields.io/badge/Autor-Jéssica%20Rodrigues%20RM357218-blue)
+<br>
+![](https://img.shields.io/badge/Autor-Rodrigo%20Sartori%20RM358002-blue)
+<br>
+![](https://img.shields.io/badge/Autor-Wilton%20Souza%20RM357991-blue)
+
+
+## 💻 Descrição
 
 Este monolito é responsável por gerenciar a entrada de pedidos de um restaurante. Ele lida com o processamento dos
 pedidos, gerenciamento de pagamentos e envio dos pedidos para a cozinha após a confirmação do pagamento.
 
-## Tecnologias Utilizadas
+## 🛠 Tecnologias Utilizadas
+![Java](https://img.shields.io/badge/java_21-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+![Spring](https://img.shields.io/badge/spring_3-%236DB33F.svg?style=for-the-badge&logo=springboot&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 
-- **Java 21**
-- **PostgreSQL**
-- **Maven**
-- **Spring Boot**
-- **Spring Data JPA**
-- **Docker**
-
-## Arquitetura
+## 💫 Arquitetura
 
 O projeto segue a Arquitetura Hexagonal (Ports and Adapters), permitindo maior flexibilidade e facilidade de manutenção.
 
-## Configuração
+## ⚙️ Configuração
 
 ### Pré-requisitos
 
 #### Desenvolvimento
 
-- Java 21
-- Maven 3.6.3+
-- Docker
-- Docker Compose
+- **[Java 21](https://docs.oracle.com/en/java/javase/21/)**: Documentação oficial do Java 21.
+- **[Maven 3.6.3+](https://maven.apache.org/)**: Site oficial do Maven.
+- **[Docker](https://www.docker.com/)**: Site oficial do Docker.
+- **[Docker Compose](https://docs.docker.com/compose/)**: Documentação oficial do Docker Compose.
 
 #### Execução Local
 
 - Docker Compose
 
-### Imagem Docker
+### 🐳 Imagem Docker
 
 A imagem docker desse projeto foi buildada através do arquivo `Dockerfile` presente neste repositório, e enviada a um
 container registry (Docker HUB). Para visualizá-la, basta acessar o
 link: https://hub.docker.com/r/willosouza/fiap-soat-tech-challenge
 
-### Execução
+### 🚀 Execução
 
 #### Subindo a aplicação via docker compose
 
@@ -95,21 +117,32 @@ rodar o seguinte comando: `docker compose up -d`
 
 ![Docker compose detached mode](./assets/compose_detached_mode.png)
 
-### Swagger
+### 🛒 Fake Checkout
 
-Link para acessar ao swagger após subir a aplicação: http://localhost:8357/api/swagger-ui/index.html
+Nessa fase do pejeto, disponibilizamos um recurso para realizar o pagamento de um pedido de forma manual.
+Após gerar um pedido, é possível chamar o endpoint PUT `/v1/fake-checkout`, informando no body o id do pedido gerado.
+Ao realizar a chamada, se o pedido estiver no status inicial (`RECEIVED`), ele será atualizado para
+o status `PREPARING`, com a informação de que foi pago. Caso o pedido não esteja no status inicial,
+uma mensagem de erro será retornada informando que o pedido precisa estar no status `RECEIVED` para ser
+atualizado.
 
-### MIRO - Event Storming
+### 📄 Documentação da API
+
+Link para acessar ao swagger após subir a aplicação:
+
+```bash
+http://localhost:8357/api/swagger-ui/index.html
+```
+
+
+### 🎲 Seeds
+
+Para facilitar o consumo e os testes da aplicação, seeds de dados foram criadas e gerenciadas utilizando o `Flyway`. 
+Essas seeds são aplicadas automaticamente ao iniciar a aplicação, garantindo um ambiente consistente e pronto para uso.
+
+### 📚 MIRO - Event Storming
+
+![Event Storming](./assets/event_storming.png)
 
 Acesso ao MIRO com o Event Storming:
 [Event Storming](https://miro.com/app/board/uXjVK1ekBDM=/)
-
-### Contribuição
-
-Este é um projeto que está em construção pelos desenvolvedores:
-
-- Alexandre Miranda - RM357321
-- Diego Ceccon - RM357437
-- Jéssica Rodrigues - RM357218
-- Rodrigo Sartori - RM358002
-- Wilton Souza - RM357991
