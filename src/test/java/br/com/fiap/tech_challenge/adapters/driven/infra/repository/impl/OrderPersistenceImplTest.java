@@ -2,14 +2,13 @@ package br.com.fiap.tech_challenge.adapters.driven.infra.repository.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
 import br.com.fiap.tech_challenge.adapters.driven.infra.entities.OrderEntity;
-import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.OrderPageMapper;
+import br.com.fiap.tech_challenge.adapters.driven.infra.mapper.PageMapper;
 import br.com.fiap.tech_challenge.adapters.driven.infra.repository.OrderRepository;
+import br.com.fiap.tech_challenge.core.domain.models.Order;
 import br.com.fiap.tech_challenge.core.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.core.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.core.domain.models.order.Order;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableOrder;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageablePageableOrder;
-import br.com.fiap.tech_challenge.core.domain.models.order.PageableSortOrder;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPage;
+import br.com.fiap.tech_challenge.core.domain.models.pageable.CustomPageable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,12 +38,14 @@ class OrderPersistenceImplTest {
 	private OrderRepository repository;
 
 	@Mock
-	private OrderPageMapper mapper;
+	private PageMapper<Order> mapper;
 
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
 
 	private Order order;
+
+	private CustomPageable<Order> orderPage;
 
 	@BeforeEach
 	void setUp() {
@@ -81,22 +82,22 @@ class OrderPersistenceImplTest {
 		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
 
 		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
-		when(mapper.toDomainPage(any())).thenReturn(buildPageableOrder());
+		when(mapper.toDomainPage(any())).thenReturn(orderPage);
 
 		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable.getPageNumber(),
 				pageable.getPageSize());
 
-		List<Order> orderFound = orderFoundOpt.getContent();
+		List<Order> orderFound = orderFoundOpt.content();
 
 		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
 
 		verifyNoMoreInteractions(repository);
 
 		assertNotNull(orderFound);
-		assertEquals(orderFound.size(), 1);
-		assertEquals(orderFoundOpt.getSize(), 1);
-		assertEquals(orderFoundOpt.getTotalElements(), 1);
-		assertEquals(orderFoundOpt.getNumberOfElements(), 1);
+		assertEquals(orderFound.size(), orderPage.content().size());
+		assertEquals(orderFoundOpt.page().size(), orderPage.page().size());
+		assertEquals(orderFoundOpt.page().totalElements(), orderPage.page().totalElements());
+		assertEquals(orderFoundOpt.page().numberOfElements(), orderPage.page().numberOfElements());
 	}
 
 	@Test
@@ -123,33 +124,10 @@ class OrderPersistenceImplTest {
 		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
 				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
 
-		var id = UUID.randomUUID();
-		var paymentId = "paymentIdMock";
-		var amount = new BigDecimal("200.00");
-		var createdAt = LocalDateTime.now();
-		var updatedAt = LocalDateTime.now();
-		var products = List.of(orderProduct1, orderProduct1);
-		var sequence = 2;
-		var orderStatus = OrderStatusEnum.RECEIVED;
+		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
+				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
 
-		order = new Order(id, amount, sequence, orderStatus, true, products, null, paymentId, createdAt, updatedAt);
-	}
-
-	private PageableOrder buildPageableOrder() {
-		Long totalPages = 1L;
-		Long totalElements = 1L;
-		Long size = 1L;
-		List<Order> content = List.of(order);
-		Long number = null;
-		PageableSortOrder sort = null;
-		Boolean first = null;
-		Boolean last = null;
-		Long numberOfElements = 1L;
-		PageablePageableOrder pageable = null;
-		Boolean empty = null;
-
-		return new PageableOrder(totalPages, totalElements, size, content, number, sort, first, last, numberOfElements,
-				pageable, empty);
+		orderPage = new CustomPageable<>(List.of(order), new CustomPage(1L, 1L, 1L, 1L, true, false, 1L, false));
 	}
 
 }
