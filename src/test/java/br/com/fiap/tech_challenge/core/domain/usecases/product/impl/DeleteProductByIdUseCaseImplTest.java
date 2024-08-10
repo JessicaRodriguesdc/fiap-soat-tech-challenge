@@ -43,11 +43,11 @@ public class DeleteProductByIdUseCaseImplTest {
     public void shouldDeleteProductById() {
         when(persistence.findById(product.getId())).thenReturn(Optional.of(product));
 
-        doNothing().when(persistence).delete(product.getId());
+		when(persistence.update(any(Product.class))).thenReturn(product);
 
         deleteProductByIdUseCase.delete(product.getId());
 
-        verify(persistence).delete(product.getId());
+        verify(persistence).update(product);
     }
 
 	@Test
@@ -60,7 +60,7 @@ public class DeleteProductByIdUseCaseImplTest {
 
         assertEquals("Product not found", exception.getMessage());
 
-        verify(persistence, never()).delete(product.getId());
+        verify(persistence, never()).update(product);
     }
 
 	private void buildArranges() {
