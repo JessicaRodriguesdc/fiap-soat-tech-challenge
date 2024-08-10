@@ -28,7 +28,7 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
 
 	@Override
 	public Optional<Customer> findByDocument(String document) {
-		var customerFound = repository.findByDocument(document.replace(".", ""));
+		var customerFound = repository.findByDocument(document.replace(".", "").replace("-", ""));
 		return customerFound.map(CustomerEntity::toCustomer);
 	}
 
