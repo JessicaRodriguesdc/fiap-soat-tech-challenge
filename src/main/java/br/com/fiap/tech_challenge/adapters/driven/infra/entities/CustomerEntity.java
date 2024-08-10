@@ -41,7 +41,7 @@ public class CustomerEntity {
 	public CustomerEntity(Customer customer) {
 		this.id = customer.getId();
 		this.name = customer.getName();
-		this.document = customer.getDocument();
+		this.document = customer.getDocument().replace(".", "");
 		this.email = customer.getEmail();
 	}
 

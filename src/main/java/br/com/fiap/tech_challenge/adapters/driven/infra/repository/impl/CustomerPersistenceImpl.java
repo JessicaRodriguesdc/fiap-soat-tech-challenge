@@ -21,13 +21,14 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
 	@Override
 	public Customer create(Customer customer) {
 		var customerEntity = new CustomerEntity(customer);
+
 		var customerSaved = repository.save(customerEntity);
 		return customerSaved.toCustomer();
 	}
 
 	@Override
 	public Optional<Customer> findByDocument(String document) {
-		var customerFound = repository.findByDocument(document);
+		var customerFound = repository.findByDocument(document.replace(".", ""));
 		return customerFound.map(CustomerEntity::toCustomer);
 	}
 
