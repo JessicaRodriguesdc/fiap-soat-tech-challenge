@@ -98,13 +98,12 @@ rodar o seguinte comando: `docker compose up -d`
 ### Swagger
 
 Link para acessar ao swagger após subir a aplicação:
-http://localhost:8357/api/swagger-ui/index.html
+[Swagger](http://localhost:8357/api/swagger-ui/index.html)
 
 ### MIRO - Event Storming
 
 Acesso ao MIRO com o Event Storming:
-[Event Storming](https://miro.com/welcomeonboard/OFd5QUNidmhXdGhNbmoyZzcwSWR3MmRyeFA5VW5WRlNCcWgxcDBlT1FteENpcmphc09mVHlJaXFOaXlvdTFYaHwzMDc0NDU3MzQ3OTIwNTcxNTU5fDI=?share_link_id=381296204220)
-
+[Event Storming](https://miro.com/app/board/uXjVK1ekBDM=/)
 
 ### Contribuição
 
