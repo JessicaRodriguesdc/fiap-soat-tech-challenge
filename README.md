@@ -1,6 +1,6 @@
 <div align="center">
 
-# Pós Tech - Tech Challenge Microservice
+# Pós Tech FIAP - Tech Challenge - Grupo 12
 
 ![GitHub Release Date](https://img.shields.io/badge/Release%20Date-Agosto%202024-yellowgreen)
 ![](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellowgreen)
@@ -12,15 +12,15 @@
 
 Este é um projeto que está em construção pelos desenvolvedores:
 
-![](https://img.shields.io/badge/Autor-Alexandre%20Miranda%20RM357321-blue)
+![](https://img.shields.io/badge/RM357321-Alexandre%20Miranda-blue)
 <br>
-![](https://img.shields.io/badge/Autor-Diego%20Ceccon%20RM357437-blue)
+![](https://img.shields.io/badge/RM357437-Diego%20Ceccon-blue)
 <br>
-![](https://img.shields.io/badge/Autor-Jéssica%20Rodrigues%20RM357218-blue)
+![](https://img.shields.io/badge/RM357218-Jéssica%20Rodrigues%20-blue)
 <br>
-![](https://img.shields.io/badge/Autor-Rodrigo%20Sartori%20RM358002-blue)
+![](https://img.shields.io/badge/RM358002-Rodrigo%20Sartori-blue)
 <br>
-![](https://img.shields.io/badge/Autor-Wilton%20Souza%20RM357991-blue)
+![](https://img.shields.io/badge/RM357991-Wilton%20Souza%20-blue)
 
 
 ## 💻 Descrição
