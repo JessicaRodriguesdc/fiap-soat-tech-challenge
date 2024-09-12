@@ -1,0 +1,16 @@
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    additionalScrapeConfigs:
+      - job_name: 'tech-challenge-app'
+        scrape_interval: 15s
+        static_configs:
+          - targets: ['tech-challenge-app-service.techchallenge.svc.cluster.local:8357']
+        metrics_path: /api/actuator/prometheus
+
+grafana:
+  enabled: false
+  
+alertmanager:
+  enabled: false
+
