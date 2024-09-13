@@ -3,16 +3,18 @@ kind: Ingress
 metadata:
   name: tech-challenge-ingress
   namespace: techchallenge
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-    - host: fiap-techchallenge.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: tech-challenge-app-service
-                port:
-                  number: 8357
+  - host: fiap-techchallenge.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tech-challenge-app-service
+            port:
+              number: 8357

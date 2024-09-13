@@ -6,7 +6,7 @@ resource "kubernetes_manifest" "techchallenge_secrets" {
   for_each = fileset("${path.module}/k8s/techchallenge/secret", "*.yaml")
   manifest = yamldecode(file("${path.module}/k8s/techchallenge/secret/${each.value}"))
 
-  depends_on = [ kubernetes_manifest.techchallenge_namespaces ]
+  depends_on = [kubernetes_manifest.techchallenge_namespaces]
 }
 
 resource "kubernetes_manifest" "techchallenge_deployments" {

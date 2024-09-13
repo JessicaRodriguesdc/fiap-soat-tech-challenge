@@ -1,0 +1,6 @@
+controller:
+  service:
+    type: LoadBalancer
+  replicaCount: 1
+  publishService:
+    enabled: true
