@@ -36,3 +36,7 @@ datasources:
         url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         access: proxy
         isDefault: true
+
+grafana.ini:
+  "dashboards":
+    min_refresh_interval: "1s"   # Set minimum refresh interval to 1 second

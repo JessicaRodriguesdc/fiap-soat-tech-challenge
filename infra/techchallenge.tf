@@ -1,5 +1,7 @@
 resource "kubernetes_manifest" "techchallenge_namespaces" {
   manifest = yamldecode(file("${path.module}/k8s/techchallenge/namespace.yaml"))
+
+  # depends_on = [ helm_release.metrics_server ]
 }
 
 resource "kubernetes_manifest" "techchallenge_secrets" {

@@ -728,8 +728,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -789,6 +788,7 @@ data:
       },
       "timepicker": {
         "refresh_intervals": [
+          "1s",
           "5s",
           "15s",
           "30s",

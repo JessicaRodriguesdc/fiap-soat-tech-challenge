@@ -1,12 +1,26 @@
 prometheus:
   prometheusSpec:
-    serviceMonitorSelectorNilUsesHelmValues: false
+    # serviceMonitorSelectorNilUsesHelmValues: false
     additionalScrapeConfigs:
       - job_name: 'tech-challenge-app'
-        scrape_interval: 15s
+        scrape_interval: 1s
         static_configs:
           - targets: ['tech-challenge-app-service.techchallenge.svc.cluster.local:8357']
         metrics_path: /api/actuator/prometheus
+      - job_name: 'nginx-ingress-metrics'
+        metrics_path: /metrics
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: nginx-ingress-ingress-nginx-controller-metrics
+          - source_labels: [__meta_kubernetes_namespace]
+            action: keep
+            regex: ingress-nginx
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: metrics
 
 grafana:
   enabled: false
