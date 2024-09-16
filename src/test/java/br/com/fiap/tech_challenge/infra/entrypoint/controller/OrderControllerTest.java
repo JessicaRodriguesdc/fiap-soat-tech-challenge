@@ -1,16 +1,15 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
+import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
+import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
+import br.com.fiap.tech_challenge.domain.models.Customer;
+import br.com.fiap.tech_challenge.domain.models.Order;
+import br.com.fiap.tech_challenge.domain.models.OrderProduct;
+import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.handler.ControllerAdvice;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper.OrderMapper;
-import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.domain.models.Customer;
-import br.com.fiap.tech_challenge.domain.models.OrderProduct;
-import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.domain.models.Order;
-import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
-import br.com.fiap.tech_challenge.application.usecase.order.FindPaidOrdersUseCase;
-import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,9 +40,6 @@ class OrderControllerTest {
 
 	@Mock
 	private CreateOrderUseCase createOrderUseCase;
-
-	@Mock
-	private FindPaidOrdersUseCase findPaidOrdersUseCase;
 
 	@Mock
 	private OrderMapper mapper;

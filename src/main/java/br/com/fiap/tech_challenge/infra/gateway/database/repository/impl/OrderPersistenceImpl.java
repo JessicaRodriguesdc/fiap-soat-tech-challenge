@@ -1,15 +1,14 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
+import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
+import br.com.fiap.tech_challenge.domain.models.Order;
+import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
-import br.com.fiap.tech_challenge.domain.models.Order;
-import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
-import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,11 +38,10 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	}
 
 	@Override
-	public CustomPageable<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Integer page,
-			Integer size) {
-		var orders = repository.findByIsPaidAndStatus(isPaid, status, PageRequest.of(page, size));
+	public List<Order> findByStatusNot(OrderStatusEnum status) {
+		var ordersEntity = repository.findByStatusNot(status);
 
-		return mapper.toDomainPage(orders.map(OrderEntity::toOrder));
+		return ordersEntity.stream().map(OrderEntity::toOrder).toList();
 	}
 
 }

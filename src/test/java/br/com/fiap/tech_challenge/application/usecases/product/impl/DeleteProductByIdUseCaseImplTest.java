@@ -1,11 +1,11 @@
 package br.com.fiap.tech_challenge.application.usecases.product.impl;
 
-import br.com.fiap.tech_challenge.application.usecase.product.impl.DeleteProductByIdUseCaseImpl;
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
+import br.com.fiap.tech_challenge.application.usecase.product.impl.DeleteProductByIdUseCaseImpl;
+import br.com.fiap.tech_challenge.domain.models.Product;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductStatusEnum;
-import br.com.fiap.tech_challenge.domain.models.Product;
-import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

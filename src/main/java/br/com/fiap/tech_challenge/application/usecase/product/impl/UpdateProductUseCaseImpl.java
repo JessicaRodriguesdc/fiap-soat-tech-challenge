@@ -1,10 +1,9 @@
 package br.com.fiap.tech_challenge.application.usecase.product.impl;
 
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.domain.models.Product;
 import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
-
 import br.com.fiap.tech_challenge.application.usecase.product.UpdateProductUseCase;
+import br.com.fiap.tech_challenge.domain.models.Product;
 
 import java.util.UUID;
 

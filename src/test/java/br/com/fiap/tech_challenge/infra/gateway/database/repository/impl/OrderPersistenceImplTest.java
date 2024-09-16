@@ -1,14 +1,14 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPage;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -71,34 +68,6 @@ class OrderPersistenceImplTest {
         assertEquals(order.getCreatedAt(), created.getCreatedAt());
         assertEquals(order.getUpdatedAt(), created.getUpdatedAt());
     }
-
-	@Test
-	@DisplayName("Should Find is paid Order by status and pageable")
-	void shouldFindPaidOrderByStatusAndPagination() {
-		var isPaid = true;
-		var orderStatus = OrderStatusEnum.PREPARING;
-		var pageable = PageRequest.of(0, 10);
-
-		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
-
-		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
-		when(mapper.toDomainPage(any())).thenReturn(orderPage);
-
-		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable.getPageNumber(),
-				pageable.getPageSize());
-
-		List<Order> orderFound = orderFoundOpt.content();
-
-		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
-
-		verifyNoMoreInteractions(repository);
-
-		assertNotNull(orderFound);
-		assertEquals(orderFound.size(), orderPage.content().size());
-		assertEquals(orderFoundOpt.page().size(), orderPage.page().size());
-		assertEquals(orderFoundOpt.page().totalElements(), orderPage.page().totalElements());
-		assertEquals(orderFoundOpt.page().numberOfElements(), orderPage.page().numberOfElements());
-	}
 
 	@Test
     @DisplayName("Should Find Order by ID")

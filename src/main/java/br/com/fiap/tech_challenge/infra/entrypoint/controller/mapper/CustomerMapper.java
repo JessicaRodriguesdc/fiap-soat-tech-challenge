@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper;
 
-import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CustomerRequestDTO;
 import br.com.fiap.tech_challenge.domain.models.Customer;
+import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CustomerRequestDTO;
 import org.springframework.stereotype.Component;
 
 @Component

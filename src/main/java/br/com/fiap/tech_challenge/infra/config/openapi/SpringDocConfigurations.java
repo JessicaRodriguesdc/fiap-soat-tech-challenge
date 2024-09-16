@@ -41,11 +41,12 @@ public class SpringDocConfigurations {
 		Map<String, Schema> createOrderResponseDto = ModelConverters.getInstance().read(CreateOrderResponseDTO.class);
 		Map<String, Schema> orderProductsResponseDto = ModelConverters.getInstance()
 			.read(CreateOrderRequestDTO.OrderProducts.class);
-		Map<String, Schema> orderPageResponseDto = ModelConverters.getInstance().read(OrderPageResponseDTO.class);
-		Map<String, Schema> orderResponseDto = ModelConverters.getInstance().read(OrderResponseDTO.class);
 		Map<String, Schema> productPageResponseDto = ModelConverters.getInstance().read(ProductPageResponseDTO.class);
 		Map<String, Schema> productResponseDto = ModelConverters.getInstance().read(ProductResponseDTO.class);
 		Map<String, Schema> pageResponseDto = ModelConverters.getInstance().read(PageResponseDTO.class);
+		Map<String, Schema> orderWorkItemsResponseDTO = ModelConverters.getInstance()
+			.read(OrderWorkItemsResponseDTO.class);
+		Map<String, Schema> orderWorkItemDto = ModelConverters.getInstance().read(OrderWorkItemDto.class);
 
 		Schema errorsValidateDataArraySchema = new ArraySchema()
 			.items(new Schema<>().$ref("#/components/schemas/ErrorsValidateData"));
@@ -54,11 +55,11 @@ public class SpringDocConfigurations {
 		schemaMap.putAll(customerResponseDto);
 		schemaMap.putAll(createOrderResponseDto);
 		schemaMap.putAll(orderProductsResponseDto);
-		schemaMap.putAll(orderPageResponseDto);
-		schemaMap.putAll(orderResponseDto);
 		schemaMap.putAll(productPageResponseDto);
 		schemaMap.putAll(productResponseDto);
 		schemaMap.putAll(pageResponseDto);
+		schemaMap.putAll(orderWorkItemsResponseDTO);
+		schemaMap.putAll(orderWorkItemDto);
 		schemaMap.put("ErrorsValidateDataList", errorsValidateDataArraySchema);
 
 		return schemaMap;

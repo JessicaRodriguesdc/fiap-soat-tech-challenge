@@ -1,8 +1,8 @@
 package br.com.fiap.tech_challenge.application.usecase.product.impl;
 
-import br.com.fiap.tech_challenge.domain.models.Product;
 import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import br.com.fiap.tech_challenge.application.usecase.product.CreateProductUseCase;
+import br.com.fiap.tech_challenge.domain.models.Product;
 
 public class CreateProductUseCaseImpl implements CreateProductUseCase {
 

@@ -1,8 +1,5 @@
 package br.com.fiap.tech_challenge.domain.models;
 
-import br.com.fiap.tech_challenge.domain.models.Customer;
-import br.com.fiap.tech_challenge.domain.models.Order;
-import br.com.fiap.tech_challenge.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper;
 
-import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderRequestDTO;
 import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
+import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderRequestDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

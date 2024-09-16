@@ -3,7 +3,6 @@ package br.com.fiap.tech_challenge.infra.entrypoint.controller.handler;
 import br.com.fiap.tech_challenge.application.exceptions.AlreadyExistsException;
 import br.com.fiap.tech_challenge.application.exceptions.AlreadyInStatusException;
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.infra.entrypoint.controller.handler.ControllerAdvice;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.DateTimeException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class ControllerAdviceTest {

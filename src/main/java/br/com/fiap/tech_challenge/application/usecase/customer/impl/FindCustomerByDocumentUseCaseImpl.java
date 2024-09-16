@@ -1,9 +1,9 @@
 package br.com.fiap.tech_challenge.application.usecase.customer.impl;
 
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.domain.models.Customer;
 import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
 import br.com.fiap.tech_challenge.application.usecase.customer.FindCustomerByDocumentUseCase;
+import br.com.fiap.tech_challenge.domain.models.Customer;
 
 public class FindCustomerByDocumentUseCaseImpl implements FindCustomerByDocumentUseCase {
 

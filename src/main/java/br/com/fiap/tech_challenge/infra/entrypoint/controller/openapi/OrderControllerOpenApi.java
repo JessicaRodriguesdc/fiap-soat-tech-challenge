@@ -2,9 +2,8 @@ package br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi;
 
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderResponseDTO;
-import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.OrderPageResponseDTO;
+import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.OrderWorkItemsResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.handler.ErrorsValidateData;
-import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,15 +15,14 @@ import org.springframework.http.ResponseEntity;
 @Tag(name = "Order")
 public interface OrderControllerOpenApi {
 
-	@Operation(summary = "Find Orders By Status")
+	@Operation(summary = "Find Work Items")
 	@ApiResponse(responseCode = "200", description = "Ok Response",
-			content = @Content(mediaType = "application/json", schema = @Schema(ref = "OrderPageResponseDTO")))
+			content = @Content(mediaType = "application/json", schema = @Schema(ref = "OrderWorkItemsResponseDTO")))
 	@ApiResponse(responseCode = "404", description = "Not Found Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
 	@ApiResponse(responseCode = "500", description = "Internal Server Error Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
-	ResponseEntity<OrderPageResponseDTO> findByIsPaidAndStatus(OrderStatusEnum status, Boolean isPaid, int page,
-			int size);
+	ResponseEntity<OrderWorkItemsResponseDTO> findWorkItems();
 
 	@Operation(summary = "Register a Order")
 	@ApiResponse(responseCode = "201", description = "Created Response",
