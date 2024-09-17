@@ -44,10 +44,8 @@ helm repo update
 
 helm upgrade --install nginx-ingress ingress-nginx/ingress-nginx \
   --namespace ingress-nginx \
-  --version 4.8.1 \
+  --version 4.11.2 \
   --values "$BASE_DIR/values.yaml" \
-  --set controller.service.type=LoadBalancer \
-  --set controller.publishService.enabled=true \
   --wait \
   --timeout 600s
 

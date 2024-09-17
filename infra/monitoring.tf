@@ -1,7 +1,5 @@
 resource "kubernetes_manifest" "monitoring_namespaces" {
   manifest = yamldecode(file("${path.module}/k8s/monitoring/namespace.yaml"))
-
-  # depends_on = [ helm_release.metrics_server ]
 }
 
 resource "helm_release" "kube-prometheus-stack" {

@@ -1,7 +1,5 @@
 resource "kubernetes_manifest" "nginx_ingress_namespace" {
   manifest = yamldecode(file("${path.module}/k8s/nginx-ingress/namespace.yaml"))
-
-  # depends_on = [ helm_release.metrics_server ]
 }
 
 resource "helm_release" "nginx_ingress" {
