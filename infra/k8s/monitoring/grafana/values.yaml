@@ -1,4 +1,4 @@
-adminPassword: "password"
+adminPassword: "techchallenge"
 
 service:
   type: NodePort

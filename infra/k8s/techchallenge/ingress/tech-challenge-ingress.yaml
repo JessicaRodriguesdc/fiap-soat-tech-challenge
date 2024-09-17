@@ -5,6 +5,8 @@ metadata:
   namespace: techchallenge
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/x-forwarded-port: "true"
+    nginx.ingress.kubernetes.io/x-forwarded-host: "true"
 spec:
   ingressClassName: nginx
   rules:

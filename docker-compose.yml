@@ -3,6 +3,7 @@ services:
     build: .
     container_name: tech-challenge-app
     environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
       - SPRING_DATASOURCE_URL=${POSTGRES_URL}/${POSTGRES_DB}
       - SPRING_DATASOURCE_USERNAME=${POSTGRES_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}

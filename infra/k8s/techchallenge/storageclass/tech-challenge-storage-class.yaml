@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: tech-challenge-storage-class
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer

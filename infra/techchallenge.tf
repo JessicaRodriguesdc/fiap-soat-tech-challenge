@@ -1,7 +1,5 @@
 resource "kubernetes_manifest" "techchallenge_namespaces" {
   manifest = yamldecode(file("${path.module}/k8s/techchallenge/namespace.yaml"))
-
-  # depends_on = [ helm_release.metrics_server ]
 }
 
 resource "kubernetes_manifest" "techchallenge_secrets" {
@@ -11,13 +9,44 @@ resource "kubernetes_manifest" "techchallenge_secrets" {
   depends_on = [kubernetes_manifest.techchallenge_namespaces]
 }
 
+resource "kubernetes_manifest" "techchallenge_storageclass" {
+  for_each = fileset("${path.module}/k8s/techchallenge/storageclass", "*.yaml")
+  manifest = yamldecode(file("${path.module}/k8s/techchallenge/storageclass/${each.value}"))
+
+  depends_on = [
+    kubernetes_manifest.techchallenge_namespaces,
+    kubernetes_manifest.techchallenge_secrets
+  ]
+}
+
+resource "kubernetes_manifest" "techchallenge_persistentvolume" {
+  for_each = fileset("${path.module}/k8s/techchallenge/persistentvolume", "*.yaml")
+  manifest = yamldecode(file("${path.module}/k8s/techchallenge/persistentvolume/${each.value}"))
+
+  depends_on = [
+    kubernetes_manifest.techchallenge_namespaces,
+    kubernetes_manifest.techchallenge_storageclass
+  ]
+}
+
+resource "kubernetes_manifest" "techchallenge_statefulset" {
+  for_each = fileset("${path.module}/k8s/techchallenge/statefulset", "*.yaml")
+  manifest = yamldecode(file("${path.module}/k8s/techchallenge/statefulset/${each.value}"))
+
+  depends_on = [
+    kubernetes_manifest.techchallenge_namespaces,
+    kubernetes_manifest.techchallenge_persistentvolume
+  ]
+}
+
 resource "kubernetes_manifest" "techchallenge_deployments" {
   for_each = fileset("${path.module}/k8s/techchallenge/deployment", "*.yaml")
   manifest = yamldecode(file("${path.module}/k8s/techchallenge/deployment/${each.value}"))
 
   depends_on = [
     kubernetes_manifest.techchallenge_namespaces,
-    kubernetes_manifest.techchallenge_secrets
+    kubernetes_manifest.techchallenge_secrets,
+    kubernetes_manifest.techchallenge_statefulset
   ]
 }
 

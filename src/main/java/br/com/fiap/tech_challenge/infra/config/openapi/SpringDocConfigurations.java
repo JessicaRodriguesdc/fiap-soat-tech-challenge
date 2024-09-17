@@ -9,6 +9,8 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +19,9 @@ import java.util.Map;
 
 @Configuration
 public class SpringDocConfigurations {
+
+	@Value("${springdoc.api-docs.server.url}")
+	private String apiDocsUrl;
 
 	@Bean
 	public OpenAPI customOpenAPI() {
@@ -29,6 +34,7 @@ public class SpringDocConfigurations {
 				 - Rodrigo Sartori - RM358002\n
 				 - Wilton Souza - RM357991\n
 				""").contact(new Contact().name("SOAT 8 Group").email("soat-group@gmail.com")))
+			.addServersItem(new Server().url(apiDocsUrl))
 			.components(new Components().schemas(this.generateSchemas()));
 	}
 

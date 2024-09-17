@@ -17,11 +17,11 @@ then
 fi
 
 # Create the monitoring namespace
-echo "Applying monitoring namespace..."
+echo -e "\nApplying monitoring namespace..."
 kubectl apply -f "$BASE_DIR/namespace.yaml"
 
 # Wait until the namespace is available before proceeding
-echo "Waiting for namespace to be in Active status..."
+echo -e "\nWaiting for namespace to be in Active status..."
 while [[ $(kubectl get namespace monitoring -o jsonpath='{.status.phase}') != "Active" ]]; do
     CURRENT_TIME=$(date +%s)
     ELAPSED_TIME=$(( CURRENT_TIME - START_TIME ))
@@ -35,7 +35,7 @@ while [[ $(kubectl get namespace monitoring -o jsonpath='{.status.phase}') != "A
 done
 
 # Deploy kube-prometheus-stack using Helm
-echo "Installing kube-prometheus-stack via Helm..."
+echo -e "\nInstalling kube-prometheus-stack via Helm..."
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
@@ -47,15 +47,15 @@ helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheu
   --timeout 600s
 
 # Apply the Grafana ConfigMap
-echo "Applying Grafana ConfigMap..."
+echo -e "\nApplying Grafana ConfigMap..."
 kubectl apply -f "$BASE_DIR/grafana/configmap.yaml"
 
 # Wait for the ConfigMap to be available
-echo "Waiting for Grafana ConfigMap to be applied..."
+echo -e "\nWaiting for Grafana ConfigMap to be applied..."
 kubectl get configmap grafana-config -n monitoring --timeout=60s
 
 # Deploy Grafana using Helm
-echo "Installing Grafana via Helm..."
+echo -e "\nInstalling Grafana via Helm..."
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 
@@ -66,4 +66,4 @@ helm upgrade --install grafana grafana/grafana \
   --wait \
   --timeout 600s
 
-echo "All resources applied successfully."
+echo -e "\n All resources applied successfully."

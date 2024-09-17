@@ -11,7 +11,7 @@ then
 fi
 
 # Apply the namespace first
-echo "Applying namespace..."
+echo -e "\nApplying namespace..."
 kubectl apply -f "$BASE_DIR/namespace.yaml"
 
 TIMEOUT=15
@@ -32,38 +32,59 @@ while [[ $(kubectl get namespace techchallenge -o jsonpath='{.status.phase}') !=
 done
 
 # Apply secrets after the namespace
-echo "Applying secrets..."
+echo -e "\nApplying secrets..."
 for secret in "$BASE_DIR/secret"/*.yaml; do
   echo "Applying $secret..."
   kubectl apply -f "$secret"
 done
 
+# Apply storage class
+echo -e "\nApplying StorageClass..."
+for storageclass in "$BASE_DIR/storageclass"/*.yaml; do
+  echo "Applying $storageclass..."
+  kubectl apply -f "$storageclass"
+done
+
+# Apply persistent volume
+echo -e "\nApplying PV and PVC..."
+for persistentvolume in "$BASE_DIR/persistentvolume"/*.yaml; do
+  echo "Applying $persistentvolume..."
+  kubectl apply -f "$persistentvolume"
+done
+
+# Apply stateful set
+echo -e "\nApplying statefulset..."
+for sts in "$BASE_DIR/statefulset"/*.yaml; do
+  echo "Applying $sts..."
+  kubectl apply -f "$sts"
+done
+
 # Apply deployments after the namespace and secrets
-echo "Applying deployments..."
+echo -e "\nApplying deployments..."
 for deployment in "$BASE_DIR/deployment"/*.yaml; do
   echo "Applying $deployment..."
   kubectl apply -f "$deployment"
 done
 
 # Apply services after the namespace and deployments
-echo "Applying services..."
+echo -e "\nApplying services..."
 for service in "$BASE_DIR/service"/*.yaml; do
   echo "Applying $service..."
   kubectl apply -f "$service"
 done
 
 # Apply ingress after namespace and deployments
-echo "Applying ingress..."
+echo -e "\nApplying ingress..."
 for ingress in "$BASE_DIR/ingress"/*.yaml; do
   echo "Applying $ingress..."
   kubectl apply -f "$ingress"
 done
 
 # Apply HPA after namespace and services
-echo "Applying HPA (Horizontal Pod Autoscaler)..."
+echo -e "\nApplying HPA (Horizontal Pod Autoscaler)..."
 for hpa in "$BASE_DIR/hpa"/*.yaml; do
   echo "Applying $hpa..."
   kubectl apply -f "$hpa"
 done
 
-echo "All resources applied successfully."
+echo -e "\nAll resources applied successfully."

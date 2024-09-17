@@ -24,7 +24,7 @@ spec:
             httpGet:
               path: /api/actuator/health
               port: 8357
-            initialDelaySeconds: 120
+            initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 10
             failureThreshold: 3
@@ -33,7 +33,7 @@ spec:
             httpGet:
               path: /api/actuator/health
               port: 8357
-            initialDelaySeconds: 120
+            initialDelaySeconds: 60
             periodSeconds: 30
             timeoutSeconds: 5
             failureThreshold: 3
@@ -45,6 +45,8 @@ spec:
               cpu: "500m"
               memory: "1Gi"
           env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 secretKeyRef:

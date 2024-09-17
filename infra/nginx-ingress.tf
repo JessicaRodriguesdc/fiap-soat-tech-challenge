@@ -13,5 +13,10 @@ resource "helm_release" "nginx_ingress" {
 
   values = [file("${path.module}/k8s/nginx-ingress/values.yaml")]
 
-  depends_on = [kubernetes_manifest.nginx_ingress_namespace]
+  depends_on = [
+    kubernetes_manifest.nginx_ingress_namespace,
+    helm_release.metrics_server,
+    helm_release.grafana,
+    helm_release.kube-prometheus-stack
+  ]
 }

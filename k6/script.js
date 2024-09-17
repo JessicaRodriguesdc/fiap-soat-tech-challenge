@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
 
-var multiplyFactor = 10
+var multiplyFactor = 13
 
 export const options = {
   stages: [
@@ -18,7 +18,7 @@ export const options = {
   ]
 };
 
-export default function() {
-  http.get('http://fiap-techchallenge.local:30080/api/v1/products?category=MAIN_COURSE&page=0&size=10');
-  sleep(1);
-}
+  export default function() {
+    http.get('http://fiap-techchallenge.local:30080/api/v1/products?category=MAIN_COURSE&page=0&size=10');
+    sleep(1);
+  }
