@@ -1,6 +1,5 @@
 prometheus:
   prometheusSpec:
-    # serviceMonitorSelectorNilUsesHelmValues: false
     additionalScrapeConfigs:
       - job_name: 'tech-challenge-app'
         scrape_interval: 1s

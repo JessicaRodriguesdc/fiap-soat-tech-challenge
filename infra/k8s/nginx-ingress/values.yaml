@@ -1,16 +1,16 @@
 controller:
   service:
-    type: NodePort        # Set service type to NodePort
+    type: NodePort
     nodePorts:
-      http: 30080          # Specify NodePort for HTTP traffic
-      https: 30443         # Optionally specify NodePort for HTTPS traffic
+      http: 30080
+      https: 30443
   metrics:
-    enabled: true                   # Enable metrics collection
+    enabled: true
     service:
       annotations:
-        prometheus.io/scrape: "true"     # Enable scraping by Prometheus
-        prometheus.io/port: "10254"      # Port where NGINX metrics are exposed
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10254"
       labels: 
         app: ingress-nginx
-      type: ClusterIP                    # Service type
-      port: 10254                        # Metrics are exposed on this port
+      type: ClusterIP
+      port: 10254

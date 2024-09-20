@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
 
-var multiplyFactor = 20
+var multiplyFactor = 15
 
 export const options = {
   stages: [

@@ -18,9 +18,9 @@ dashboardProviders:
   dashboardproviders.yaml:
     apiVersion: 1
     providers:
-      - name: 'default'
+      - name: "default"
         orgId: 1
-        folder: 'Dashboards'
+        folder: "Dashboards"
         type: file
         disableDeletion: false
         editable: true
@@ -39,4 +39,4 @@ datasources:
 
 grafana.ini:
   "dashboards":
-    min_refresh_interval: "1s"   # Set minimum refresh interval to 1 second
+    min_refresh_interval: "1s"
