@@ -1,5 +1,5 @@
 resource "kubernetes_manifest" "nginx_ingress_namespace" {
-  manifest = yamldecode(file("${path.module}/k8s/nginx-ingress/namespace.yaml"))
+  manifest = yamldecode(file("${path.module}/../k8s/nginx-ingress/namespace.yaml"))
 }
 
 resource "helm_release" "nginx_ingress" {
@@ -9,7 +9,7 @@ resource "helm_release" "nginx_ingress" {
   repository = "https://kubernetes.github.io/ingress-nginx"
   version    = "4.11.2"
 
-  values = [file("${path.module}/k8s/nginx-ingress/values.yaml")]
+  values = [file("${path.module}/../k8s/nginx-ingress/values.yaml")]
 
   depends_on = [
     kubernetes_manifest.nginx_ingress_namespace,
