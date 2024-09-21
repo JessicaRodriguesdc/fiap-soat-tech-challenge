@@ -41,7 +41,7 @@ public class OrderController implements OrderControllerOpenApi {
 	public ResponseEntity<CreateOrderResponseDTO> create(@RequestBody @Valid CreateOrderRequestDTO orderRequest) {
 		var mapperCreateOrder = mapper.toCreateOrder(orderRequest);
 		var order = createOrderUseCase.create(mapperCreateOrder);
-		var response = new CreateOrderResponseDTO(order.getId(), order.getPaymentId());
+		var response = new CreateOrderResponseDTO(order.getId(), order.getSequence(), order.getPaymentId());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
