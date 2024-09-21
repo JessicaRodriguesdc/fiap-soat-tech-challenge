@@ -77,9 +77,9 @@ class OrderTest {
 		this.updatedAt = LocalDateTime.now();
 		this.customer = new Customer(id, "Walter White", "31739380037", "heisenberg@gmail.com");
 		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
-				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
+				UUID.randomUUID(), "X Burger", UUID.randomUUID(), LocalDateTime.now());
 		OrderProduct orderProduct2 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 2",
-				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
+				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 		this.products = List.of(orderProduct1, orderProduct2);
 	}
 

@@ -21,6 +21,8 @@ public class OrderProductTest {
 
 	private String customization;
 
+	private String productName;
+
 	private LocalDateTime createdAt;
 
 	@BeforeEach
@@ -33,7 +35,7 @@ public class OrderProductTest {
 
 	public void shouldInstantiateOrderProductConstructor() {
 		BigDecimal price = BigDecimal.valueOf(100.00);
-		OrderProduct orderProduct = new OrderProduct(id, price, customization, productId, orderId, createdAt);
+		OrderProduct orderProduct = new OrderProduct(id, price, customization, productId, productName, orderId, createdAt);
 
 		assertEquals(id, orderProduct.getId());
 		assertEquals(price, orderProduct.getPrice());
@@ -59,6 +61,7 @@ public class OrderProductTest {
 		this.productId = UUID.randomUUID();
 		this.orderId = UUID.randomUUID();
 		this.customization = "Extra cheese";
+		this.productName = "X-Burger";
 		this.createdAt = LocalDateTime.now();
 	}
 

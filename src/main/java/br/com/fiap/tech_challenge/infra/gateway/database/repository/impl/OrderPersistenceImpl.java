@@ -4,8 +4,11 @@ import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderProductEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,12 +19,14 @@ import java.util.UUID;
 public class OrderPersistenceImpl implements OrderPersistence {
 
 	private final OrderRepository repository;
+	private final ProductRepository productRepository;
 
 	private final PageMapper<Order> mapper;
 
-	public OrderPersistenceImpl(OrderRepository repository, PageMapper mapper) {
+	public OrderPersistenceImpl(OrderRepository repository, ProductRepository productRepository, PageMapper mapper) {
 		this.repository = repository;
-		this.mapper = mapper;
+        this.productRepository = productRepository;
+        this.mapper = mapper;
 	}
 
 	@Override
@@ -33,6 +38,13 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	@Override
 	public Order create(Order order) {
 		var orderEntity = new OrderEntity(order);
+
+		order.getProducts()
+				.forEach(orderProduct -> {
+					var productEntity = productRepository.findById(orderProduct.getProductId()).orElseThrow();
+					orderEntity.addOrderProductEntity(new OrderProductEntity(orderProduct, productEntity));
+				});
+
 		var orderSaved = repository.save(orderEntity);
 		return orderSaved.toOrder();
 	}

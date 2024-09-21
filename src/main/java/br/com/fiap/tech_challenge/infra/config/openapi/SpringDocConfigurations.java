@@ -47,6 +47,7 @@ public class SpringDocConfigurations {
 		Map<String, Schema> orderWorkItemsResponseDTO = ModelConverters.getInstance()
 			.read(OrderWorkItemsResponseDTO.class);
 		Map<String, Schema> orderWorkItemDto = ModelConverters.getInstance().read(OrderWorkItemDto.class);
+		Map<String, Schema> orderProductWorkItemDto = ModelConverters.getInstance().read(OrderProductWorkItemDto.class);
 
 		Schema errorsValidateDataArraySchema = new ArraySchema()
 			.items(new Schema<>().$ref("#/components/schemas/ErrorsValidateData"));
@@ -60,6 +61,7 @@ public class SpringDocConfigurations {
 		schemaMap.putAll(pageResponseDto);
 		schemaMap.putAll(orderWorkItemsResponseDTO);
 		schemaMap.putAll(orderWorkItemDto);
+		schemaMap.putAll(orderProductWorkItemDto);
 		schemaMap.put("ErrorsValidateDataList", errorsValidateDataArraySchema);
 
 		return schemaMap;

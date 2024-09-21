@@ -7,8 +7,10 @@ import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPage;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,9 @@ class OrderPersistenceImplTest {
 	@Mock
 	private OrderRepository repository;
 
+    @Mock
+    private ProductRepository productRepository;
+
 	@Mock
 	private PageMapper<Order> mapper;
 
@@ -52,6 +57,7 @@ class OrderPersistenceImplTest {
 	@Test
     @DisplayName("Should create and save a new Order")
     void shouldCreateAndSaveNewOrder() {
+        when(productRepository.findById(any())).thenReturn(Optional.of(new ProductEntity()));
         when(repository.save(any())).thenReturn(new OrderEntity(order));
 
         var created = orderPersistence.create(order);
@@ -91,7 +97,7 @@ class OrderPersistenceImplTest {
 
 	private void buildArranges() {
 		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
-				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
+				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 
 		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
 				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
