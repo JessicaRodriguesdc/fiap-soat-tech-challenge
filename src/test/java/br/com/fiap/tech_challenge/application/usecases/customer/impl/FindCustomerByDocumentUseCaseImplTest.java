@@ -1,10 +1,10 @@
 package br.com.fiap.tech_challenge.application.usecases.customer.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.impl.CustomerPersistenceImpl;
-import br.com.fiap.tech_challenge.application.usecase.customer.impl.FindCustomerByDocumentUseCaseImpl;
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.application.usecase.customer.impl.FindCustomerByDocumentUseCaseImpl;
 import br.com.fiap.tech_challenge.domain.models.Customer;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.impl.CustomerPersistenceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

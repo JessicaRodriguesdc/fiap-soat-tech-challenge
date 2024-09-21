@@ -1,10 +1,10 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi;
 
+import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.ProductPageResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.handler.ErrorsValidateData;
-import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;

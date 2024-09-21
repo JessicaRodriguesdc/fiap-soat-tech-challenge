@@ -1,11 +1,10 @@
 package br.com.fiap.tech_challenge.infra.config.bean;
 
+import br.com.fiap.tech_challenge.application.gateway.client.PaymentClient;
 import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
 import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
-import br.com.fiap.tech_challenge.application.gateway.client.PaymentClient;
 import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import br.com.fiap.tech_challenge.application.usecase.order.impl.CreateOrderUseCaseImpl;
-import br.com.fiap.tech_challenge.infra.config.bean.CreateOrderUseCaseConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

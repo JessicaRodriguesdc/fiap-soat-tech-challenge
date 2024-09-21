@@ -1,15 +1,18 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
+import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
-import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
-import org.springframework.data.domain.PageRequest;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderProductEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,12 +20,14 @@ import java.util.UUID;
 public class OrderPersistenceImpl implements OrderPersistence {
 
 	private final OrderRepository repository;
+	private final ProductRepository productRepository;
 
-	private final PageMapper<Order> mapper;
+	@PersistenceContext
+	private EntityManager entityManager;
 
-	public OrderPersistenceImpl(OrderRepository repository, PageMapper mapper) {
+	public OrderPersistenceImpl(OrderRepository repository, ProductRepository productRepository) {
 		this.repository = repository;
-		this.mapper = mapper;
+        this.productRepository = productRepository;
 	}
 
 	@Override
@@ -34,16 +39,24 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	@Override
 	public Order create(Order order) {
 		var orderEntity = new OrderEntity(order);
+
+		order.getProducts()
+				.forEach(orderProduct -> {
+					var productEntity = productRepository.findById(orderProduct.getProductId()).orElseThrow();
+					orderEntity.addOrderProductEntity(new OrderProductEntity(orderProduct, productEntity));
+				});
+
 		var orderSaved = repository.save(orderEntity);
-		return orderSaved.toOrder();
+		entityManager.clear();
+
+		return this.findById(orderSaved.getId()).orElseThrow();
 	}
 
 	@Override
-	public CustomPageable<Order> findByIsPaidAndStatus(Boolean isPaid, OrderStatusEnum status, Integer page,
-			Integer size) {
-		var orders = repository.findByIsPaidAndStatus(isPaid, status, PageRequest.of(page, size));
+	public List<Order> findByStatusNot(OrderStatusEnum status) {
+		var ordersEntity = repository.findByStatusNot(status);
 
-		return mapper.toDomainPage(orders.map(OrderEntity::toOrder));
+		return ordersEntity.stream().map(OrderEntity::toOrder).toList();
 	}
 
 }

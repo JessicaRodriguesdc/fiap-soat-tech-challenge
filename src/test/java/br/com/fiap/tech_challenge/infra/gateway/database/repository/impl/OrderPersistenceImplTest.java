@@ -1,14 +1,16 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPage;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -37,16 +36,14 @@ class OrderPersistenceImplTest {
 	@Mock
 	private OrderRepository repository;
 
-	@Mock
-	private PageMapper<Order> mapper;
+    @Mock
+    private ProductRepository productRepository;
 
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
 
 	private Order order;
-
-	private CustomPageable<Order> orderPage;
-
+    
 	@BeforeEach
 	void setUp() {
 		this.buildArranges();
@@ -55,6 +52,7 @@ class OrderPersistenceImplTest {
 	@Test
     @DisplayName("Should create and save a new Order")
     void shouldCreateAndSaveNewOrder() {
+        when(productRepository.findById(any())).thenReturn(Optional.of(new ProductEntity()));
         when(repository.save(any())).thenReturn(new OrderEntity(order));
 
         var created = orderPersistence.create(order);
@@ -71,34 +69,6 @@ class OrderPersistenceImplTest {
         assertEquals(order.getCreatedAt(), created.getCreatedAt());
         assertEquals(order.getUpdatedAt(), created.getUpdatedAt());
     }
-
-	@Test
-	@DisplayName("Should Find is paid Order by status and pageable")
-	void shouldFindPaidOrderByStatusAndPagination() {
-		var isPaid = true;
-		var orderStatus = OrderStatusEnum.PREPARING;
-		var pageable = PageRequest.of(0, 10);
-
-		Page<OrderEntity> orderEntityPage = new PageImpl<>(List.of(new OrderEntity(order)));
-
-		when(repository.findByIsPaidAndStatus(any(), any(), any())).thenReturn(orderEntityPage);
-		when(mapper.toDomainPage(any())).thenReturn(orderPage);
-
-		var orderFoundOpt = orderPersistence.findByIsPaidAndStatus(isPaid, orderStatus, pageable.getPageNumber(),
-				pageable.getPageSize());
-
-		List<Order> orderFound = orderFoundOpt.content();
-
-		verify(repository, times(ConstantTimes.ONLY_ONCE)).findByIsPaidAndStatus(isPaid, orderStatus, pageable);
-
-		verifyNoMoreInteractions(repository);
-
-		assertNotNull(orderFound);
-		assertEquals(orderFound.size(), orderPage.content().size());
-		assertEquals(orderFoundOpt.page().size(), orderPage.page().size());
-		assertEquals(orderFoundOpt.page().totalElements(), orderPage.page().totalElements());
-		assertEquals(orderFoundOpt.page().numberOfElements(), orderPage.page().numberOfElements());
-	}
 
 	@Test
     @DisplayName("Should Find Order by ID")
@@ -122,12 +92,10 @@ class OrderPersistenceImplTest {
 
 	private void buildArranges() {
 		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
-				UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now());
+				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 
 		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
 				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
-
-		orderPage = new CustomPageable<>(List.of(order), new CustomPage(1L, 1L, 1L, 1L, true, false, 1L, false));
 	}
 
 }

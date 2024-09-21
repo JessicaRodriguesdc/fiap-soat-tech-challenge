@@ -1,10 +1,10 @@
 package br.com.fiap.tech_challenge.application.usecases.customer.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.impl.CustomerPersistenceImpl;
-import br.com.fiap.tech_challenge.application.usecase.customer.impl.CreateCustomerUseCaseImpl;
 import br.com.fiap.tech_challenge.application.exceptions.AlreadyExistsException;
+import br.com.fiap.tech_challenge.application.usecase.customer.impl.CreateCustomerUseCaseImpl;
 import br.com.fiap.tech_challenge.domain.models.Customer;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.impl.CustomerPersistenceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreateCustomerUseCaseImplTest {

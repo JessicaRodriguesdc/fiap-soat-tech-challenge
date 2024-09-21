@@ -1,14 +1,14 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
+import br.com.fiap.tech_challenge.application.exceptions.AlreadyExistsException;
+import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.application.usecase.customer.CreateCustomerUseCase;
+import br.com.fiap.tech_challenge.application.usecase.customer.FindCustomerByDocumentUseCase;
+import br.com.fiap.tech_challenge.domain.models.Customer;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CustomerRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CustomerResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.handler.ControllerAdvice;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper.CustomerMapper;
-import br.com.fiap.tech_challenge.application.exceptions.AlreadyExistsException;
-import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.domain.models.Customer;
-import br.com.fiap.tech_challenge.application.usecase.customer.CreateCustomerUseCase;
-import br.com.fiap.tech_challenge.application.usecase.customer.FindCustomerByDocumentUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

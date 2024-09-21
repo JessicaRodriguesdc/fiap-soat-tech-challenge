@@ -14,11 +14,13 @@ public class OrderProduct {
 
 	private final UUID productId;
 
+	private String productName;
+
 	private final UUID orderId;
 
 	private final LocalDateTime createdAt;
 
-	public OrderProduct(UUID id, BigDecimal price, String customization, UUID productId, UUID orderId,
+	public OrderProduct(UUID id, BigDecimal price, String customization, UUID productId, String productName, UUID orderId,
 			LocalDateTime createdAt) {
 		this.id = id;
 		this.price = price;
@@ -26,26 +28,31 @@ public class OrderProduct {
 		this.productId = productId;
 		this.orderId = orderId;
 		this.createdAt = createdAt;
+		this.productName = productName;
 	}
 
 	public static OrderProduct create(BigDecimal price, String customization, UUID productId) {
-		return new OrderProduct(null, price, customization, productId, null, null);
+		return new OrderProduct(null, price, customization, productId, null, null, null);
 	}
 
 	public UUID getId() {
-		return id;
+		return this.id;
 	}
 
 	public BigDecimal getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public String getCustomization() {
-		return customization;
+		return this.customization;
 	}
 
 	public UUID getProductId() {
-		return productId;
+		return this.productId;
+	}
+
+	public String getProductName() {
+		return this.productName;
 	}
 
 }

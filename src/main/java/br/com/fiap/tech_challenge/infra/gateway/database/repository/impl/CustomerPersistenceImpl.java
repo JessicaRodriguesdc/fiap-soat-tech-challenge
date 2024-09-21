@@ -1,9 +1,9 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
+import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
+import br.com.fiap.tech_challenge.domain.models.Customer;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.CustomerEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.CustomerRepository;
-import br.com.fiap.tech_challenge.domain.models.Customer;
-import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
