@@ -5,8 +5,6 @@ import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderProductEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import org.springframework.stereotype.Component;
@@ -21,12 +19,9 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	private final OrderRepository repository;
 	private final ProductRepository productRepository;
 
-	private final PageMapper<Order> mapper;
-
-	public OrderPersistenceImpl(OrderRepository repository, ProductRepository productRepository, PageMapper mapper) {
+	public OrderPersistenceImpl(OrderRepository repository, ProductRepository productRepository) {
 		this.repository = repository;
         this.productRepository = productRepository;
-        this.mapper = mapper;
 	}
 
 	@Override

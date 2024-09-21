@@ -1,7 +1,6 @@
 package br.com.fiap.tech_challenge.application.usecase.order.impl;
 
 import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
-import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import br.com.fiap.tech_challenge.application.usecase.order.FindWorkItemsUseCase;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;

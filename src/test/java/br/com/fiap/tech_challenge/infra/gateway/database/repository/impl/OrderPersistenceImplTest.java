@@ -39,16 +39,11 @@ class OrderPersistenceImplTest {
     @Mock
     private ProductRepository productRepository;
 
-	@Mock
-	private PageMapper<Order> mapper;
-
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
 
 	private Order order;
-
-	private CustomPageable<Order> orderPage;
-
+    
 	@BeforeEach
 	void setUp() {
 		this.buildArranges();
@@ -101,8 +96,6 @@ class OrderPersistenceImplTest {
 
 		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
 				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
-
-		orderPage = new CustomPageable<>(List.of(order), new CustomPage(1L, 1L, 1L, 1L, true, false, 1L, false));
 	}
 
 }
