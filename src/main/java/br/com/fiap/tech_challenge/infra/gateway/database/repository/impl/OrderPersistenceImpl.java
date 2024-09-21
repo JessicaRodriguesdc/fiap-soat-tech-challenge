@@ -7,7 +7,10 @@ import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderProductEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +21,9 @@ public class OrderPersistenceImpl implements OrderPersistence {
 
 	private final OrderRepository repository;
 	private final ProductRepository productRepository;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public OrderPersistenceImpl(OrderRepository repository, ProductRepository productRepository) {
 		this.repository = repository;
@@ -41,7 +47,9 @@ public class OrderPersistenceImpl implements OrderPersistence {
 				});
 
 		var orderSaved = repository.save(orderEntity);
-		return orderSaved.toOrder();
+		entityManager.clear();
+
+		return this.findById(orderSaved.getId()).orElseThrow();
 	}
 
 	@Override

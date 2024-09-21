@@ -79,4 +79,7 @@ public class OrderEntity {
 				customer != null ? customer.toCustomer() : null, paymentId, createdAt, updatedAt);
 	}
 
+	public UUID getId(){
+		return this.id;
+	}
 }
