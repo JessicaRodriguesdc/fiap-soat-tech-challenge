@@ -12,7 +12,10 @@ resource "helm_release" "kube-prometheus-stack" {
 
   timeout = 600
 
-  depends_on = [ kubernetes_manifest.monitoring_namespaces ]
+  depends_on = [
+    kubernetes_manifest.monitoring_namespaces,
+    helm_release.metrics_server
+  ]
 }
 
 resource "kubernetes_manifest" "grafana_configmaps" {
@@ -35,6 +38,7 @@ resource "helm_release" "grafana" {
 
   depends_on = [
     kubernetes_manifest.monitoring_namespaces,
-    kubernetes_manifest.grafana_configmaps
+    kubernetes_manifest.grafana_configmaps,
+    helm_release.metrics_server
   ]
 }

@@ -41,12 +41,7 @@ spec:
         volumeMounts:
         - name: pg-data
           mountPath: /var/lib/postgresql/data
-  volumeClaimTemplates:
-  - metadata:
-      name: pg-data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      storageClassName: "tech-challenge-storage-class"
-      resources:
-        requests:
-          storage: 10Gi
+      volumes:
+      - name: pg-data
+        persistentVolumeClaim: 
+          claimName: tech-challenge-persistent-volume-claim
