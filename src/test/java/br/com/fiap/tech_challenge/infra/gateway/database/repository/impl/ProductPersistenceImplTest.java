@@ -1,10 +1,10 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import br.com.fiap.tech_challenge.domain.models.Product;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductStatusEnum;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

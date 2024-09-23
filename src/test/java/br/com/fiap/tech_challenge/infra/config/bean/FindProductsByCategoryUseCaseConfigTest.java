@@ -2,7 +2,6 @@ package br.com.fiap.tech_challenge.infra.config.bean;
 
 import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import br.com.fiap.tech_challenge.application.usecase.product.impl.FindProductsByCategoryUseCaseImpl;
-import br.com.fiap.tech_challenge.infra.config.bean.FindProductsByCategoryUseCaseConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

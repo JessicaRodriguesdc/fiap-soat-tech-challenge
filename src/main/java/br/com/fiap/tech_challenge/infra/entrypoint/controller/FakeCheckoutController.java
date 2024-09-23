@@ -1,9 +1,9 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
+import br.com.fiap.tech_challenge.application.usecase.order.UpdateOrderStatusUseCase;
+import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.FakeCheckoutRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi.FakeCheckoutControllerOpenApi;
-import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.application.usecase.order.UpdateOrderStatusUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

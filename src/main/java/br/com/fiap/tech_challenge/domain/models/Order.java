@@ -4,6 +4,7 @@ import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ public class Order {
 
 	private final String paymentId;
 
-	private final List<OrderProduct> products;
+	private List<OrderProduct> products;
 
 	private final Customer customer;
 
@@ -89,5 +90,10 @@ public class Order {
 	public String getPaymentId() {
 		return paymentId;
 	}
+
+	public void removeProducts(){
+		this.products = new ArrayList<>();
+	}
+
 
 }

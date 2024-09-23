@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.entities;
 
 import br.com.fiap.tech_challenge.domain.models.OrderProduct;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,25 +25,30 @@ public class OrderProductEntity {
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "order_id", nullable = false)
 	private OrderEntity order;
 
-	private UUID productId;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private ProductEntity product;
 
 	public OrderProductEntity() {
 	}
 
-	public OrderProductEntity(OrderEntity order, OrderProduct orderProduct) {
-		this.order = order;
+	public OrderProductEntity(OrderProduct orderProduct, ProductEntity productEntity) {
 		this.id = orderProduct.getId();
 		this.price = orderProduct.getPrice();
 		this.customization = orderProduct.getCustomization();
-		this.productId = orderProduct.getProductId();
+		this.product = productEntity;
 	}
 
 	public OrderProduct toOrderProduct(UUID orderId) {
-		return new OrderProduct(id, price, customization, productId, orderId, createdAt);
+		return new OrderProduct(id, price, customization, product.getId(), product.getName(), orderId, createdAt);
 	}
 
+	public void setOrder(OrderEntity orderEntity) {
+		this.order = orderEntity;
+	}
 }

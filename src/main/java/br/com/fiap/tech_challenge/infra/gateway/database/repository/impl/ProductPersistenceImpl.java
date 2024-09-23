@@ -1,12 +1,12 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
-import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
+import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import br.com.fiap.tech_challenge.domain.models.Product;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
-import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
+import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
+import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
+import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
 package br.com.fiap.tech_challenge.infra.gateway.database.repository.impl;
 
 import br.com.fiap.tech_challenge.ConstantTimes;
+import br.com.fiap.tech_challenge.domain.models.Customer;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.CustomerEntity;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.CustomerRepository;
-import br.com.fiap.tech_challenge.domain.models.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

@@ -1,11 +1,11 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
+import br.com.fiap.tech_challenge.application.usecase.customer.CreateCustomerUseCase;
+import br.com.fiap.tech_challenge.application.usecase.customer.FindCustomerByDocumentUseCase;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CustomerRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CustomerResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper.CustomerMapper;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi.CustomerControllerOpenApi;
-import br.com.fiap.tech_challenge.application.usecase.customer.CreateCustomerUseCase;
-import br.com.fiap.tech_challenge.application.usecase.customer.FindCustomerByDocumentUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

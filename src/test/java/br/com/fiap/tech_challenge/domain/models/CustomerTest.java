@@ -1,6 +1,5 @@
 package br.com.fiap.tech_challenge.domain.models;
 
-import br.com.fiap.tech_challenge.domain.models.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

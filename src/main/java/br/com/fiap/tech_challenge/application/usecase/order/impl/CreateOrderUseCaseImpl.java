@@ -1,16 +1,16 @@
 package br.com.fiap.tech_challenge.application.usecase.order.impl;
 
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
+import br.com.fiap.tech_challenge.application.gateway.client.PaymentClient;
+import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
+import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
+import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
+import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
+import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
 import br.com.fiap.tech_challenge.domain.models.Customer;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.domain.models.Product;
-import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
-import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
-import br.com.fiap.tech_challenge.application.gateway.client.PaymentClient;
-import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
-import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
-import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
 
 import java.math.BigDecimal;
 import java.util.List;

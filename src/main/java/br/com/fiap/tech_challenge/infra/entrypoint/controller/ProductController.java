@@ -1,15 +1,15 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
+import br.com.fiap.tech_challenge.application.usecase.product.CreateProductUseCase;
+import br.com.fiap.tech_challenge.application.usecase.product.DeleteProductByIdUseCase;
+import br.com.fiap.tech_challenge.application.usecase.product.FindProductsByCategoryUseCase;
+import br.com.fiap.tech_challenge.application.usecase.product.UpdateProductUseCase;
+import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.ProductPageResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.ProductRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.ProductResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper.ProductMapper;
-import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi.ProductControllerOpenApi;
-import br.com.fiap.tech_challenge.application.usecase.product.CreateProductUseCase;
-import br.com.fiap.tech_challenge.application.usecase.product.UpdateProductUseCase;
-import br.com.fiap.tech_challenge.application.usecase.product.DeleteProductByIdUseCase;
-import br.com.fiap.tech_challenge.application.usecase.product.FindProductsByCategoryUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

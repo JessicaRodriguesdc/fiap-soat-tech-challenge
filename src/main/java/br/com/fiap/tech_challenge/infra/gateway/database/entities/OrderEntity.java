@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class OrderEntity {
 	private CustomerEntity customer;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrderProductEntity> products;
+	private List<OrderProductEntity> products = new ArrayList<>();
 
 	public OrderEntity() {
 	}
@@ -62,11 +63,11 @@ public class OrderEntity {
 		this.paymentId = order.getPaymentId();
 		this.createdAt = order.getCreatedAt();
 		this.updatedAt = order.getUpdatedAt();
+	}
 
-		this.products = order.getProducts()
-			.stream()
-			.map(orderProduct -> new OrderProductEntity(this, orderProduct))
-			.toList();
+	public void addOrderProductEntity(OrderProductEntity orderProductEntity){
+		orderProductEntity.setOrder(this);
+		this.products.add(orderProductEntity);
 	}
 
 	public Order toOrder() {
@@ -78,4 +79,7 @@ public class OrderEntity {
 				customer != null ? customer.toCustomer() : null, paymentId, createdAt, updatedAt);
 	}
 
+	public UUID getId(){
+		return this.id;
+	}
 }

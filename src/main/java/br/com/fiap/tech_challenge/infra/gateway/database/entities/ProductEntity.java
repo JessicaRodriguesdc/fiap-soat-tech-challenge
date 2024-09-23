@@ -42,14 +42,6 @@ public class ProductEntity {
 	public ProductEntity() {
 	}
 
-	public ProductEntity(UUID id, String name, ProductCategoryEnum category, BigDecimal price, String description) {
-		this.id = id;
-		this.name = name;
-		this.category = category;
-		this.price = price;
-		this.description = description;
-	}
-
 	public ProductEntity(Product product) {
 		this.id = product.getId();
 		this.name = product.getName();

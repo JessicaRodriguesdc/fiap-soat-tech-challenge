@@ -3,10 +3,10 @@ package br.com.fiap.tech_challenge.application.usecase.order.impl;
 import br.com.fiap.tech_challenge.application.exceptions.AlreadyInStatusException;
 import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.application.exceptions.InvalidStatusUpdateException;
-import br.com.fiap.tech_challenge.domain.models.Order;
-import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
 import br.com.fiap.tech_challenge.application.usecase.order.UpdateOrderStatusUseCase;
+import br.com.fiap.tech_challenge.domain.models.Order;
+import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
 
 import java.util.UUID;
 
