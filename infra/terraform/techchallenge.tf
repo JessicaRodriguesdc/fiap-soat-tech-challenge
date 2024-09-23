@@ -19,9 +19,19 @@ resource "kubernetes_manifest" "techchallenge_storageclass" {
   ]
 }
 
+resource "kubernetes_manifest" "techchallenge_persistentvolumeclaim" {
+  for_each = fileset("${path.module}/../k8s/techchallenge/pvc", "*.yaml")
+  manifest = yamldecode(file("${path.module}/../k8s/techchallenge/pvc/${each.value}"))
+
+  depends_on = [
+    kubernetes_manifest.techchallenge_namespaces,
+    kubernetes_manifest.techchallenge_storageclass
+  ]
+}
+
 resource "kubernetes_manifest" "techchallenge_persistentvolume" {
-  for_each = fileset("${path.module}/../k8s/techchallenge/persistentvolume", "*.yaml")
-  manifest = yamldecode(file("${path.module}/../k8s/techchallenge/persistentvolume/${each.value}"))
+  for_each = fileset("${path.module}/../k8s/techchallenge/pv", "*.yaml")
+  manifest = yamldecode(file("${path.module}/../k8s/techchallenge/pv/${each.value}"))
 
   depends_on = [
     kubernetes_manifest.techchallenge_namespaces,

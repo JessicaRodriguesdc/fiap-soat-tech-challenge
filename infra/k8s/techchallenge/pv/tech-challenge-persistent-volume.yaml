@@ -10,5 +10,6 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
   hostPath:
     path: "/mnt/data/postgres"

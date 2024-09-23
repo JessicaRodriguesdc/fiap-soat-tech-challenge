@@ -11,6 +11,8 @@ resource "helm_release" "nginx_ingress" {
 
   values = [file("${path.module}/../k8s/nginx-ingress/values.yaml")]
 
+  timeout = 600
+
   depends_on = [
     kubernetes_manifest.nginx_ingress_namespace,
     helm_release.metrics_server,
