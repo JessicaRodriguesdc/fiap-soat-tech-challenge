@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tech-challenge-db-statefulset
+  namespace: techchallenge
+  labels:
+    app: tech-challenge-db-statefulset
+spec:
+  serviceName: tech-challenge-db-statefulset
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tech-challenge-db-statefulset
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-db-statefulset
+    spec:
+      containers:
+      - name: tech-challenge-db-statefulset
+        image: postgres:13
+        ports:
+        - containerPort: 5432
+          name: postgres
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: tech-challenge-secret
+              key: db-name
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: tech-challenge-secret
+              key: db-username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tech-challenge-secret
+              key: db-password
+        volumeMounts:
+        - name: pg-data
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: pg-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "tech-challenge-storage-class"
+      resources:
+        requests:
+          storage: 10Gi

@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-app
+  namespace: techchallenge
+  labels:
+    app: tech-challenge-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tech-challenge-app
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-app
+    spec:
+      containers:
+        - name: tech-challenge-app
+          image: willosouza/fiap-soat-tech-challenge:v2.0.0
+          ports:
+            - containerPort: 8357
+          readinessProbe:
+            httpGet:
+              path: /api/actuator/health
+              port: 8357
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /api/actuator/health
+              port: 8357
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secret
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secret
+                  key: db-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secret
+                  key: db-password
