@@ -7,6 +7,8 @@ import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
 import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
 import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
 import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
+import br.com.fiap.tech_challenge.infra.gateway.client.cotroller.dto.PaymentDTO;
+import br.com.fiap.tech_challenge.infra.gateway.client.cotroller.dto.PaymentItemDTO;
 import br.com.fiap.tech_challenge.domain.models.Customer;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.OrderProduct;
@@ -46,9 +48,11 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
 		var orderProducts = getOrderProducts(input);
 		var calculatedAmount = reduceAmount(orderProducts);
-		var qrCode = paymentClient.generatePixQrCode(calculatedAmount);
+		var externalPaymentId = UUID.randomUUID();
+		var pixDto = createPayment(input, calculatedAmount, externalPaymentId);
+		var qrCode = paymentClient.generateQrCode(pixDto);
 
-		var newOrder = Order.create(calculatedAmount, orderProducts, customer, qrCode);
+		var newOrder = Order.create(calculatedAmount, orderProducts, customer, externalPaymentId.toString(), qrCode);
 
 		return persistence.create(newOrder);
 	}
@@ -86,6 +90,16 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
 	private List<UUID> getListOfProductIds(CreateOrderDTO input) {
 		return input.products().stream().map(CreateOrderDTO.OrderProducts::id).toList();
+	}
+
+	private PaymentDTO createPayment(CreateOrderDTO input, BigDecimal totalAmount, UUID externalPaymentId) {
+		List<UUID> ids = input.products().stream().map(CreateOrderDTO.OrderProducts::id).collect(Collectors.toList());
+		List<Product> products = findProductListOrThrowException(ids);
+
+		return new PaymentDTO(products.stream()
+			.map(product -> new PaymentItemDTO(product.getCategory().toString(), product.getName(),
+					product.getDescription(), product.getPrice()))
+			.collect(Collectors.toList()), totalAmount, externalPaymentId);
 	}
 
 }
