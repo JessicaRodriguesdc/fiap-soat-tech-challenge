@@ -18,6 +18,8 @@ class OrderTest {
 
 	private String paymentId;
 
+	private String qr;
+
 	private BigDecimal amount;
 
 	private List<OrderProduct> products;
@@ -40,7 +42,7 @@ class OrderTest {
 		OrderStatusEnum status = OrderStatusEnum.RECEIVED;
 		boolean isPaid = true;
 
-		Order order = new Order(id, amount, sequence, status, isPaid, products, customer, paymentId, createdAt,
+		Order order = new Order(id, amount, sequence, status, isPaid, products, customer, paymentId, qr, createdAt,
 				updatedAt);
 
 		assertEquals(id, order.getId());
@@ -57,7 +59,7 @@ class OrderTest {
 	@Test
 	@DisplayName("Should return Order attributes as the object was created")
 	public void shouldCreateOrder() {
-		Order order = Order.create(amount, products, customer, paymentId);
+		Order order = Order.create(amount, products, customer, paymentId, qr);
 
 		assertNull(order.getId());
 		assertEquals(amount, order.getAmount());
@@ -72,12 +74,13 @@ class OrderTest {
 	private void buildArranges() {
 		this.id = UUID.randomUUID();
 		this.paymentId = "paymentIdMock";
+		this.qr = "qrMock";
 		this.amount = new BigDecimal("200.00");
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = LocalDateTime.now();
 		this.customer = new Customer(id, "Walter White", "31739380037", "heisenberg@gmail.com");
 		OrderProduct orderProduct1 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 1",
-				UUID.randomUUID(), "X Burger", UUID.randomUUID(), LocalDateTime.now());
+				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 		OrderProduct orderProduct2 = new OrderProduct(UUID.randomUUID(), new BigDecimal("100.00"), "Customization 2",
 				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 		this.products = List.of(orderProduct1, orderProduct2);

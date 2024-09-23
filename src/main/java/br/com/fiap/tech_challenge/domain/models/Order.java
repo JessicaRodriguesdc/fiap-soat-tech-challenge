@@ -16,11 +16,13 @@ public class Order {
 
 	private final Integer sequence;
 
-	private final OrderStatusEnum status;
+	private OrderStatusEnum status;
 
 	private final boolean isPaid;
 
 	private final String paymentId;
+
+	private final String qr;
 
 	private List<OrderProduct> products;
 
@@ -30,14 +32,14 @@ public class Order {
 
 	private final LocalDateTime updatedAt;
 
-	public static Order create(BigDecimal amount, List<OrderProduct> products, Customer customer, String paymentId) {
-
-		return new Order(null, amount, null, OrderStatusEnum.RECEIVED, false, products, customer, paymentId, null,
+	public static Order create(BigDecimal amount, List<OrderProduct> products, Customer customer, String paymentId,
+			String qr) {
+		return new Order(null, amount, null, OrderStatusEnum.RECEIVED, false, products, customer, paymentId, qr, null,
 				null);
 	}
 
 	public Order(UUID id, BigDecimal amount, Integer sequence, OrderStatusEnum status, boolean isPaid,
-			List<OrderProduct> products, Customer customer, String paymentId, LocalDateTime createdAt,
+			List<OrderProduct> products, Customer customer, String paymentId, String qr, LocalDateTime createdAt,
 			LocalDateTime updatedAt) {
 		this.id = id;
 		this.amount = amount;
@@ -47,6 +49,7 @@ public class Order {
 		this.products = products;
 		this.customer = customer;
 		this.paymentId = paymentId;
+		this.qr = qr;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -91,9 +94,16 @@ public class Order {
 		return paymentId;
 	}
 
-	public void removeProducts(){
+	public void removeProducts() {
 		this.products = new ArrayList<>();
 	}
 
+	public String getQr() {
+		return qr;
+	}
+
+	public void setStatus(OrderStatusEnum status) {
+		this.status = status;
+	}
 
 }

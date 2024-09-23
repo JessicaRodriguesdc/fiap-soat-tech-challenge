@@ -17,21 +17,21 @@ public class FindWorkItemsUseCaseImpl implements FindWorkItemsUseCase {
 
 	public FindWorkItemsUseCaseImpl(OrderPersistence persistence) {
 		this.persistence = persistence;
-    }
+	}
 
 	@Override
 	public List<List<Order>> findWorkItems() {
 		List<Order> orders = persistence.findByStatusNot(OrderStatusEnum.FINISHED);
 
 		Map<OrderStatusEnum, List<Order>> groupedByStatus = orders.stream()
-				.sorted(Comparator.comparing(Order::getCreatedAt))
-				.collect(Collectors.groupingBy(Order::getStatus));
+			.sorted(Comparator.comparing(Order::getCreatedAt))
+			.collect(Collectors.groupingBy(Order::getStatus));
 
 		List<Order> readyItems = groupedByStatus.getOrDefault(OrderStatusEnum.READY, new ArrayList<>());
 		readyItems.forEach(Order::removeProducts);
 
 		return List.of(groupedByStatus.getOrDefault(OrderStatusEnum.RECEIVED, new ArrayList<>()),
-				groupedByStatus.getOrDefault(OrderStatusEnum.PREPARING, new ArrayList<>()),
-				readyItems);
+				groupedByStatus.getOrDefault(OrderStatusEnum.PREPARING, new ArrayList<>()), readyItems);
 	}
+
 }

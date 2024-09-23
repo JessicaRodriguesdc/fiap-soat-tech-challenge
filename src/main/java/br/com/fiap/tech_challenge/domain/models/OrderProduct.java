@@ -20,8 +20,8 @@ public class OrderProduct {
 
 	private final LocalDateTime createdAt;
 
-	public OrderProduct(UUID id, BigDecimal price, String customization, UUID productId, String productName, UUID orderId,
-			LocalDateTime createdAt) {
+	public OrderProduct(UUID id, BigDecimal price, String customization, UUID productId, String productName,
+			UUID orderId, LocalDateTime createdAt) {
 		this.id = id;
 		this.price = price;
 		this.customization = customization;
