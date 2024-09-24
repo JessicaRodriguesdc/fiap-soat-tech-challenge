@@ -20,7 +20,7 @@ import java.util.Map;
 @Configuration
 public class SpringDocConfigurations {
 
-	@Value("${springdoc.api-docs.server.url}")
+	// @Value("${springdoc.api-docs.server.url}")
 	private String apiDocsUrl;
 
 	@Bean
