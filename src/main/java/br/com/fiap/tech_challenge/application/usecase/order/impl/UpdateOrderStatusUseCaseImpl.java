@@ -41,7 +41,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
 				orderFound.getStatus(), isPaid, orderFound.getProducts(), orderFound.getCustomer(),
 				orderFound.getPaymentId(), orderFound.getQr(), orderFound.getCreatedAt(), orderFound.getUpdatedAt());
 
-		persistence.create(updatedOrder);
+		persistence.update(updatedOrder);
 	}
 
 	@Scheduled(fixedRate = 600000)
@@ -61,7 +61,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
 					order.isPaid(), order.getProducts(), order.getCustomer(), order.getPaymentId(), order.getQr(),
 					order.getCreatedAt(), order.getUpdatedAt());
 
-			persistence.create(updatedOrder);
+			persistence.update(updatedOrder);
 		}
 	}
 

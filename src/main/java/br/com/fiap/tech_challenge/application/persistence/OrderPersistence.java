@@ -14,6 +14,8 @@ public interface OrderPersistence {
 
 	Order create(Order customer);
 
+	Order update(Order customer);
+
 	List<Order> findByStatusNot(OrderStatusEnum status);
 
 	Optional<Order> findByPaymentId(String paymentId);

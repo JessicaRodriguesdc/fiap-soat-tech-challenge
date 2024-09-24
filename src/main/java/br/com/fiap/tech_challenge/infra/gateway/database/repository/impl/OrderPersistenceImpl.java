@@ -53,6 +53,13 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	}
 
 	@Override
+	public Order update(Order order) {
+		var orderEntity = new OrderEntity(order);
+		var orderSaved = repository.save(orderEntity);
+		return orderSaved.toOrder();
+	}
+
+	@Override
 	public List<Order> findByStatusNot(OrderStatusEnum status) {
 		var ordersEntity = repository.findByStatusNot(status);
 
