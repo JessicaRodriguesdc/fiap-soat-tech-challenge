@@ -10,8 +10,8 @@ import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepos
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +20,7 @@ import java.util.UUID;
 public class OrderPersistenceImpl implements OrderPersistence {
 
 	private final OrderRepository repository;
+
 	private final ProductRepository productRepository;
 
 	@PersistenceContext
@@ -27,7 +28,7 @@ public class OrderPersistenceImpl implements OrderPersistence {
 
 	public OrderPersistenceImpl(OrderRepository repository, ProductRepository productRepository) {
 		this.repository = repository;
-        this.productRepository = productRepository;
+		this.productRepository = productRepository;
 	}
 
 	@Override
@@ -40,11 +41,10 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	public Order create(Order order) {
 		var orderEntity = new OrderEntity(order);
 
-		order.getProducts()
-				.forEach(orderProduct -> {
-					var productEntity = productRepository.findById(orderProduct.getProductId()).orElseThrow();
-					orderEntity.addOrderProductEntity(new OrderProductEntity(orderProduct, productEntity));
-				});
+		order.getProducts().forEach(orderProduct -> {
+			var productEntity = productRepository.findById(orderProduct.getProductId()).orElseThrow();
+			orderEntity.addOrderProductEntity(new OrderProductEntity(orderProduct, productEntity));
+		});
 
 		var orderSaved = repository.save(orderEntity);
 		entityManager.clear();
@@ -53,10 +53,29 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	}
 
 	@Override
+	public Order update(Order order) {
+		var orderEntity = new OrderEntity(order);
+		var orderSaved = repository.save(orderEntity);
+		return orderSaved.toOrder();
+	}
+
+	@Override
 	public List<Order> findByStatusNot(OrderStatusEnum status) {
 		var ordersEntity = repository.findByStatusNot(status);
 
 		return ordersEntity.stream().map(OrderEntity::toOrder).toList();
+	}
+
+	@Override
+	public Optional<Order> findByPaymentId(String paymentId) {
+		var orderFound = repository.findByPaymentId(paymentId);
+		return orderFound.map(OrderEntity::toOrder);
+	}
+
+	@Override
+	public List<Order> findByStatusAndCreatedAtBefore(OrderStatusEnum status, LocalDateTime createdAt) {
+		var orderFound = repository.findByStatusAndCreatedAtBefore(status, createdAt);
+		return orderFound.stream().map(OrderEntity::toOrder).toList();
 	}
 
 }

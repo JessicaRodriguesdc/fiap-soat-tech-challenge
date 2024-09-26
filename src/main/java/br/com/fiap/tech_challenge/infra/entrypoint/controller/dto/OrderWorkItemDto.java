@@ -10,16 +10,14 @@ import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record OrderWorkItemDto(@Schema(example = "ab69e046-fb5a-4a79-98d6-363efdf20e11") UUID id,
-							   @Schema(example = "1") Integer sequence,
-							   @Schema(example = "Charles") String customerName,
-							   List<OrderProductWorkItemDto> products,
-							   @Schema(example = "2024-08-03T01:15:58Z") LocalDateTime createdAt,
-							   @Schema(example = "2024-08-03T01:17:58Z") LocalDateTime updatedAt
-							   ) {
+		@Schema(example = "1") Integer sequence, @Schema(example = "Charles") String customerName,
+		List<OrderProductWorkItemDto> products, @Schema(example = "2024-08-03T01:15:58Z") LocalDateTime createdAt,
+		@Schema(example = "2024-08-03T01:17:58Z") LocalDateTime updatedAt) {
 
 	public OrderWorkItemDto(Order order) {
-		this(order.getId(), order.getSequence(), order.getCustomer() != null ? order.getCustomer().getName() : null, !order.getProducts().isEmpty() ?
-				order.getProducts().stream().map(OrderProductWorkItemDto::new).toList() : null, order.getCreatedAt(),
-				order.getUpdatedAt());
+		this(order.getId(), order.getSequence(), order.getCustomer() != null ? order.getCustomer().getName() : null,
+				!order.getProducts().isEmpty() ? order.getProducts().stream().map(OrderProductWorkItemDto::new).toList()
+						: null,
+				order.getCreatedAt(), order.getUpdatedAt());
 	}
 }

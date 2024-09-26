@@ -1,6 +1,5 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
-import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
 import br.com.fiap.tech_challenge.application.usecase.order.FindWorkItemsUseCase;
 import br.com.fiap.tech_challenge.application.usecase.order.IsPaidUseCase;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderRequestDTO;
@@ -8,6 +7,7 @@ import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderRes
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.OrderWorkItemsResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.mapper.OrderMapper;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi.OrderControllerOpenApi;
+import br.com.fiap.tech_challenge.application.usecase.order.CreateOrderUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,8 @@ public class OrderController implements OrderControllerOpenApi {
 
 	private final IsPaidUseCase isPaidUseCase;
 
-	public OrderController(CreateOrderUseCase createOrderUseCase, IsPaidUseCase isOrderPaid,
-			FindWorkItemsUseCase findWorkItemsUseCase, OrderMapper mapper) {
+	public OrderController(CreateOrderUseCase createOrderUseCase, FindWorkItemsUseCase findWorkItemsUseCase,
+			 IsPaidUseCase isOrderPaid, OrderMapper mapper) {
 		this.createOrderUseCase = createOrderUseCase;
 		this.findWorkItemsUseCase = findWorkItemsUseCase;
 		this.isPaidUseCase = isOrderPaid;
@@ -47,7 +47,7 @@ public class OrderController implements OrderControllerOpenApi {
 	public ResponseEntity<CreateOrderResponseDTO> create(@RequestBody @Valid CreateOrderRequestDTO orderRequest) {
 		var mapperCreateOrder = mapper.toCreateOrder(orderRequest);
 		var order = createOrderUseCase.create(mapperCreateOrder);
-		var response = new CreateOrderResponseDTO(order.getId(), order.getSequence(), order.getPaymentId());
+		var response = new CreateOrderResponseDTO(order.getId(), order.getSequence(), order.getQr());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}

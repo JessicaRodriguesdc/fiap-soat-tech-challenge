@@ -104,6 +104,7 @@ class OrderControllerTest {
 	private void buildOrder() {
 		var id = UUID.randomUUID();
 		var paymentId = "paymentIdMock";
+		var qr = "qrMock";
 		var amount = new BigDecimal("200.00");
 		var status = OrderStatusEnum.PREPARING;
 		var customer = new Customer(id, "Walter White", "31739380037", "heisenberg@gmail.com");
@@ -113,7 +114,7 @@ class OrderControllerTest {
 				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 		var products = List.of(orderProduct1, orderProduct2);
 
-		order = new Order(id, amount, 2, status, true, products, customer, paymentId, null, null);
+		order = new Order(id, amount, 2, status, true, products, customer, paymentId, qr, null, null);
 	}
 
 	private void buildRequest() {
@@ -124,7 +125,7 @@ class OrderControllerTest {
 	}
 
 	private void buildResponse() {
-		createOrderResponseDTO = new CreateOrderResponseDTO(order.getId(), order.getPaymentId());
+		createOrderResponseDTO = new CreateOrderResponseDTO(order.getId(), order.getSequence(), order.getQr());
 	}
 
 }

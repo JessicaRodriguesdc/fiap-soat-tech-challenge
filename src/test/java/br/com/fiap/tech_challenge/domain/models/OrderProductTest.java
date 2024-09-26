@@ -35,7 +35,8 @@ public class OrderProductTest {
 
 	public void shouldInstantiateOrderProductConstructor() {
 		BigDecimal price = BigDecimal.valueOf(100.00);
-		OrderProduct orderProduct = new OrderProduct(id, price, customization, productId, productName, orderId, createdAt);
+		OrderProduct orderProduct = new OrderProduct(id, price, customization, productId, productName, orderId,
+				createdAt);
 
 		assertEquals(id, orderProduct.getId());
 		assertEquals(price, orderProduct.getPrice());

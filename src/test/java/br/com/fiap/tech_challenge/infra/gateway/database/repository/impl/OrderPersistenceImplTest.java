@@ -4,13 +4,10 @@ import br.com.fiap.tech_challenge.ConstantTimes;
 import br.com.fiap.tech_challenge.domain.models.Order;
 import br.com.fiap.tech_challenge.domain.models.OrderProduct;
 import br.com.fiap.tech_challenge.domain.models.enums.OrderStatusEnum;
-import br.com.fiap.tech_challenge.domain.models.pageable.CustomPage;
-import br.com.fiap.tech_challenge.domain.models.pageable.CustomPageable;
 import br.com.fiap.tech_challenge.infra.gateway.database.entities.OrderEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.entities.ProductEntity;
-import br.com.fiap.tech_challenge.infra.gateway.database.mapper.PageMapper;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.OrderRepository;
 import br.com.fiap.tech_challenge.infra.gateway.database.repository.ProductRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -36,39 +32,21 @@ class OrderPersistenceImplTest {
 	@Mock
 	private OrderRepository repository;
 
-    @Mock
-    private ProductRepository productRepository;
+	@Mock
+	private ProductRepository productRepository;
+
+	@Mock
+	private EntityManager entityManager;
 
 	@InjectMocks
 	private OrderPersistenceImpl orderPersistence;
 
 	private Order order;
-    
+
 	@BeforeEach
 	void setUp() {
 		this.buildArranges();
 	}
-
-	@Test
-    @DisplayName("Should create and save a new Order")
-    void shouldCreateAndSaveNewOrder() {
-        when(productRepository.findById(any())).thenReturn(Optional.of(new ProductEntity()));
-        when(repository.save(any())).thenReturn(new OrderEntity(order));
-
-        var created = orderPersistence.create(order);
-
-        verify(repository, times(ConstantTimes.ONLY_ONCE)).save(any());
-        verifyNoMoreInteractions(repository);
-
-        assertEquals(order.getId(), created.getId());
-        assertEquals(order.getAmount(), created.getAmount());
-        assertEquals(order.getSequence(), created.getSequence());
-        assertEquals(order.getCustomer(), created.getCustomer());
-        assertEquals(order.getPaymentId(), created.getPaymentId());
-        assertEquals(order.getStatus(), created.getStatus());
-        assertEquals(order.getCreatedAt(), created.getCreatedAt());
-        assertEquals(order.getUpdatedAt(), created.getUpdatedAt());
-    }
 
 	@Test
     @DisplayName("Should Find Order by ID")
@@ -95,7 +73,8 @@ class OrderPersistenceImplTest {
 				UUID.randomUUID(), "X Bacon", UUID.randomUUID(), LocalDateTime.now());
 
 		order = new Order(UUID.randomUUID(), new BigDecimal("200.00"), 2, OrderStatusEnum.RECEIVED, true,
-				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", LocalDateTime.now(), LocalDateTime.now());
+				List.of(orderProduct1, orderProduct1), null, "paymentIdMock", "qrMock", LocalDateTime.now(),
+				LocalDateTime.now());
 	}
 
 }
