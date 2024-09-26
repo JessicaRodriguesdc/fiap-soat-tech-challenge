@@ -1,6 +1,7 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller;
 
 import br.com.fiap.tech_challenge.application.usecase.order.FindWorkItemsUseCase;
+import br.com.fiap.tech_challenge.application.usecase.order.IsPaidUseCase;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.CreateOrderResponseDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.OrderWorkItemsResponseDTO;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/v1/orders")
 public class OrderController implements OrderControllerOpenApi {
@@ -22,10 +25,13 @@ public class OrderController implements OrderControllerOpenApi {
 
 	private final OrderMapper mapper;
 
+	private final IsPaidUseCase isPaidUseCase;
+
 	public OrderController(CreateOrderUseCase createOrderUseCase, FindWorkItemsUseCase findWorkItemsUseCase,
-			OrderMapper mapper) {
+			 IsPaidUseCase isOrderPaid, OrderMapper mapper) {
 		this.createOrderUseCase = createOrderUseCase;
 		this.findWorkItemsUseCase = findWorkItemsUseCase;
+		this.isPaidUseCase = isOrderPaid;
 		this.mapper = mapper;
 	}
 
@@ -44,6 +50,13 @@ public class OrderController implements OrderControllerOpenApi {
 		var response = new CreateOrderResponseDTO(order.getId(), order.getSequence(), order.getQr());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+
+	@Override
+	@GetMapping("/{id}/paid-status")
+	public ResponseEntity<Boolean> isOrderPaid(@PathVariable("id") final UUID id) {
+		var response = isPaidUseCase.isOrderPaid(id);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 }
