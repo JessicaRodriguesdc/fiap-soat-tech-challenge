@@ -53,7 +53,7 @@ public class OrderController implements OrderControllerOpenApi {
 	}
 
 	@Override
-	@GetMapping("/{id}/status")
+	@GetMapping("/{id}/paid-status")
 	public ResponseEntity<Boolean> isOrderPaid(@PathVariable("id") final UUID id) {
 		var response = isPaidUseCase.isOrderPaid(id);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
