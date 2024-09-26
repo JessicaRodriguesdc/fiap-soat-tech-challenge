@@ -37,6 +37,9 @@ public class OrderEntity {
 	@Column(nullable = false)
 	private String paymentId;
 
+	@Column(nullable = false)
+	private String qr;
+
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
@@ -61,11 +64,12 @@ public class OrderEntity {
 		this.isPaid = order.isPaid();
 		this.customer = order.getCustomer() != null ? new CustomerEntity(order.getCustomer()) : null;
 		this.paymentId = order.getPaymentId();
+		this.qr = order.getQr();
 		this.createdAt = order.getCreatedAt();
 		this.updatedAt = order.getUpdatedAt();
 	}
 
-	public void addOrderProductEntity(OrderProductEntity orderProductEntity){
+	public void addOrderProductEntity(OrderProductEntity orderProductEntity) {
 		orderProductEntity.setOrder(this);
 		this.products.add(orderProductEntity);
 	}
@@ -76,10 +80,11 @@ public class OrderEntity {
 			.toList();
 
 		return new Order(id, amount, sequence, status, isPaid, orderProducts,
-				customer != null ? customer.toCustomer() : null, paymentId, createdAt, updatedAt);
+				customer != null ? customer.toCustomer() : null, paymentId, qr, createdAt, updatedAt);
 	}
 
-	public UUID getId(){
+	public UUID getId() {
 		return this.id;
 	}
+
 }

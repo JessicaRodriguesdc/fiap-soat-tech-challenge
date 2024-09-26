@@ -1,11 +1,12 @@
 package br.com.fiap.tech_challenge.application.gateway.client;
 
-import java.math.BigDecimal;
+import br.com.fiap.tech_challenge.infra.gateway.client.cotroller.dto.PaymentDTO;
+import br.com.fiap.tech_challenge.infra.gateway.client.cotroller.dto.PaymentStatusDTO;
 
 public interface PaymentClient {
 
-	String generatePixQrCode(BigDecimal value);
+	String generateQrCode(PaymentDTO dto);
 
-	Boolean verifyPaymentStatus(String qrCode);
+	PaymentStatusDTO verifyPayment(String dataId);
 
 }

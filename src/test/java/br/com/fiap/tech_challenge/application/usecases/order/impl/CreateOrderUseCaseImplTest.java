@@ -1,17 +1,18 @@
 package br.com.fiap.tech_challenge.application.usecases.order.impl;
 
-import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
-import br.com.fiap.tech_challenge.application.gateway.client.PaymentClient;
-import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
-import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
-import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
-import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
 import br.com.fiap.tech_challenge.application.usecase.order.impl.CreateOrderUseCaseImpl;
+import br.com.fiap.tech_challenge.application.exceptions.DoesNotExistException;
 import br.com.fiap.tech_challenge.domain.models.Customer;
-import br.com.fiap.tech_challenge.domain.models.Order;
-import br.com.fiap.tech_challenge.domain.models.Product;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductCategoryEnum;
 import br.com.fiap.tech_challenge.domain.models.enums.ProductStatusEnum;
+import br.com.fiap.tech_challenge.domain.models.Order;
+import br.com.fiap.tech_challenge.domain.models.Product;
+import br.com.fiap.tech_challenge.application.persistence.CustomerPersistence;
+import br.com.fiap.tech_challenge.application.persistence.OrderPersistence;
+import br.com.fiap.tech_challenge.application.gateway.client.PaymentClient;
+import br.com.fiap.tech_challenge.application.persistence.ProductPersistence;
+import br.com.fiap.tech_challenge.application.usecase.order.dto.CreateOrderDTO;
+import br.com.fiap.tech_challenge.infra.gateway.client.cotroller.dto.PaymentDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,10 @@ class CreateOrderUseCaseImplTest {
 
 	private UUID productId;
 
+	private UUID paymentId;
+
+	private String qr;
+
 	private BigDecimal price;
 
 	@BeforeEach
@@ -70,13 +75,13 @@ class CreateOrderUseCaseImplTest {
 
 		when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
 		when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
-		when(paymentClient.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
+		when(paymentClient.generateQrCode(any(PaymentDTO.class))).thenReturn(qr);
 		when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
 		Order order = createOrderUseCase.create(createOrderDTO);
 
 		assertNotNull(order);
-		assertEquals("qrCode123", order.getPaymentId());
+		assertEquals(qr, order.getQr());
 		assertEquals(price, order.getAmount());
 	}
 
@@ -89,13 +94,13 @@ class CreateOrderUseCaseImplTest {
 		Product product = buildProduct();
 
 		when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
-		when(paymentClient.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
+		when(paymentClient.generateQrCode(any(PaymentDTO.class))).thenReturn(qr);
 		when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
 		Order order = createOrderUseCase.create(createOrderDTO);
 
 		assertNotNull(order);
-		assertEquals("qrCode123", order.getPaymentId());
+		assertEquals(qr, order.getQr());
 		assertEquals(price, order.getAmount());
 
 		verify(customerPersistence, never()).findById(any(UUID.class));
@@ -113,7 +118,7 @@ class CreateOrderUseCaseImplTest {
 
 		when(customerPersistence.findById(customerId)).thenReturn(Optional.of(customer));
 		when(productPersistence.findById(productId)).thenReturn(Optional.of(product));
-		when(paymentClient.generatePixQrCode(any(BigDecimal.class))).thenReturn("qrCode123");
+		when(paymentClient.generateQrCode(any(PaymentDTO.class))).thenReturn(qr);
 		when(orderPersistence.create(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
 		Order order = createOrderUseCase.create(createOrderDTO);
@@ -152,6 +157,8 @@ class CreateOrderUseCaseImplTest {
 	private void buildArranges() {
 		this.customerId = UUID.randomUUID();
 		this.productId = UUID.randomUUID();
+		this.paymentId = UUID.randomUUID();
+		this.qr = "qrCode123";
 		this.price = BigDecimal.valueOf(199.98);
 	}
 

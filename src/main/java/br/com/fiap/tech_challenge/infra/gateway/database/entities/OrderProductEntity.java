@@ -51,4 +51,5 @@ public class OrderProductEntity {
 	public void setOrder(OrderEntity orderEntity) {
 		this.order = orderEntity;
 	}
+
 }

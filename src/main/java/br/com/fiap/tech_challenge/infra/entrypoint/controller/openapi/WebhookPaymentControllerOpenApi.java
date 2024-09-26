@@ -1,7 +1,7 @@
 package br.com.fiap.tech_challenge.infra.entrypoint.controller.openapi;
 
-import br.com.fiap.tech_challenge.infra.entrypoint.controller.dto.FakeCheckoutRequestDTO;
 import br.com.fiap.tech_challenge.infra.entrypoint.controller.handler.ErrorsValidateData;
+import br.com.fiap.tech_challenge.infra.gateway.client.cotroller.request.WebHookPaymentRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,11 +10,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Tag(name = "Fake Checkout")
-public interface FakeCheckoutControllerOpenApi {
+@Tag(name = "Webhook Payment")
+public interface WebhookPaymentControllerOpenApi {
 
-	@Operation(summary = "Change the order status to PREPARING, and mark as paid")
+	@Operation(summary = "Mercado Pago Payment WebHook")
 	@ApiResponse(responseCode = "204", description = "No Content Response",
 			content = @Content(mediaType = "application/json"))
 	@ApiResponse(responseCode = "400", description = "Bad Request Response",
@@ -26,6 +27,7 @@ public interface FakeCheckoutControllerOpenApi {
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
 	@ApiResponse(responseCode = "500", description = "Internal Server Error Response",
 			content = @Content(mediaType = "application/json", schema = @Schema(ref = "ProblemDto")))
-	ResponseEntity<Void> checkout(@RequestBody FakeCheckoutRequestDTO fakeCheckoutRequestDTO);
+	ResponseEntity<Void> handleWebhook(@RequestParam("data.id") String dataId, @RequestParam("type") String type,
+			@RequestBody WebHookPaymentRequest request);
 
 }
