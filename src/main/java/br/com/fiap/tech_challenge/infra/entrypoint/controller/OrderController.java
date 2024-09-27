@@ -28,7 +28,7 @@ public class OrderController implements OrderControllerOpenApi {
 	private final IsPaidUseCase isPaidUseCase;
 
 	public OrderController(CreateOrderUseCase createOrderUseCase, FindWorkItemsUseCase findWorkItemsUseCase,
-			 IsPaidUseCase isOrderPaid, OrderMapper mapper) {
+			IsPaidUseCase isOrderPaid, OrderMapper mapper) {
 		this.createOrderUseCase = createOrderUseCase;
 		this.findWorkItemsUseCase = findWorkItemsUseCase;
 		this.isPaidUseCase = isOrderPaid;

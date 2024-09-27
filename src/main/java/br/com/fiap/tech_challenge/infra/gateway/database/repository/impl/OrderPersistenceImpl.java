@@ -55,6 +55,10 @@ public class OrderPersistenceImpl implements OrderPersistence {
 	@Override
 	public Order update(Order order) {
 		var orderEntity = new OrderEntity(order);
+		order.getProducts().forEach(orderProduct -> {
+			var productEntity = productRepository.findById(orderProduct.getProductId()).orElseThrow();
+			orderEntity.addOrderProductEntity(new OrderProductEntity(orderProduct, productEntity));
+		});
 		var orderSaved = repository.save(orderEntity);
 		return orderSaved.toOrder();
 	}
