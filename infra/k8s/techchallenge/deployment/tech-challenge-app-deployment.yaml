@@ -62,3 +62,16 @@ spec:
                 secretKeyRef:
                   name: tech-challenge-secret
                   key: db-password
+            - name: EXTERNAL_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-secret
+                  key: external-api-token
+            - name: EXTERNAL_API_HOST
+              value: "https://api.mercadopago.com"
+            - name: EXTERNAL_API_CREATE_QR
+              value: "/instore/orders/qr/seller/collectors/1986357239/pos/FIAPSOAT12C/qrs"
+            - name: EXTERNAL_API_GET_PAYMENT
+              value: "/v1/payments/"
+            - name: EXTERNAL_API_NOTIFICATION_URL
+              value: "https://webhook.site/dac3f51a-a6b8-491c-adab-940ebd49d661"
